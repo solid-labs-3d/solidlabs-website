@@ -60,7 +60,7 @@ const PRODUCTS = [
   },
   {
     id:'SL-004', name:'Phone Stand', price:449,
-    desc:'Adjustable-angle phone stand. 0–90° range, rubber grip base. Works with cases. Holds any phone up to 200g.',
+    desc:'Minimalist angled phone dock. 65° viewing angle. Fits all phones up to 80mm wide. Non-slip TPU pads included.',
     colors:['#f05c1e','#111','#f0ede6'],
     icon:(
       <svg width="72" height="80" viewBox="0 0 72 80" fill="none">

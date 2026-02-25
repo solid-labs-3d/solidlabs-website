@@ -82,7 +82,7 @@ const EX_FAQ = [
   {
     keys: ["electronics", "source", "arduino", "esp32", "stm32", "rpi"],
     answer:
-      "We source Arduino, ESP32, STM32, Raspberry Pi, sensors, actuators, custom PCBs — single units to bulk, no MOQ. Same-week sourcing.",
+      "We mount PCBs, solder wire harnesses, install headers and connectors, flash firmware, and run functional tests. Delivered as a complete working unit — not parts in a bag. We don't cut corners here.",
     chips: ["What can you source?", "Lead time"],
   },
   {
@@ -1537,7 +1537,7 @@ const ZOOM_ITEMS = [
     num: "01 — Electronics",
     title: "ELECTRONICS",
     em: "SUPPLY",
-    desc: "We source Arduino, ESP32, STM32, Raspberry Pi, sensors, actuators, and custom PCBs. Single components to bulk runs — no MOQ minimums. You describe what you need and we source it, same week.",
+    desc: "We mount PCBs, solder wire harnesses, install headers and connectors, flash firmware, and run functional tests. Delivered as a complete working unit — not parts in a bag. We don't cut corners here.",
     specs: [
       "Arduino",
       "ESP32",
@@ -1601,9 +1601,9 @@ const ZOOM_ITEMS = [
   },
   {
     num: "05 — SLA Printing",
-    title: "RESIN",
+    title: "CNC MACHINING",
     em: "PRECISION",
-    desc: "When FDM isn't fine enough. Our SLA printers hit 0.025mm layers, ±0.05mm XY accuracy, and build volumes up to 290×165×185mm. Dental models, display masters, jewellery patterns, functional micro-parts — this is the tool.",
+    desc: "Precision CNC machining for aluminium, steel, and engineering plastics. Tolerances to ±0.05mm. Combined with our 3D printing and electronics capabilities, this completes the full hardware manufacturing loop.",
     specs: [
       "0.025–0.1mm Layers",
       "±0.05mm XY",
@@ -1615,54 +1615,54 @@ const ZOOM_ITEMS = [
     visual: <SLASVG />,
     link: "/sla-printing",
   },
-  {
-    num: "06 — Carbon Fibre",
-    title: "CARBON",
-    em: "FIBRE",
-    desc: "Hand layup CFRP for parts where weight is the enemy. 1.5 g/cm³, 3,500 MPa tensile strength — 10× stiffer than steel by mass. Aerospace brackets, robotics arms, cycling components, custom performance hardware.",
-    specs: [
-      "1.5 g/cm³",
-      "3,500 MPa",
-      "230 GPa Modulus",
-      "Hand Layup",
-      "Prepreg Option",
-      "Aerospace Grade",
-    ],
-    visual: <CarbonSVG />,
-    link: "/carbon-fibre",
-  },
-  {
-    num: "07 — Injection Moulding",
-    title: "INJECTION",
-    em: "MOULDING",
-    desc: "When your quantities cross 100 units and per-unit economics matter, injection moulding is the answer. Aluminium tooling in 7–14 days. ±0.05mm accuracy. Up to 8 cavities. ABS, PP, Nylon, HDPE.",
-    specs: [
-      "Min 100 Units",
-      "±0.05mm",
-      "7–14 Day Tooling",
-      "ABS · PP · Nylon",
-      "Up to 8 Cavities",
-      "0.8–3.2μm Ra",
-    ],
-    visual: <InjectionSVG />,
-    link: "/injection-moulding",
-  },
-  {
-    num: "08 — Vacuum Forming",
-    title: "VACUUM",
-    em: "FORMING",
-    desc: "Large-format covers, protective housings, trays, and packaging. Max sheet 600×400mm, 0.8mm minimum wall, 1:1 depth ratio. Low tooling cost makes it ideal for prototypes and short runs before going to injection.",
-    specs: [
-      "600×400mm Sheet",
-      "0.8mm Min Wall",
-      "PETG · ABS · HIPS",
-      "Acrylic · PP · HDPE",
-      "3–5 Day Lead",
-      "Low Tooling Cost",
-    ],
-    visual: <VacuumSVG />,
-    link: "/vacuum-forming",
-  },
+  // {
+  //   num: "06 — Carbon Fibre",
+  //   title: "CARBON",
+  //   em: "FIBRE",
+  //   desc: "Hand layup CFRP for parts where weight is the enemy. 1.5 g/cm³, 3,500 MPa tensile strength — 10× stiffer than steel by mass. Aerospace brackets, robotics arms, cycling components, custom performance hardware.",
+  //   specs: [
+  //     "1.5 g/cm³",
+  //     "3,500 MPa",
+  //     "230 GPa Modulus",
+  //     "Hand Layup",
+  //     "Prepreg Option",
+  //     "Aerospace Grade",
+  //   ],
+  //   visual: <CarbonSVG />,
+  //   link: "/carbon-fibre",
+  // },
+  // {
+  //   num: "07 — Injection Moulding",
+  //   title: "INJECTION",
+  //   em: "MOULDING",
+  //   desc: "When your quantities cross 100 units and per-unit economics matter, injection moulding is the answer. Aluminium tooling in 7–14 days. ±0.05mm accuracy. Up to 8 cavities. ABS, PP, Nylon, HDPE.",
+  //   specs: [
+  //     "Min 100 Units",
+  //     "±0.05mm",
+  //     "7–14 Day Tooling",
+  //     "ABS · PP · Nylon",
+  //     "Up to 8 Cavities",
+  //     "0.8–3.2μm Ra",
+  //   ],
+  //   visual: <InjectionSVG />,
+  //   link: "/injection-moulding",
+  // },
+  // {
+  //   num: "08 — Vacuum Forming",
+  //   title: "VACUUM",
+  //   em: "FORMING",
+  //   desc: "Large-format covers, protective housings, trays, and packaging. Max sheet 600×400mm, 0.8mm minimum wall, 1:1 depth ratio. Low tooling cost makes it ideal for prototypes and short runs before going to injection.",
+  //   specs: [
+  //     "600×400mm Sheet",
+  //     "0.8mm Min Wall",
+  //     "PETG · ABS · HIPS",
+  //     "Acrylic · PP · HDPE",
+  //     "3–5 Day Lead",
+  //     "Low Tooling Cost",
+  //   ],
+  //   visual: <VacuumSVG />,
+  //   link: "/vacuum-forming",
+  // },
 ];
 
 /* ────────────────────────────────────────────────
@@ -1772,9 +1772,7 @@ export default function Extreme() {
           <em>WAY BEYOND.</em>
         </h1>
         <p className="ex-h1-sub rv d2">
-          FDM, SLA, Injection Moulding, Vacuum Forming, Carbon Fibre,
-          Electronics Assembly, IoT Integration. One team. One brief. One
-          delivery. We go from concept to complete working product.
+         For engineers who need hardware sourced, electronics integrated, firmware flashed, and fully tested assemblies delivered. We go all the way — from bare PCB to working product.
         </p>
       </section>
 
@@ -1811,7 +1809,7 @@ export default function Extreme() {
         ))}
       </div>
 
-      {/* ══ SERVICE STACK OVERVIEW ════════════════ */}
+      {/* ══ SERVICE STACK OVERVIEW ════════════════
       <section
         className="sec-pad"
         style={{
@@ -1934,7 +1932,7 @@ export default function Extreme() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ══ ZOOM CAPABILITIES ═════════════════════ */}
       <div className="ex-zoom-sec">
@@ -2166,7 +2164,7 @@ export default function Extreme() {
         </div>
       </section>
 
-      {/* ══ HOW WE WORK TOGETHER ══════════════════ */}
+      {/* ══ HOW WE WORK TOGETHER ══════════════════
       <section
         className="sec-pad"
         style={{
@@ -2278,7 +2276,7 @@ export default function Extreme() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ══ CTA BAND ══════════════════════════════ */}
       <div className="ex-cta-band">
