@@ -1,0 +1,179 @@
+/* ═══════════════════════════════════════════════════════
+   SOLIDLABS — MOBILE RESPONSIVE
+   1024px → tablet landscape
+   768px  → tablet portrait / large phone
+   480px  → phone
+═══════════════════════════════════════════════════════ */
+
+/* ── Tablet 1024px ── */
+@media (max-width: 1024px) {
+  nav { padding: 16px 32px; }
+  .sec-pad { padding: 80px 32px; }
+  .prod-grid { grid-template-columns: 1fr 1fr; }
+  .or-grid { grid-template-columns: repeat(3, 1fr); }
+  .how-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .how-steps::before { display: none; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .filament-chart { grid-template-columns: repeat(2,1fr); }
+  .quality-grid { grid-template-columns: repeat(2,1fr); }
+  .support-grid { grid-template-columns: repeat(2,1fr); }
+  .ev-grid { grid-template-columns: repeat(2,1fr); }
+  .client-logo-grid { grid-template-columns: repeat(4,1fr); }
+  .layer-infog { gap: 48px; }
+  .inj-process { grid-template-columns: repeat(3,1fr); }
+  .cf-properties { grid-template-columns: repeat(2,1fr); }
+  .sla-specs { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── Mobile 768px ── */
+@media (max-width: 768px) {
+  /* Cursor off on touch */
+  body { cursor: auto; }
+  #cur, #cur-r { display: none; }
+  button, a { cursor: pointer !important; }
+
+  /* Nav */
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  nav .nav-actions .nav-cta { display: none; }
+  #nav-hamburger { display: flex; }
+
+  /* Shared */
+  .sec-pad { padding: 64px 20px; }
+  .sec-pad-sm { padding: 48px 20px; }
+  .sh { margin-bottom: 40px; }
+  .sh-t { font-size: clamp(28px, 8vw, 44px); }
+  .site-footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  /* Hero */
+  #hero { padding: 0 20px 56px; }
+  .hero-h1 { font-size: clamp(58px, 15vw, 90px); margin-bottom: 28px; }
+  .hero-bot { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .hero-desc { max-width: 100%; font-size: 13px; }
+  .hero-btns { flex-wrap: wrap; }
+  .hero-bgmark { display: none; }
+  .scroll-hint { display: none; }
+
+  /* Stats */
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .sb-item { padding: 24px 20px; }
+  .sb-n { font-size: 36px; }
+
+  /* Products */
+  .prod-grid { grid-template-columns: 1fr; }
+  .prod-card { min-height: auto; padding: 36px 24px 28px; }
+
+  /* How steps */
+  .how-steps { grid-template-columns: 1fr 1fr; }
+  .how-step:nth-child(5) { grid-column: 1 / -1; }
+  .how-icon { width: 72px; height: 72px; }
+
+  /* About */
+  #about-home { grid-template-columns: 1fr; min-height: auto; }
+  .ab-l, .ab-r { padding: 56px 24px; }
+  .ab-big { font-size: clamp(36px, 10vw, 56px); }
+  .stats-row { gap: 20px; flex-wrap: wrap; }
+
+  /* Reviews */
+  .rev-grid { grid-template-columns: 1fr; }
+  .rev-card { padding: 28px 20px; }
+
+  /* Logos */
+  .client-logo-grid { grid-template-columns: repeat(3,1fr); margin-top: 32px; }
+  .client-logo-card { padding: 20px 12px; min-height: 80px; }
+
+  /* Support */
+  #support { padding: 56px 20px; }
+  .support-grid { grid-template-columns: 1fr 1fr; margin-top: 40px; }
+  .sg-item { padding: 24px 18px; }
+
+  /* CTA */
+  #cta-band { padding: 72px 20px; }
+  .cta-h { font-size: clamp(48px, 13vw, 72px); }
+  .cta-btns { justify-content: center; }
+
+  /* Contact */
+  #contact-sec { grid-template-columns: 1fr; }
+  .con-l, .con-r { padding: 48px 24px; }
+  .con-t { font-size: clamp(36px, 10vw, 52px); }
+
+  /* Originals */
+  .or-hero { padding: 120px 20px 52px; }
+  .or-h1 { font-size: clamp(52px, 14vw, 88px); }
+  .or-grid { grid-template-columns: repeat(2,1fr); }
+  .oc { padding: 28px 20px; }
+
+  /* Precision */
+  .yw-hero { padding: 120px 20px 52px; }
+  .yw-h1 { font-size: clamp(52px, 14vw, 88px); }
+  .yw-cap-grid { grid-template-columns: 1fr; }
+
+  /* Extreme */
+  .ex-hero { padding: 120px 20px 64px; }
+  .ex-h1 { font-size: clamp(52px, 14vw, 88px); }
+  .ex-hero-data { display: none; }
+  .ex-zoom-item { grid-template-columns: 1fr !important; direction: ltr !important; padding: 56px 20px; gap: 32px; }
+  .ex-zoom-item:nth-child(even) { direction: ltr !important; }
+  .ex-visual { min-height: 180px; }
+  .ex-stats { grid-template-columns: repeat(2,1fr); }
+  .ex-stat { padding: 32px 20px; }
+  .ex-stat-n { font-size: 44px; }
+  .ex-bars { max-width: 100%; }
+  .ex-bar-label { min-width: 140px; }
+  .ex-cta-band { padding: 64px 20px; }
+
+  /* Learn */
+  .learn-hero { padding: 110px 20px 52px; }
+  .learn-h1 { font-size: clamp(52px, 14vw, 88px); }
+  .parts-grid { grid-template-columns: 1fr 1fr; }
+  .filament-chart { grid-template-columns: 1fr 1fr; }
+  .layer-infog { grid-template-columns: 1fr; gap: 40px; }
+  .deep-step { grid-template-columns: 48px 1fr; }
+  .ds-visual { display: none; }
+  .ds-num { font-size: 28px; padding: 28px 12px; }
+  .ds-content { padding: 28px 20px; }
+  .quality-grid { grid-template-columns: 1fr; margin-top: 40px; }
+  .qf-item { padding: 28px 20px; }
+
+  /* Evidence */
+  .ev-grid { grid-template-columns: 1fr; }
+  .ev-card { padding: 28px 20px; }
+
+  /* New pages */
+  .inj-hero, .vac-hero, .sla-hero, .cf-hero { padding: 120px 20px 52px; }
+  .inj-h1, .vac-h1, .sla-h1, .cf-h1 { font-size: clamp(48px, 13vw, 80px); }
+  .inj-process { grid-template-columns: 1fr; }
+  .inj-specs-grid { grid-template-columns: 1fr 1fr; }
+  .inj-materials { grid-template-columns: 1fr 1fr; }
+  .vac-steps { grid-template-columns: 1fr 1fr; }
+  .vac-materials { grid-template-columns: 1fr; }
+  .sla-process { grid-template-columns: 1fr; }
+  .sla-specs { grid-template-columns: repeat(2,1fr); }
+  .sla-resins { grid-template-columns: 1fr; }
+  .cf-properties { grid-template-columns: repeat(2,1fr); }
+  .cf-applications { grid-template-columns: 1fr 1fr; }
+  .cf-layup { grid-template-columns: 1fr; }
+
+  /* Cart */
+  #cart-overlay { width: 100%; right: -100%; }
+
+  /* Imagenie */
+  .imagenie-panel { width: calc(100vw - 32px); right: 16px; bottom: 96px; }
+  .imagenie-btn { bottom: 20px; right: 20px; }
+}
+
+/* ── Phone 480px ── */
+@media (max-width: 480px) {
+  .sec-pad { padding: 52px 16px; }
+  nav { padding: 12px 16px; }
+  #hero { padding: 0 16px 48px; }
+  .hero-h1 { font-size: clamp(52px, 16vw, 72px); }
+  .or-grid, .parts-grid, .filament-chart, .vac-steps, .inj-materials { grid-template-columns: 1fr; }
+  .support-grid, .how-steps { grid-template-columns: 1fr; }
+  .client-logo-grid { grid-template-columns: repeat(2,1fr); }
+  .ex-stats, .inj-specs-grid, .sla-specs, .cf-properties { grid-template-columns: 1fr 1fr; }
+  .cf-applications { grid-template-columns: 1fr; }
+  .hero-btns, .cta-btns { flex-direction: column; }
+  .btn-or, .btn-ghost, .btn-yw, .btn-bl { width: 100%; text-align: center; }
+  #mobile-nav ul li a { font-size: clamp(28px, 10vw, 40px); }
+}

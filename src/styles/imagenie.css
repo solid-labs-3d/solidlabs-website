@@ -1,0 +1,278 @@
+/* ══════════════════════════════════════════════════════
+   IMAGENIE — AI Chatbot
+   Genie-inspired floating assistant for SolidLabs
+   Accent: orange (#f05c1e), dark glass panels
+══════════════════════════════════════════════════════ */
+
+/* Floating trigger button */
+.imagenie-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--or);
+  border: none;
+  cursor: none;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(240,92,30,.35);
+  transition: transform .2s, box-shadow .2s, background .2s;
+  animation: genie-float 3s ease-in-out infinite;
+}
+.imagenie-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 32px rgba(240,92,30,.55);
+  background: var(--orm);
+}
+.imagenie-btn.open { background: var(--s2); box-shadow: none; }
+
+/* Genie lamp icon inside button */
+.imagenie-icon { width: 28px; height: 28px; }
+
+/* Notification dot */
+.imagenie-notif {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 10px;
+  height: 10px;
+  background: #22cc44;
+  border-radius: 50%;
+  border: 2px solid var(--blk);
+  animation: pulse 2s ease infinite;
+}
+
+/* Chat panel */
+.imagenie-panel {
+  position: fixed;
+  bottom: 104px;
+  right: 28px;
+  width: 360px;
+  max-height: 520px;
+  background: rgba(14,14,14,.98);
+  border: 1px solid var(--s2);
+  border-radius: 2px;
+  z-index: 399;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(.97);
+  transition: opacity .22s ease, transform .22s ease;
+}
+.imagenie-panel.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+
+/* Panel header */
+.imagenie-head {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--s2);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--s1);
+}
+.imagenie-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--or), var(--orm));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+.imagenie-title { display: flex; flex-direction: column; gap: 3px; }
+.imagenie-name {
+  font-family: var(--ff-cond);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: .04em;
+  color: var(--wht);
+}
+.imagenie-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--g4);
+}
+.imagenie-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22cc44;
+  animation: pulse 2s ease infinite;
+}
+
+/* Messages area */
+.imagenie-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+.imagenie-msgs::-webkit-scrollbar { width: 4px; }
+.imagenie-msgs::-webkit-scrollbar-track { background: transparent; }
+.imagenie-msgs::-webkit-scrollbar-thumb { background: var(--s3); border-radius: 2px; }
+
+/* Message bubbles */
+.msg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 86%;
+  animation: fadeup .25s ease;
+}
+.msg.bot { align-self: flex-start; }
+.msg.user { align-self: flex-end; }
+.msg-bubble {
+  padding: 11px 14px;
+  font-size: 13px;
+  line-height: 1.65;
+  border-radius: 2px;
+}
+.msg.bot .msg-bubble {
+  background: var(--s2);
+  color: var(--wht);
+  border-left: 2px solid var(--or);
+}
+.msg.user .msg-bubble {
+  background: var(--or);
+  color: var(--blk);
+  font-weight: 400;
+}
+.msg-time {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: .1em;
+  color: var(--g3);
+  padding: 0 2px;
+}
+.msg.user .msg-time { text-align: right; }
+
+/* Quick reply chips */
+.imagenie-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 16px 12px;
+}
+.chip {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  background: var(--s2);
+  color: var(--g4);
+  border: 1px solid var(--s3);
+  cursor: none;
+  transition: background .15s, color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--or); color: var(--blk); border-color: var(--or); }
+
+/* Input row */
+.imagenie-input {
+  padding: 12px 16px;
+  border-top: 1px solid var(--s2);
+  display: flex;
+  gap: 8px;
+  background: var(--s0);
+}
+.imagenie-field {
+  flex: 1;
+  background: var(--s2);
+  border: 1px solid var(--s3);
+  color: var(--wht);
+  padding: 10px 12px;
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color .2s;
+  border-radius: 0;
+  cursor: auto;
+}
+.imagenie-field::placeholder { color: var(--g3); }
+.imagenie-field:focus { border-color: var(--or); }
+.imagenie-send {
+  width: 40px;
+  height: 40px;
+  background: var(--or);
+  border: none;
+  cursor: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+.imagenie-send:hover { background: var(--orm); }
+.imagenie-send svg { width: 16px; height: 16px; }
+
+/* Human handoff banner */
+.imagenie-handoff {
+  margin: 8px 16px;
+  padding: 12px 14px;
+  background: var(--s2);
+  border: 1px solid var(--or);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--g5);
+  line-height: 1.5;
+}
+.imagenie-handoff-icon { font-size: 20px; flex-shrink: 0; }
+.imagenie-handoff-cta {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--or);
+  text-decoration: none;
+  cursor: none;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 11px 14px;
+  background: var(--s2);
+  border-left: 2px solid var(--or);
+  align-self: flex-start;
+  max-width: 60px;
+}
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--g3);
+  border-radius: 50%;
+  animation: tdot .9s ease infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: .15s; }
+.typing-dot:nth-child(3) { animation-delay: .3s; }
+
+@keyframes tdot { 0%,100%{opacity:.2;transform:translateY(0)} 50%{opacity:1;transform:translateY(-3px)} }
+@keyframes genie-float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)} }

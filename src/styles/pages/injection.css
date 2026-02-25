@@ -1,0 +1,22 @@
+/* ══ INJECTION MOULDING (ORANGE) ══ */
+.page-injection { background: #060402; }
+.inj-hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 68px; position: relative; overflow: hidden; border-bottom: 1px solid #1a0800; }
+.inj-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 55% 40%, rgba(240,92,30,.1), transparent 65%); }
+.inj-h1 { font-family: var(--ff-cond); font-weight: 900; font-size: clamp(64px,12vw,150px); line-height: .84; letter-spacing: .01em; margin-bottom: 28px; }
+.inj-h1 em { font-style: italic; color: var(--or); }
+.inj-process { display: grid; grid-template-columns: repeat(5,1fr); gap: 2px; background: var(--s2); margin-top: 60px; }
+.inj-step { background: var(--s1); padding: 40px 28px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+.inj-step-n { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: var(--or); }
+.inj-step-icon { height: 80px; display: flex; align-items: center; }
+.inj-step-t { font-family: var(--ff-cond); font-weight: 800; font-size: 20px; }
+.inj-step-d { font-size: 12px; color: var(--g5); line-height: 1.7; }
+.inj-specs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--s2); margin-top: 2px; }
+.inj-spec-card { background: var(--blk); padding: 40px 32px; }
+.inj-spec-label { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--g3); margin-bottom: 12px; }
+.inj-spec-val { font-family: var(--ff-cond); font-weight: 900; font-size: clamp(32px,4vw,52px); color: var(--or); line-height: 1; }
+.inj-spec-sub { font-size: 12px; color: var(--g5); margin-top: 8px; }
+.inj-materials { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: var(--s2); margin-top: 60px; }
+.inj-mat { background: var(--s1); padding: 32px 28px; display: flex; flex-direction: column; gap: 10px; }
+.inj-mat-name { font-family: var(--ff-cond); font-weight: 800; font-size: 22px; }
+.inj-mat-tag { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
+.inj-mat-desc { font-size: 12px; color: var(--g5); line-height: 1.65; }

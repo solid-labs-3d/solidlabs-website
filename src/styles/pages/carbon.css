@@ -1,0 +1,21 @@
+/* ══ CARBON FIBRE (GOLD / YELLOW) ══ */
+.page-carbon { background: #060602; }
+.cf-hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 68px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(240,192,32,.1); }
+.cf-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 55% 40%, rgba(240,192,32,.08), transparent 65%); }
+.cf-hero-weave { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, rgba(240,192,32,.015) 0px, rgba(240,192,32,.015) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(-45deg, rgba(240,192,32,.015) 0px, rgba(240,192,32,.015) 1px, transparent 1px, transparent 20px); }
+.cf-h1 { font-family: var(--ff-cond); font-weight: 900; font-size: clamp(64px,12vw,156px); line-height: .84; letter-spacing: .01em; margin-bottom: 28px; }
+.cf-h1 em { font-style: italic; color: var(--yw); }
+.cf-properties { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(240,192,32,.08); }
+.cf-prop { background: #060602; padding: 48px 32px; }
+.cf-prop-label { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,192,32,.4); margin-bottom: 10px; }
+.cf-prop-val { font-family: var(--ff-cond); font-weight: 900; font-size: clamp(28px,4vw,48px); color: var(--yw); }
+.cf-prop-sub { font-size: 12px; color: rgba(180,160,80,.6); margin-top: 6px; }
+.cf-applications { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--s2); margin-top: 60px; }
+.cf-app { background: var(--blk); padding: 40px 32px; display: flex; flex-direction: column; gap: 12px; }
+.cf-app-icon { height: 60px; display: flex; align-items: center; }
+.cf-app-name { font-family: var(--ff-cond); font-weight: 800; font-size: 22px; }
+.cf-app-tag { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--yw); }
+.cf-app-desc { font-size: 13px; color: var(--g5); line-height: 1.7; }
+.cf-layup { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--s2); margin-top: 2px; }
+.cf-layup-text { background: var(--blk); padding: 60px 48px; }
+.cf-layup-visual { background: var(--s1); padding: 60px 48px; display: flex; align-items: center; justify-content: center; }

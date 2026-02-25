@@ -1,0 +1,77 @@
+import { useState } from 'react'
+
+// Cart state lives here — export addToCart so any page can call it
+export const cart = { items: [], listeners: [] }
+
+export function addToCart(name, price) {
+  cart.items.push({ name, price, id: Date.now() })
+  cart.listeners.forEach(fn => fn([...cart.items]))
+}
+
+export function removeFromCart(id) {
+  cart.items = cart.items.filter(i => i.id !== id)
+  cart.listeners.forEach(fn => fn([...cart.items]))
+}
+
+export default function Cart() {
+  const [items,  setItems]  = useState([])
+  const [open,   setOpen]   = useState(false)
+
+  // Register listener on mount
+  useState(() => {
+    cart.listeners.push(setItems)
+    return () => { cart.listeners = cart.listeners.filter(f => f !== setItems) }
+  })
+
+  const total = items.reduce((s, i) => s + i.price, 0)
+
+  return (
+    <div id="cart-overlay" className={open ? 'open' : ''}>
+      <div className="cart-head">
+        <div className="cart-head-t">Cart ({items.length})</div>
+        <button className="cart-close" onClick={() => setOpen(false)}>Close ✕</button>
+      </div>
+      <div className="cart-body" id="cart-body">
+        {items.length === 0
+          ? <div className="cart-empty">No items yet.</div>
+          : items.map(item => (
+              <div className="cart-item" key={item.id}>
+                <div>
+                  <div className="cart-item-name">{item.name}</div>
+                  <div style={{fontFamily:'var(--ff-mono)',fontSize:8,color:'var(--g3)',marginTop:4}}>PLA+ · Orange</div>
+                </div>
+                <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6}}>
+                  <div className="cart-item-price">₹{item.price.toLocaleString()}</div>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    style={{fontFamily:'var(--ff-mono)',fontSize:7,letterSpacing:'.12em',textTransform:'uppercase',padding:'4px 8px',background:'var(--s2)',color:'var(--g4)',border:'none',cursor:'pointer'}}
+                  >Remove</button>
+                </div>
+              </div>
+            ))
+        }
+      </div>
+      <div className="cart-foot">
+        <div className="cart-total">
+          <div className="cart-total-l">Total</div>
+          <div className="cart-total-n" id="cart-total">₹{total.toLocaleString()}</div>
+        </div>
+        <button
+          className="btn-or"
+          style={{width:'100%',textAlign:'center'}}
+          onClick={() => { setOpen(false); document.getElementById('contact-sec')?.scrollIntoView({behavior:'smooth'}) }}
+        >
+          Proceed to Order →
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// Hook for cart open state — allows Nav to toggle it
+export function useCartToggle() {
+  return () => {
+    const el = document.getElementById('cart-overlay')
+    el?.classList.toggle('open')
+  }
+}

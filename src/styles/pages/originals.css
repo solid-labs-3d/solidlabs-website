@@ -1,0 +1,122 @@
+/* ══ SL ORIGINALS (D2C — ORANGE) ══ */
+#pg-originals,
+.page-originals {
+  background: #0a0400;
+}
+.or-hero {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 48px 68px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #1a0800;
+}
+.or-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 60% 38%,
+    rgba(240, 92, 30, 0.12),
+    transparent 65%
+  );
+}
+.or-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(240, 92, 30, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 92, 30, 0.025) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+.or-h1 {
+  font-family: var(--ff-cond);
+  font-weight: 900;
+  font-size: clamp(72px, 13vw, 162px);
+  line-height: 0.84;
+  letter-spacing: 0.01em;
+  margin-bottom: 32px;
+  position: relative;
+}
+.or-h1 em {
+  font-style: italic;
+  color: var(--or);
+}
+.or-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: #200c00;
+}
+.oc {
+  background: #0e0500;
+  padding: 44px 32px;
+  display: flex;
+  flex-direction: column;
+  cursor: none;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.oc:hover {
+  background: #160800;
+}
+.oc-num {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3a1500;
+  margin-bottom: 28px;
+}
+.oc-icon {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  margin-bottom: 24px;
+}
+.oc-name {
+  font-family: var(--ff-cond);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--wht);
+  margin-bottom: 8px;
+}
+.oc-desc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+.oc-bot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #1a0800;
+  padding-top: 14px;
+  margin-top: auto;
+}
+.oc-price {
+  font-family: var(--ff-cond);
+  font-weight: 900;
+  font-size: 26px;
+  color: var(--or);
+}
+.obtn {
+  font-family: var(--ff-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  background: var(--or);
+  color: #0a0a0a;
+  border: none;
+  cursor: none;
+  transition: background 0.2s;
+}
+.obtn:hover {
+  background: var(--wht);
+}
