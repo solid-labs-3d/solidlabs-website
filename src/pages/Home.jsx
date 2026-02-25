@@ -991,85 +991,170 @@ export default function Home() {
       </section>
 
       {/* ── CTA ── */}
+      {/* ── CTA ── */}
+      {/* ── PROMISE BAR ── */}
+      <section id="cta-promise">
+        <div className="cta-top">
+          <div className="cta-top-l">
+            <div className="cta-eyebrow">OUR PROMISE</div>
+            <h3 className="cta-promise">
+              Anyday, Anytime — we are here to <br></br> support you, always.
+            </h3>
+          </div>
+          <div className="cta-top-r">
+            <svg width="32" height="28" viewBox="0 0 80 72" fill="none">
+              <polygon
+                points="10,2 68,2 76,20 18,20"
+                fill="var(--or)"
+                opacity=".9"
+              />
+              <polygon
+                points="6,28 64,28 72,46 14,46"
+                fill="var(--or)"
+                opacity=".6"
+              />
+              <polygon
+                points="2,54 60,54 68,72 10,72"
+                fill="var(--or)"
+                opacity=".35"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
       <section id="cta-band">
-        <h2 className="cta-h rv">
-          READY TO
-          <br />
-          <em>BUILD?</em>
-        </h2>
-        <p className="cta-s rv d1">
-          Upload your file, get a quote in 2 hours, receive your part the next
-          day. It really is that simple.
-        </p>
-        <div className="cta-btns rv d2">
-          <button className="btn-or" onClick={goQuote}>
-            Get a Quote →
-          </button>
-          <button className="btn-ghost" onClick={() => nav("/learn")}>
-            How It Works
-          </button>
+        <div className="cta-main">
+          <h2 className="cta-h rv">
+            START YOUR
+            <br />
+            <em>BUILD.</em>
+          </h2>
+          <p className="cta-s rv d1">
+            Upload a file or describe what you need. We respond within 2<br />
+            hours with a quote — anyday, anytime.
+          </p>
+          <div className="cta-btns rv d2">
+            <button className="btn-or" onClick={goQuote}>
+              SEND A FILE
+            </button>
+            <button className="btn-ghost" onClick={() => nav("/contact")}>
+              [EMAIL PROTECTED]
+            </button>
+          </div>
         </div>
       </section>
 
       {/* ── CONTACT ── */}
+      {/* ── CONTACT ── */}
       <div id="contact-sec">
+        {/* LEFT */}
         <div className="con-l">
           <h2 className="con-t rv">
-            LET'S BUILD
+            GET IN
             <br />
-            SOMETHING.
+            TOUCH
           </h2>
+
           <div className="con-det rv d1">
-            <div className="cd-l">Email</div>
+            <div className="cd-l">EMAIL</div>
             <a className="cd-v" href="mailto:hello@solidlabs.in">
-              hello@solidlabs.in
+              [email protected]
             </a>
           </div>
+
           <div className="con-det rv d2">
-            <div className="cd-l">WhatsApp</div>
-            <a className="cd-v" href="https://wa.me/919800000000">
-              +91 98000 00000
+            <div className="cd-l">PHONE / WHATSAPP</div>
+            <a className="cd-v" href="https://wa.me/919876543210">
+              +91 98765 43210
             </a>
           </div>
+
           <div className="con-det rv d3">
-            <div className="cd-l">Location</div>
-            <span className="cd-v">Bengaluru, Karnataka 560001</span>
+            <div className="cd-l">LOCATION</div>
+            <span className="cd-v">Bengaluru, Karnataka, India</span>
           </div>
+
+          <div className="con-det rv d4">
+            <div className="cd-l">SUPPORT HOURS</div>
+            <span className="cd-v" style={{ color: "var(--or)" }}>
+              Anyday · 8am – 10pm IST
+            </span>
+          </div>
+
+          <p className="con-note rv d5">
+            You'll hear from a real engineer, not a bot. We review every file
+            before printing and flag any issues upfront — that's how we maintain
+            98% first-pass accuracy.
+          </p>
         </div>
+
+        {/* RIGHT */}
         <div className="con-r">
+          <div className="con-r-eyebrow">SEND A MESSAGE</div>
+
           <div className="ff">
-            <label className="fl">Your Name</label>
-            <input className="fi" type="text" placeholder="Ravi Kumar" />
+            <label className="fl">NAME</label>
+            <input className="fi" type="text" placeholder="Your name" />
           </div>
+
           <div className="ff">
-            <label className="fl">Email</label>
-            <input className="fi" type="email" placeholder="ravi@startup.in" />
+            <label className="fl">EMAIL</label>
+            <input className="fi" type="email" placeholder="you@company.com" />
           </div>
+
           <div className="ff">
-            <label className="fl">Project Brief</label>
+            <label className="fl">PROJECT BRIEF</label>
             <textarea
               className="ft"
-              placeholder="Describe your part — material, quantity, deadline…"
+              placeholder="Describe your part, quantity, material, timeline..."
             />
           </div>
+
           <div className="ff">
-            <label className="fl">Attach File (STL / STEP)</label>
-            <div id="fup">
-              <div
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: 9,
-                  letterSpacing: ".14em",
-                  textTransform: "uppercase",
-                  color: "var(--g3)",
-                  marginBottom: 8,
-                }}
+            <label className="fl">UPLOAD FILE (STL, STEP, OBJ, PDF, PNG)</label>
+            <div
+              id="fup"
+              onClick={() => document.getElementById("file-inp").click()}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                style={{ marginBottom: 8 }}
               >
-                Drag & drop your file here
-              </div>
+                <line
+                  x1="12"
+                  y1="16"
+                  x2="12"
+                  y2="4"
+                  stroke="var(--g3)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <polyline
+                  points="8,8 12,4 16,8"
+                  stroke="var(--g3)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <line
+                  x1="4"
+                  y1="20"
+                  x2="20"
+                  y2="20"
+                  stroke="var(--g3)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="fup-label">DROP FILE OR CLICK TO UPLOAD</div>
               <input
                 type="file"
-                accept=".stl,.step,.obj,.3mf"
+                accept=".stl,.step,.obj,.pdf,.png"
                 onChange={(e) => {
                   const f = e.target.files[0];
                   if (f)
@@ -1079,21 +1164,9 @@ export default function Home() {
                 style={{ display: "none" }}
                 id="file-inp"
               />
-              <label
-                htmlFor="file-inp"
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: 8,
-                  letterSpacing: ".12em",
-                  textTransform: "uppercase",
-                  color: "var(--or)",
-                  cursor: "pointer",
-                }}
-              >
-                Or click to browse
-              </label>
             </div>
           </div>
+
           <button
             className="fsub"
             onClick={(e) => {
@@ -1101,7 +1174,7 @@ export default function Home() {
               e.target.style.background = "#22cc44";
             }}
           >
-            Send Request →
+            SEND MESSAGE →
           </button>
         </div>
       </div>
