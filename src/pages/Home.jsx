@@ -54,7 +54,7 @@ export default function Home() {
           3D PRINTING · INNOVATION · BENGALURU · INDIA
         </div>
         <div className="hero-eye">
-          Bengaluru, India · Precision 3D Printing Since 2018
+          Bengaluru, India · Precision 3D Printing Since 2024
         </div>
         <h1 className="hero-h1">
           SOLID
@@ -222,7 +222,7 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES OVERVIEW ── */}
-      <section className="sec-pad" style={{ background: "var(--s1)" }}>
+      {/* <section className="sec-pad" style={{ background: "var(--s1)" }}>
         <SectionHeader title="All Services" sub="Full Capability Stack" />
         <div
           style={{
@@ -325,7 +325,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── HOW IT WORKS ── */}
       <section className="sec-pad">
@@ -649,45 +649,45 @@ export default function Home() {
 
       {/* ── ABOUT SPLIT ── */}
       <div id="about-home">
+        {/* LEFT — orange panel */}
         <div className="ab-l rv">
-          <div>
-            <div className="ab-big">
-              BUILT IN
-              <br />
-              BENGALURU.
-            </div>
-            <div className="ab-sn" style={{ marginTop: 16 }}>
-              Since 2018
-            </div>
-            <div className="ab-sl">7+ Years of Precision Manufacturing</div>
+          <div className="ab-eyebrow">SOLIDLABS · SINCE 2024</div>
+          <div className="ab-big">
+            EVERY SOLID OBJECT STARTED AS AN IDEA. WE CLOSE THAT GAP.
           </div>
-          <div>
-            <button
-              className="btn-ghost"
-              style={{ borderColor: "rgba(0,0,0,.3)", color: "var(--blk)" }}
-              onClick={() => nav("/about")}
-            >
-              Our Story →
-            </button>
+          <div className="ab-founded">
+            <div className="ab-year">2024</div>
+            <div className="ab-fl">FOUNDED · BENGALURU GARAGE</div>
           </div>
         </div>
+
+        {/* RIGHT — dark panel */}
         <div className="ab-r rv d1">
-          <p className="ab-txt">
-            SolidLabs started in a garage with one printer and a stubborn idea:{" "}
-            <strong>
-              quality manufacturing shouldn't need a factory floor.
-            </strong>
-            Today we run 24 hours a day, shipping to startups, research labs,
-            and makers across India.
-          </p>
+          <div className="ab-body">
+            <p className="ab-txt">
+              SolidLabs is a focused precision workshop. Not a marketplace, not
+              an aggregator. <strong>We make things — properly.</strong> From
+              consumer products to complex electronic assemblies, we handle it
+              all in-house with a team of engineers who care.
+            </p>
+            <p className="ab-txt" style={{ marginTop: 24 }}>
+              We don't outsource. We don't chase volume for its own sake. When
+              you talk to us, you talk to the person who will make your part.
+            </p>
+          </div>
+
           <div className="stats-row">
             {[
-              { n: "12K+", l: "Parts Shipped" },
-              { n: "98%", l: "First-Pass QC" },
-              { n: "24h", l: "Turnaround" },
+              { n: "5", s: "+", l: "PRINTERS" },
+              { n: "15", s: "+", l: "CLIENTS" },
+              { n: "5", s: "+", l: "TEAM" },
+              { n: "7K", s: "+", l: "PARTS" },
             ].map((s) => (
-              <div key={s.l}>
-                <div className="si-n">{s.n}</div>
+              <div className="si-item" key={s.l}>
+                <div className="si-n">
+                  {s.n}
+                  <span className="si-plus">{s.s}</span>
+                </div>
                 <div className="si-l">{s.l}</div>
               </div>
             ))}
@@ -757,90 +757,231 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── TRUSTED BY ── */}
+      <section className="sec-pad" style={{ background: "var(--blk)" }}>
+        <div className="tb-header">
+          <SectionHeader title="Trusted By" />
+          <div className="tb-sub">CLIENT PORTFOLIO · 340+ COMPANIES</div>
+        </div>
+
+        <div className="tb-grid">
+          {[
+            { n: "CLIENT 01", t: "IOT STARTUP" },
+            { n: "CLIENT 02", t: "AERIAL SYSTEMS CO." },
+            { n: "CLIENT 03", t: "INDUSTRIAL AUTOMATION CO." },
+            { n: "CLIENT 04", t: "D2C HARDWARE BRAND" },
+            { n: "CLIENT 05", t: "MEDTECH STARTUP" },
+            { n: "CLIENT 06", t: "ROBOTICS TEAM" },
+            { n: "CLIENT 07", t: "CONSUMER GOODS CO." },
+            { n: "CLIENT 08", t: "TECH COMPANY BLR" },
+            { n: "CLIENT 09", t: "ENGINEERING CONSULTANCY" },
+            { n: "CLIENT 10", t: "UAV SYSTEMS" },
+            { n: "CLIENT 11", t: "DESIGN STUDIO" },
+            { n: "CLIENT 12", t: "ROBOTICS COMPETITION" },
+          ].map((c) => (
+            <div className="tb-cell rv" key={c.n}>
+              <div className="tb-name">{c.n}</div>
+              <div className="tb-type">{c.t}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="tb-footer">
+          340+ CLIENTS · STARTUPS · ENTERPRISES · RESEARCH LABS · D2C BRANDS
+        </div>
+      </section>
+
+      {/* ── SUPPORT ── */}
       {/* ── SUPPORT ── */}
       <section id="support">
-        <div className="support-headline rv">
-          ANYDAY,
-          <br />
-          <em>ANYTIME</em>
-          <br />
-          WE ARE HERE.
+        {/* Top row */}
+        <div className="support-top">
+          <div className="support-top-l">
+            <div className="support-eyebrow">ALWAYS ON · SUPPORT</div>
+            <div className="support-headline rv">
+              ANYDAY,
+              <br />
+              <em>ANYTIME</em>
+              <br />
+              WE ARE
+              <br />
+              HERE.
+            </div>
+          </div>
+          <div className="support-top-r">
+            <button className="btn-full-guide" onClick={() => nav("/learn")}>
+              EXTENDED SUPPORT →
+            </button>
+            <div className="support-clock">
+              <svg width="100" height="100" viewBox="0 0 120 120">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="52"
+                  stroke="#f05c1e"
+                  strokeWidth="3"
+                  fill="none"
+                />
+                {/* hour hand — static */}
+                <line
+                  x1="60"
+                  y1="60"
+                  x2="60"
+                  y2="28"
+                  stroke="#f0ede6"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+                {/* minute hand — rotates */}
+                <line
+                  x1="60"
+                  y1="60"
+                  x2="88"
+                  y2="60"
+                  stroke="#f0ede6"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 60 60"
+                    to="360 60 60"
+                    dur="6s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <circle cx="60" cy="60" r="4" fill="#f05c1e" />
+              </svg>
+            </div>
+            <p className="support-clock-desc">
+              We don't clock out. When you need us — before a launch, after
+              midnight, over the weekend — we're here.
+            </p>
+          </div>
         </div>
+
+        {/* Bottom cards */}
         <div className="support-grid">
           {[
             {
-              t: "WhatsApp Direct",
-              d: "Message us directly. Real engineers, not bots.",
-              h: "Mon–Sun · 7am–11pm",
+              t: "Extended Hours",
+              d: "Far beyond standard business hours. We're available throughout your project at every stage.",
+              h: "Mon–Sat · 8am – 10pm IST",
+              Icon: () => (
+                <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                  />
+                  <line
+                    x1="12"
+                    y1="12"
+                    x2="12"
+                    y2="7"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="12"
+                    y1="12"
+                    x2="16"
+                    y2="12"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ),
             },
             {
-              t: "Email Support",
-              d: "2-hour response SLA on all technical queries.",
-              h: "Always On",
+              t: "Direct Response",
+              d: "No ticketing hell. A real engineer who knows your project responds within the hour.",
+              h: "Avg response · <60 min",
+              Icon: () => (
+                <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <rect
+                    x="3"
+                    y="6"
+                    width="18"
+                    height="13"
+                    rx="2"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                  />
+                  <line
+                    x1="3"
+                    y1="10"
+                    x2="21"
+                    y2="10"
+                    stroke="#f05c1e"
+                    strokeWidth="1.2"
+                    opacity="0.5"
+                  />
+                  <line
+                    x1="7"
+                    y1="14"
+                    x2="13"
+                    y2="14"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ),
             },
             {
-              t: "File Review",
-              d: "We check your design before printing. No surprise failures.",
-              h: "Free",
+              t: "Free Revisions",
+              d: "If a print doesn't meet spec, we reprint it. No questions, no extra charges.",
+              h: "Reprints within · 12 hours",
+              Icon: () => (
+                <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <path
+                    d="M4 12 A8 8 0 1 1 12 20"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                  <polyline
+                    points="4,8 4,12 8,12"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ),
             },
             {
-              t: "Anytime",
-              d: "Emergency prints and urgent orders accepted at any hour.",
-              h: "24/7 · Always",
-              clock: true,
+              t: "Pan-India Reach",
+              d: "Shipping to every pin code. Same-day dispatch for orders confirmed before 2pm IST.",
+              h: "Same-day dispatch · Before 2pm",
+              Icon: () => (
+                <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <circle
+                    cx="12"
+                    cy="10"
+                    r="3"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                  />
+                  <path
+                    d="M12 2 C7 2 4 6 4 10 C4 16 12 22 12 22 C12 22 20 16 20 10 C20 6 17 2 12 2Z"
+                    stroke="#f05c1e"
+                    strokeWidth="1.8"
+                  />
+                </svg>
+              ),
             },
           ].map((s) => (
             <div className="sg-item rv" key={s.t}>
-              {s.clock && (
-                <div className="clock-ring" style={{ marginBottom: 8 }}>
-                  <svg width="60" height="60" viewBox="0 0 120 120">
-                    <circle
-                      cx="60"
-                      cy="60"
-                      r="46"
-                      stroke="#1e1e1e"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="4 4"
-                    />
-                    <path
-                      d="M60 14 A46 46 0 1 1 59.99 14"
-                      stroke="#f05c1e"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeDasharray="290 290"
-                    />
-                    <line
-                      x1="60"
-                      y1="60"
-                      x2="60"
-                      y2="28"
-                      stroke="#f0ede6"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <line
-                      x1="60"
-                      y1="60"
-                      x2="88"
-                      y2="60"
-                      stroke="#f0ede6"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <circle cx="60" cy="60" r="4" fill="#f05c1e" />
-                    <line
-                      x1="60"
-                      y1="18"
-                      x2="60"
-                      y2="24"
-                      stroke="#555"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                </div>
-              )}
+              <div className="sg-icon">
+                <s.Icon />
+              </div>
               <div className="sg-title">{s.t}</div>
               <div className="sg-desc">{s.d}</div>
               <div className="sg-hours">{s.h}</div>
