@@ -226,7 +226,6 @@
   font-size: 13px;
   color: var(--g5);
   line-height: 1.7;
-  font-weight: 300;
   margin-bottom: 22px;
 }
 .pc-specs {
@@ -254,6 +253,50 @@
 .spec .bv {
   color: var(--bl);
   margin-left: 4px;
+}
+
+.pc-spec-item {
+  display: flex;
+  flex-direction: row; /* change from column to row */
+  align-items: center;
+  gap: 4px;
+}
+
+.pc-spec-label {
+  font-family: var(--ff-mono);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--g3);
+}
+
+.pc-spec-value {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+ 
+}
+
+/* CTA button */
+.pc-btn {
+  display: inline-flex;
+  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  transition: opacity 0.2s;
+}
+
+.pc-btn:hover {
+  opacity: 0.85;
 }
 
 /* How-it-works teaser */

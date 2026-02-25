@@ -125,34 +125,53 @@ export default function Home() {
               cls: "or-card",
               n: "01 — D2C",
               name: "SL Originals",
-              desc: "Consumer products designed, printed, and shipped from our studio. Smart desk accessories, home organizers, maker tools.",
+              desc: "Designed products — keychains, desk organisers, hardware accessories, phone stands, cable managers, and more. Ready to ship in 2–3 days.",
               page: "/originals",
               accent: "var(--or)",
+              btnLabel: "SHOP NOW →",
+              specs: [
+                { label: "SHIPS IN", value: "2-3 DAYS" },
+                { label: "COLOURS", value: "14+" },
+                { label: "MATERIAL", value: "PLA+/PETG" },
+              ],
             },
             {
               cls: "yw-card",
               n: "02 — B2B",
-              name: "Precision B2B",
-              desc: "High-tolerance FDM parts for startups, R&D labs, and OEMs. NDA-ready. 0.1mm tolerances. Weekly batch deliveries.",
+              name: "Precision Print",
+              desc: "Functional prototypes and production runs for engineers, startups, and product teams. Tight tolerances, multiple materials, fast delivery.",
               page: "/precision",
               accent: "var(--yw)",
+              btnLabel: "GET QUOTE →",
+              specs: [
+                { label: "TOLERANCE", value: "±0.2MM" },
+                { label: "BATCH", value: "1–500" },
+                { label: "LEAD TIME", value: "24H–7D" },
+              ],
             },
             {
               cls: "bl-card",
-              n: "03 — R&D",
+              n: "03 — EXTREME",
               name: "Extreme Eng.",
-              desc: "Prototype rigs, multi-material assemblies, embedded electronics, load-bearing structures. When ordinary isn't enough.",
+              desc: "Electronics sourcing, PCB enclosures, full assembly, IoT integration, jigs and fixtures. For engineers who need more than a print.",
               page: "/extreme",
               accent: "var(--bl)",
+              btnLabel: "EXPLORE →",
+              specs: [
+                { label: "ELECTRONICS", value: "SOURCED" },
+                { label: "FIRMWARE", value: "FLASHED" },
+                { label: "ASSEMBLY", value: "TESTED" },
+              ],
             },
           ].map((c) => (
             <div
               className={`prod-card ${c.cls} rv`}
               key={c.name}
               onClick={() => nav(c.page)}
-              style={{ cursor: "none" }}
+              style={{ cursor: "pointer" }}
             >
               <div className="pc-num">{c.n}</div>
+
               <div className="pc-mark">
                 <svg width="80" height="72" viewBox="0 0 80 72" fill="none">
                   <polygon
@@ -172,17 +191,30 @@ export default function Home() {
                   />
                 </svg>
               </div>
+
               <div className="pc-name">{c.name}</div>
               <p className="pc-desc">{c.desc}</p>
+
+              <div className="pc-specs">
+                {c.specs.map((sp) => (
+                  <div className="pc-spec-item" key={sp.label}>
+                    <span className="pc-spec-label">{sp.label}</span>
+                    <span className="pc-spec-value" style={{ color: c.accent }}>
+                      {sp.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
               <button
-                className="btn-or"
+                className="pc-btn"
                 style={{ background: c.accent, color: "var(--blk)" }}
                 onClick={(e) => {
                   e.stopPropagation();
                   nav(c.page);
                 }}
               >
-                Explore →
+                {c.btnLabel}
               </button>
             </div>
           ))}
