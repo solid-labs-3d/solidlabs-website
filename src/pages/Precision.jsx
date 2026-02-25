@@ -163,12 +163,12 @@ export default function Precision() {
           ))}
 
           {/* CTA card */}
-          <div className="yc yw-cta rv d2">
-            <div className="yc-n" style={{ color:'rgba(0,0,0,.3)' }}>Get Started</div>
-            <div className="yc-name" style={{ fontSize:'clamp(32px,4vw,52px)', lineHeight:.9, marginBottom:16 }}>
+          <div className="yc yw-cta rv d2" style={{ backgroundColor:'#f0c020'}}>
+            <div className="yc-n" style={{ color:'rgba(0,0,0,.3)'}}>Get Started</div>
+            <div className="yc-name" style={{ fontSize:'clamp(32px,4vw,52px)', lineHeight:.9, marginBottom:16,color:'black' }}>
               WHAT DO YOU<br/>NEED BUILT?
             </div>
-            <p className="yc-desc">Send your file. Get a quote within 2 hours. We review CAD and flag issues before printing.</p>
+            <p className="yc-desc" style={{ color:'rgba(0,0,0,.3)'}}>Send your file. Get a quote within 2 hours. We review CAD and flag issues before printing.</p>
             <button className="btn-or" style={{ marginTop:'auto', alignSelf:'flex-start' }} onClick={goQuote}>
               Upload File →
             </button>
