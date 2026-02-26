@@ -813,7 +813,7 @@ export default function Home() {
               EXTENDED SUPPORT →
             </button>
             <div className="support-clock">
-              <svg width="100" height="100" viewBox="0 0 120 120">
+              <svg width="150" height="150" viewBox="0 0 120 120">
                 <circle
                   cx="60"
                   cy="60"
@@ -826,12 +826,21 @@ export default function Home() {
                 <line
                   x1="60"
                   y1="60"
-                  x2="60"
-                  y2="28"
+                  x2="80"
+                  y2="60"
                   stroke="#f0ede6"
                   strokeWidth="3"
                   strokeLinecap="round"
-                />
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 60 60"
+                    to="360 60 60"
+                    dur="6s"
+                    repeatCount="indefinite"
+                  />{" "}
+                </line>
                 {/* minute hand — rotates */}
                 <line
                   x1="60"
@@ -845,8 +854,8 @@ export default function Home() {
                   <animateTransform
                     attributeName="transform"
                     type="rotate"
-                    from="0 60 60"
-                    to="360 60 60"
+                    from="90 60 60"
+                    to="450 60 60"
                     dur="6s"
                     repeatCount="indefinite"
                   />
@@ -1002,21 +1011,21 @@ export default function Home() {
             </h3>
           </div>
           <div className="cta-top-r">
-            <svg width="32" height="28" viewBox="0 0 80 72" fill="none">
+            <svg width="64" height="56" viewBox="0 0 80 72" fill="none">
               <polygon
                 points="10,2 68,2 76,20 18,20"
                 fill="var(--or)"
-                opacity=".9"
+                opacity=".35"
               />
               <polygon
                 points="6,28 64,28 72,46 14,46"
                 fill="var(--or)"
-                opacity=".6"
+                opacity=".2"
               />
               <polygon
                 points="2,54 60,54 68,72 10,72"
                 fill="var(--or)"
-                opacity=".35"
+                opacity=".08"
               />
             </svg>
           </div>

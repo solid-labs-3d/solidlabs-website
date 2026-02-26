@@ -333,7 +333,7 @@
 .cta-promise {
   font-family: var(--ff-cond);
   font-weight: 900;
-  font-size: 44px;
+  font-size: 54px;
   color: var(--wht);
   line-height: 1.2;
   margin: 0;
@@ -560,8 +560,8 @@
     color: var(--wht);
   }
   background: transparent;
-  border: 1px solid var(--s2);
-  color: var(--g3);
+  border: 1px solid var(--or);
+  color:var(--or);
   padding: 8px 18px;
   font-family: var(--ff-mono);
   font-size: 9px;
@@ -574,10 +574,7 @@
   white-space: nowrap;
 }
 
-.btn-full-guide:hover {
-  border-color: var(--or);
-  color: var(--or);
-}
+
 .how-steps {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -916,6 +913,7 @@
   color: var(--g3);
   line-height: 1.7;
   text-align: right;
+  width: 70%;
 }
 
 /* Bottom 4-card grid */
