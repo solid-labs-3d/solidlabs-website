@@ -275,11 +275,13 @@
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+
 }
 
 /* CTA button */
 .pc-btn {
   display: inline-flex;
+    margin-top: 25px;
   align-items: center;
   justify-content: center;
   padding: 14px 28px;
