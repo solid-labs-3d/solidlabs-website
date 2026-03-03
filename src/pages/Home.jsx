@@ -3,6 +3,7 @@ import ProductsSection from "../components/home/ProductsSection";
 import InfoSections from "../components/home/InfoSection";
 import ContactSection from "../components/home/ContactSection";
 import { useReveal } from "../hooks/useReveal";
+import Footer from "../components/footer";
 
 export default function Home() {
   useReveal();
@@ -13,6 +14,7 @@ export default function Home() {
       <ProductsSection />
       <InfoSections />
       <ContactSection />
+      <Footer/>
     </div>
   );
 }
