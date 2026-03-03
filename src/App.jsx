@@ -18,6 +18,8 @@ import VacuumForming from './pages/VacuumForming'
 import SLAPrinting from './pages/SLAPrinting'
 import CarbonFibre from './pages/CarbonFibre'
 import HowitWork from './pages/HowitWork'
+import CarboNation from './pages/Carbonation'
+import GreenLoop from './pages/Greenloop'
 
 // Page accent colours — used by cursor and nav
 export const PAGE_COLORS = {
@@ -63,6 +65,8 @@ export default function App() {
           <Route path="/sla-printing"        element={<SLAPrinting />} />
           <Route path="/carbon-fibre"        element={<CarbonFibre />} />
           <Route path="/how-it-works"       element={<HowitWork />} />
+          <Route path="/carbonation"       element={<CarboNation />} />
+           <Route path="/greenloop"       element={<GreenLoop />} />
         </Routes>
       </main>
       {/* Imagenie chatbot — floats on all pages */}

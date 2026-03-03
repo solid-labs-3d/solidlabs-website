@@ -78,6 +78,16 @@ export default function Nav({ page }) {
     EXTREAM ENG
   </Link>
 </li>
+<li>
+  <Link to="/carbonation" className={page === 'extreme' ? 'active' : ''}>
+    CARBONATION
+  </Link>
+</li>
+<li>
+  <Link to="/greenloop" className={page === 'extreme' ? 'active' : ''}>
+    GREENLOOP
+  </Link>
+</li>
 <li><Link to="/how-it-works" className={page==='how-it-works'?'active':''}>How It Works</Link></li>
 
           <li><Link to="/evidence"   className={page==='evidence'   ?'active':''}>Field Evidence</Link></li>
