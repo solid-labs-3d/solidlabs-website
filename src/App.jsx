@@ -18,7 +18,7 @@ import VacuumForming from './pages/VacuumForming'
 import SLAPrinting from './pages/SLAPrinting'
 import CarbonFibre from './pages/CarbonFibre'
 import HowitWork from './pages/HowitWork'
-import GreenLoop from './pages/Greenloop'
+import GreenLoop from './pages/GreenLoop'
 import CarboNation from './pages/Carbonation'
 import Footer from './components/footer'
 
