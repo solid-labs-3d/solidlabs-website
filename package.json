@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://solid-labs-3d.github.io/",
+  "homepage": "https://solid-labs-3d.github.io/solidlabs-website/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
