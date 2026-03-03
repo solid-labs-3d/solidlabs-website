@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SectionHeader } from "../Shared";
 import TrustedSection from "./TrustedSection";
+import SupportSection from "./SupportSection";
 
 /* ───────────────── SHARED SECTION PAD ───────────────── */
 
@@ -389,6 +390,7 @@ export default function InfoSection() {
         </RevGrid>
       </SecPad>
       <TrustedSection />
+      <SupportSection />
     </>
   );
 }
