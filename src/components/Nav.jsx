@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useCartToggle } from './Cart'
 
 const SL_LOGO = (
   <svg width="32" height="30" viewBox="0 0 56 52" fill="none">
@@ -55,6 +56,7 @@ export default function Nav({ page }) {
     }, 80)
   }
 
+  const toggleCart = useCartToggle()
   return (
     <>
       <nav id="main-nav" className={scrolled ? 'scrolled' : ''}>
@@ -102,9 +104,12 @@ export default function Nav({ page }) {
 
         {/* Desktop actions */}
         <div className="nav-actions">
-          <button className="nav-cart-btn" onClick={() => document.getElementById('cart-overlay')?.classList.toggle('open')}>
-            Cart <span id="cart-count">0</span>
-          </button>
+           <button
+      className="nav-cart-btn"
+      onClick={toggleCart}
+    >
+      Cart <span id="cart-count">0</span>
+    </button>
           <button className="nav-cta" onClick={goQuote}>Get Quote</button>
 
           {/* Hamburger */}
