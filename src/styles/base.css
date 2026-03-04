@@ -79,7 +79,7 @@ section { position: relative; overflow: hidden; border-bottom: 1px solid var(--s
 .btn-ghost:hover { border-color: var(--wht); }
 
 /* ─── Reveal Animations ─── */
-.rv { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.rv {  transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; } /*opacity:0*/
 .rv.vis { opacity: 1; transform: none; }
 .d1 { transition-delay: .06s; } .d2 { transition-delay: .12s; }
 .d3 { transition-delay: .18s; } .d4 { transition-delay: .24s; }

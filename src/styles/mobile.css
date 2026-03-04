@@ -137,7 +137,7 @@
 
   /* Evidence */
   .ev-grid { grid-template-columns: 1fr; }
-  .ev-card { padding: 28px 20px; }
+  .ev-card { padding: 8px 20px; }
 
   /* New pages */
   .inj-hero, .vac-hero, .sla-hero, .cf-hero { padding: 120px 20px 52px; }

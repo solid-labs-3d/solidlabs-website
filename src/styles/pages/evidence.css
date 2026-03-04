@@ -1,7 +1,7 @@
 /* ══ EVIDENCE PAGE ══ */
 .page-evidence { background: var(--blk); }
-.ev-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--s2); }
-.ev-card { background: var(--s1); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; }
+.ev-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;}/*background: var(--s2);*/
+.ev-card { background: var(--s1); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; margin-left: 10px; }
 .ev-tag { font-family: var(--ff-mono); font-size: 7.5px; letter-spacing: .18em; text-transform: uppercase; }
 .ev-tag.or { color: var(--or); } .ev-tag.yw { color: var(--yw); } .ev-tag.bl { color: var(--bl); }
 .ev-title { font-family: var(--ff-cond); font-weight: 800; font-size: 24px; }
