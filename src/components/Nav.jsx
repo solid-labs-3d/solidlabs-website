@@ -56,6 +56,8 @@ export default function Nav({ page }) {
     }, 80)
   }
 
+  const [open, setOpen] = useState(false);
+
   const toggleCart = useCartToggle()
   return (
     <>
@@ -79,11 +81,25 @@ export default function Nav({ page }) {
   <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
     EXTREAM ENG </Link>
 </li>
-<li>
-  <Link to="/carbonation" className={page === 'carbonation' ? 'active' : ''}>
+
+
+<li className="nav-dropdown">
+  <Link
+    to="/carbonation"
+    className={page === "carbonation" || page === "CarbonationBs" ? "active" : ""}
+  >
     CARBONATION
   </Link>
+
+  <div className="nav-dropdown-menu">
+    <Link to="/carbonation">CN Division</Link>
+    <Link to="/CarbonationBs">BS Series</Link>
+  </div>
 </li>
+
+
+
+
 <li>
   <Link to="/greenloop" className={page === 'greenloop' ? 'active' : ''}>
     GREENLOOP
