@@ -77,16 +77,15 @@ export default function Nav({ page }) {
           {/* Extreme Eng link (dropdown removed) */}
 <li>
   <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
-    EXTREAM ENG
-  </Link>
+    EXTREAM ENG </Link>
 </li>
 <li>
-  <Link to="/carbonation" className={page === 'extreme' ? 'active' : ''}>
+  <Link to="/carbonation" className={page === 'carbonation' ? 'active' : ''}>
     CARBONATION
   </Link>
 </li>
 <li>
-  <Link to="/greenloop" className={page === 'extreme' ? 'active' : ''}>
+  <Link to="/greenloop" className={page === 'greenloop' ? 'active' : ''}>
     GREENLOOP
   </Link>
 </li>
@@ -130,7 +129,9 @@ export default function Nav({ page }) {
           <li><a onClick={() => goTo('/')}>Home</a></li>
           <li><a onClick={() => goTo('/originals')}><span style={{color:'var(--or)',marginRight:8}}>●</span>SL Originals</a></li>
           <li><a onClick={() => goTo('/precision')}><span style={{color:'var(--yw)',marginRight:8}}>●</span>Precision B2B</a></li>
-          <li><a onClick={() => goTo('/extreme')}><span style={{color:'var(--bl)',marginRight:8}}>●</span>Extreme Eng.</a></li>
+          <li><a onClick={() => goTo('/extreme')}><span style={{color:'var(--bl)',marginRight:8}}>●</span>Extreme Eng</a></li>
+          <li><a onClick={() => goTo('/carbonation')}><span style={{color:'var(--yw)',marginRight:8}}>●</span>Carbonation</a></li>
+          <li><a onClick={() => goTo('/greenloop')}><span style={{color:'var(--gr)',marginRight:8}}>●</span>Greenloop</a></li>
           <li><a onClick={() => goTo('/learn')}>FDM Printing</a></li>
           <li><a onClick={() => goTo('/sla-printing')}>SLA Printing</a></li>
           <li><a onClick={() => goTo('/injection-moulding')}>Injection Moulding</a></li>

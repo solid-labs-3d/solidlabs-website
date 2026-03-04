@@ -32,6 +32,8 @@ export const PAGE_COLORS = {
   about:             { solid: '#f05c1e', ring: 'rgba(240,92,30,.35)',  hover: 'rgba(240,92,30,.4)'  },
   precision:         { solid: '#f0c020', ring: 'rgba(240,192,32,.35)', hover: 'rgba(240,192,32,.4)' },
   extreme:           { solid: '#1e7aff', ring: 'rgba(30,122,255,.35)', hover: 'rgba(30,122,255,.4)' },
+  carbonation:  { solid: '#FACC15',   ring: '#FACC15',     hover: '#FDE68A'    }, 
+  greenloop: { solid: '#22C55E',   ring: '#22C55E',     hover: '#86EFAC'    },
   'injection-moulding': { solid: '#f05c1e', ring: 'rgba(240,92,30,.35)', hover: 'rgba(240,92,30,.4)' },
   'vacuum-forming':     { solid: '#f05c1e', ring: 'rgba(240,92,30,.35)', hover: 'rgba(240,92,30,.4)' },
   'sla-printing':       { solid: '#1e7aff', ring: 'rgba(30,122,255,.35)', hover: 'rgba(30,122,255,.4)' },
