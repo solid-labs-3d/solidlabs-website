@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   return (
-    <div className="page-home">
+    <div className="page-home" style = {{marginTop: 15}}>
       {/* ── HERO ── */}
       <section id="hero">
         <div className="hero-bg" />

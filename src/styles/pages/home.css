@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 48px 68px;
+  padding: 40px 48px 68px;
   background: var(--blk);
 }
 .hero-bg {
