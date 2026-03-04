@@ -1375,7 +1375,7 @@ export default function CarboNation() {
         <Section $border="#141414">
           <Pad>
             <SectionHead>
-              <CondHead $size="clamp(32px,4vw,52px)">
+              <CondHead $size="clamp(55px,4vw,52px)">
                 Load-bearing parts
                 <br />
                 for hard problems.

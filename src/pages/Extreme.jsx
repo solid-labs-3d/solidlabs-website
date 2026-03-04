@@ -1599,22 +1599,7 @@ const ZOOM_ITEMS = [
     visual: <IoTSVG />,
     link: null,
   },
-  {
-    num: "05 — SLA Printing",
-    title: "CNC MACHINING",
-    em: "PRECISION",
-    desc: "Precision CNC machining for aluminium, steel, and engineering plastics. Tolerances to ±0.05mm. Combined with our 3D printing and electronics capabilities, this completes the full hardware manufacturing loop.",
-    specs: [
-      "0.025–0.1mm Layers",
-      "±0.05mm XY",
-      "Standard Resin",
-      "Tough Resin",
-      "Castable",
-      "Dental / Biocompat.",
-    ],
-    visual: <SLASVG />,
-    link: "/sla-printing",
-  },
+
   // {
   //   num: "06 — Carbon Fibre",
   //   title: "CARBON",
@@ -1772,7 +1757,9 @@ export default function Extreme() {
           <em>WAY BEYOND.</em>
         </h1>
         <p className="ex-h1-sub rv d2">
-         For engineers who need hardware sourced, electronics integrated, firmware flashed, and fully tested assemblies delivered. We go all the way — from bare PCB to working product.
+          For engineers who need hardware sourced, electronics integrated,
+          firmware flashed, and fully tested assemblies delivered. We go all the
+          way — from bare PCB to working product.
         </p>
       </section>
 
@@ -1942,11 +1929,9 @@ export default function Extreme() {
             className="ex-zoom-item rv"
             style={{
               background: "#020408",
-              fontFamily: "var(--ff-mono)",
-              fontSize: " 8px",
-              letterSpacing: ".2em",
-              textTransform: "uppercase",
               border: "1px solid rgba(30,122,255,.15)",
+              position: "relative",
+              overflow: "hidden",
             }}
           >
             <div>
@@ -2032,7 +2017,7 @@ export default function Extreme() {
                 gap: 8,
                 border: "1px solid rgba(30,122,255,.4)",
                 padding: "6px 14px",
-                marginBottom: 20,
+                marginBottom: 2,
               }}
             >
               <div
@@ -2056,7 +2041,12 @@ export default function Extreme() {
                 Machine Installing — Q3 2025
               </span>
             </div>
-            <p className="ex-cap-desc">
+            <p
+              className="ex-cap-desc"
+              style={{
+                marginTop: 12,
+              }}
+            >
               Precision CNC machining for aluminium, steel, and engineering
               plastics. Tolerances to ±0.05mm. This is the final piece in our
               full-loop hardware manufacturing capability — 3D print the
@@ -2065,7 +2055,10 @@ export default function Extreme() {
             </p>
             <p
               className="ex-cap-desc"
-              style={{ marginTop: 12, color: "rgba(30,122,255,.6)" }}
+              style={{
+                marginTop: 12,
+                color: "rgba(30,122,255,.6)",
+              }}
             >
               Early booking briefs accepted now. Launch pricing locked in for
               customers who brief before go-live.
@@ -2120,10 +2113,10 @@ export default function Extreme() {
       {/* ══ CAPABILITY BARS ═══════════════════════ */}
       <section
         className="sec-pad"
-        style={{ background: "#020408", borderColor: "rgba(30,122,255,.1)" }}
+        style={{ background: "#020408", borderColor: "rgba(30,122,255,.1)",marginBottom:0}}
       >
-        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)" }}>
-          <h2 className="sh-t" style={{ color: "#f0ede6" }}>
+        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)",marginTop:0 }}>
+          <h2 className="sh-t" style={{ color: "#f0ede6", fontSize: 72, marginTop:0}}>
             Capability Stack
           </h2>
           <span
