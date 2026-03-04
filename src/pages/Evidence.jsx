@@ -7,28 +7,28 @@ export default function Evidence() {
 
   useReveal()
 
-  const [projects,setProjects] = useState([])
-  const [loading,setLoading] = useState(true)
-  const [error,setError] = useState(null)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const fetchEvidence = async()=>{
+    const fetchEvidence = async () => {
 
-      try{
+      try {
 
         const res = await getProductsByCategoryName("field_evidence")
 
-        console.log("Evidence:",res)
+        console.log("Evidence:", res)
 
         setProjects(res)
 
-      }catch(err){
+      } catch (err) {
 
         console.error(err)
         setError(err.message)
 
-      }finally{
+      } finally {
 
         setLoading(false)
 
@@ -38,52 +38,52 @@ export default function Evidence() {
 
     fetchEvidence()
 
-  },[])
+  }, [])
 
   return (
-    <div style={{ background:'var(--blk)' }}>
+    <div style={{ background: 'var(--blk)' }}>
 
       {/* HERO */}
       <section style={{
-        minHeight:'65vh',
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'flex-end',
-        padding:'140px 48px 68px',
-        position:'relative',
-        overflow:'hidden',
-        borderBottom:'1px solid var(--s2)'
+        minHeight: '65vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '140px 48px 68px',
+        position: 'relative',
+        overflow: 'hidden',
+        borderBottom: '1px solid var(--s2)'
       }}>
         <div style={{
-          position:'absolute',
-          inset:0,
-          background:'radial-gradient(ellipse 70% 60% at 60% 40%,rgba(240,92,30,.06),transparent 70%)'
-        }}/>
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%,rgba(240,92,30,.06),transparent 70%)'
+        }} />
 
-        <div className="eyebrow or rv" style={{ position:'relative' }}>
+        <div className="eyebrow or rv" style={{ position: 'relative' }}>
           05 — Portfolio · Field Evidence
         </div>
 
         <h1 className="rv d1" style={{
-          fontFamily:'var(--ff-cond)',
-          fontWeight:900,
-          fontSize:'clamp(64px,12vw,148px)',
-          lineHeight:.85,
-          letterSpacing:'.01em',
-          marginBottom:28,
-          position:'relative'
+          fontFamily: 'var(--ff-cond)',
+          fontWeight: 900,
+          fontSize: 'clamp(64px,12vw,148px)',
+          lineHeight: .85,
+          letterSpacing: '.01em',
+          marginBottom: 28,
+          position: 'relative'
         }}>
-          WORK<br/>WE'RE<br/>
-          <em style={{ fontStyle:'italic', color:'var(--or)' }}>PROUD OF.</em>
+          WORK<br />WE'RE<br />
+          <em style={{ fontStyle: 'italic', color: 'var(--or)' }}>PROUD OF.</em>
         </h1>
 
         <p className="rv d2" style={{
-          fontSize:15,
-          color:'var(--g5)',
-          maxWidth:520,
-          lineHeight:1.8,
-          fontWeight:300,
-          position:'relative'
+          fontSize: 15,
+          color: 'var(--g5)',
+          maxWidth: 520,
+          lineHeight: 1.8,
+          fontWeight: 300,
+          position: 'relative'
         }}>
           Real projects for real clients. We don't do renders. These are parts that exist in the world — shipped, installed, running.
         </p>
@@ -101,21 +101,21 @@ export default function Evidence() {
         <div className="ev-grid">
 
           {loading && (
-            <div style={{color:"#fff",padding:40}}>
+            <div style={{ color: "#fff", padding: 40 }}>
               Loading projects...
             </div>
           )}
 
           {error && (
-            <div style={{color:"red",padding:40}}>
+            <div style={{ color: "red", padding: 40 }}>
               Error loading projects
             </div>
           )}
 
-          {!loading && !error && projects.map((p,i)=>(
+          {!loading && !error && projects.map((p, i) => (
             <div
               key={p.id}
-              className={`ev-card rv d${(i%3)+1}`}
+              className={`ev-card rv d${(i % 3) + 1}`}
             >
 
               <div className="ev-tag or">
@@ -133,17 +133,17 @@ export default function Evidence() {
               {/* IMAGE */}
               {p.image_url && (
                 <div style={{
-                  margin:"10px 0",
-                  display:"flex",
-                  justifyContent:"center"
+                  margin: "10px 0",
+                  display: "flex",
+                  justifyContent: "center"
                 }}>
                   <img
                     src={p.image_url}
                     alt={p.name}
                     style={{
-                      width:120,
-                      height:80,
-                      objectFit:"contain"
+                      width: 120,
+                      height: 80,
+                      objectFit: "contain"
                     }}
                   />
                 </div>
@@ -154,10 +154,12 @@ export default function Evidence() {
               </div>
 
               {/* ADD TO CART BUTTON */}
-              <div style={{marginTop:12}}>
+              <div style={{ marginTop: 12 }}>
                 <button
                   className="obtn"
-                  onClick={()=>addToCart(p.name,Number(p.price))}
+                  onClick={() =>
+                    addToCart(p.id, p.name, p.price)
+                  }
                 >
                   Add to Cart
                 </button>
@@ -171,14 +173,14 @@ export default function Evidence() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background:'var(--blk)', borderTop:'1px solid var(--s2)' }}>
+      <footer style={{ background: 'var(--blk)', borderTop: '1px solid var(--s2)' }}>
         <div className="site-footer">
 
           <div className="fl-logo">
             <svg width="28" height="26" viewBox="0 0 56 52" fill="none">
-              <polygon points="8,1 46,1 52,14 14,14" fill="#f05c1e"/>
-              <polygon points="5,20 43,20 49,33 11,33" fill="#c44820"/>
-              <polygon points="2,39 40,39 46,52 8,52" fill="#7a2e0f"/>
+              <polygon points="8,1 46,1 52,14 14,14" fill="#f05c1e" />
+              <polygon points="5,20 43,20 49,33 11,33" fill="#c44820" />
+              <polygon points="2,39 40,39 46,52 8,52" fill="#7a2e0f" />
             </svg>
             <span className="fl-name">SOLIDLABS</span>
           </div>

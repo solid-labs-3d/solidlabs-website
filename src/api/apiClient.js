@@ -51,4 +51,21 @@ export async function getProductsByCategoryName(category) {
   return res.data.data || []
 }
 
+
+// ─── CART ─────────────────────────────────────────
+
+export async function createCart() {
+  const { data } = await apiClient.post("/cart/carts/create")
+  return data.data
+}
+
+export async function updateCart(cart_id, product_id, action) {
+  const { data } = await apiClient.post("/cart/update", {
+    cart_id,
+    product_id,
+    action
+  })
+  return data
+}
+
 export default apiClient

@@ -1,17 +1,49 @@
 import { useState, useEffect } from 'react'
 import LoginModal from './LoginModal'
+import { createCart, updateCart } from "../api/apiClient"
 
 /* ───────────────── CART STORE ───────────────── */
 
 export const cart = { items: [], listeners: [] }
 
-export function addToCart(name, price) {
-  cart.items.push({ name, price, id: Date.now() })
+export async function addToCart(product_id, name, price) {
+
+  let cart_id = localStorage.getItem("cart_id")
+
+  /* create cart first time */
+
+  if (!cart_id) {
+
+    const cart = await createCart()
+
+    cart_id = cart.id
+
+    localStorage.setItem("cart_id", cart_id)
+  }
+
+  /* update backend */
+
+  await updateCart(cart_id, product_id, "add")
+
+  /* update frontend */
+
+  cart.items.push({
+    id: Date.now(),
+    product_id,
+    name,
+    price
+  })
+
   cart.listeners.forEach(fn => fn([...cart.items]))
 }
+export async function removeFromCart(product_id) {
 
-export function removeFromCart(id) {
-  cart.items = cart.items.filter(i => i.id !== id)
+  const cart_id = localStorage.getItem("cart_id")
+
+  await updateCart(cart_id, product_id, "remove")
+
+  cart.items = cart.items.filter(i => i.product_id !== product_id)
+
   cart.listeners.forEach(fn => fn([...cart.items]))
 }
 
