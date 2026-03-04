@@ -99,16 +99,22 @@ const BsH1        = styled.h1`font-family:${T.ffCond};font-weight:900;font-size:
 const BsHonest    = styled.div`display:flex;align-items:flex-start;gap:14px;background:rgba(230,48,24,.05);border:1px solid rgba(230,48,24,.18);border-left:3px solid ${T.bs};padding:14px 16px;margin-top:18px;`;
 const BsFlag      = styled.div`display:inline-flex;align-items:center;background:${T.bs};font-family:${T.ffMono};font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding:5px 20px 5px 12px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);margin-bottom:18px;`;
 
-// ─── GRIDS ────────────────────────────────────────────────────
-const BsGrid3 = styled.div`display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#1a0a06;@media(max-width:768px){grid-template-columns:1fr 1fr;}`;
-const BsGrid2 = styled.div`display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:#1a0a06;@media(max-width:768px){grid-template-columns:1fr;}`;
-const BsGrid4 = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#1a0a06;@media(max-width:768px){grid-template-columns:1fr 1fr;}`;
+// ─── PRODUCT GRID ─────────────────────────────────────────────
+const BsGrid = styled.div`
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:#1a0a06;
+  @media(max-width:900px){grid-template-columns:1fr 1fr;}
+  @media(max-width:560px){grid-template-columns:1fr;}
+`;
 
 // ─── LOADING / ERROR ─────────────────────────────────────────
 const StateMsg = styled.div`
   padding:40px 48px;font-family:${T.ffMono};font-size:8.5px;
   letter-spacing:.18em;text-transform:uppercase;
   color:${p=>p.$error?T.bs:T.g4};background:#060606;
+  grid-column: 1 / -1;
 `;
 
 // ─── FINISHES ────────────────────────────────────────────────
@@ -120,10 +126,10 @@ const FinTag  = styled.div`font-family:${T.ffMono};font-size:7px;letter-spacing:
 const FinDesc = styled.p`font-size:12.5px;color:${T.g4};line-height:1.75;font-weight:300;`;
 
 const FINISHES = [
-  { name:"Plain Weave",     tag:"1×1 · Matte or Gloss",          desc:"Equal warp and weft. Tighter, uniform surface. Great base for high-gloss clear coat.",             swatchCss:`background:#0e0e0e;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 8px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 8px);background-size:8px 8px;` },
+  { name:"Plain Weave",     tag:"1×1 · Matte or Gloss",           desc:"Equal warp and weft. Tighter, uniform surface. Great base for high-gloss clear coat.",              swatchCss:`background:#0e0e0e;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 8px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 8px);background-size:8px 8px;` },
   { name:"2×2 Twill",       tag:"Diagonal · High Gloss · Standard", desc:"The classic herringbone CF pattern. Most visually dramatic. Standard on all BS Series parts.", swatchCss:`background:#0e0e0e;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 9px),repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 9px);background-size:9px 9px;` },
-  { name:"Forged CF",       tag:"Random · High Gloss · +₹800",    desc:"Chopped fibre compression moulded. Random cloudy pattern. Lamborghini made it famous.",            swatchCss:`background:radial-gradient(ellipse at 35% 40%,#191919,#080808);background-image:repeating-linear-gradient(22deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(-22deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 12px);` },
-  { name:"Honeycomb Print", tag:"CF Substrate · UV Print · Free", desc:"CF twill with UV-print hex overlay. Technical aesthetic. No surcharge on tank pads and EDC.",     swatchCss:`background:#0e0e0e;background-image:radial-gradient(circle,rgba(200,230,0,.05) 1px,transparent 1px);background-size:8px 9px;` },
+  { name:"Forged CF",       tag:"Random · High Gloss · +₹800",     desc:"Chopped fibre compression moulded. Random cloudy pattern. Lamborghini made it famous.",             swatchCss:`background:radial-gradient(ellipse at 35% 40%,#191919,#080808);background-image:repeating-linear-gradient(22deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(-22deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 12px);` },
+  { name:"Honeycomb Print", tag:"CF Substrate · UV Print · Free",  desc:"CF twill with UV-print hex overlay. Technical aesthetic. No surcharge on tank pads and EDC.",      swatchCss:`background:#0e0e0e;background-image:radial-gradient(circle,rgba(200,230,0,.05) 1px,transparent 1px);background-size:8px 9px;` },
 ];
 
 // ─── CTA ──────────────────────────────────────────────────────
@@ -156,7 +162,6 @@ const FooterInner = styled.div`padding:36px 48px;display:flex;justify-content:sp
 const FooterName  = styled.span`font-family:${T.ffCond};font-weight:900;font-size:15px;letter-spacing:.06em;`;
 const FooterCopy  = styled.span`font-family:${T.ffMono};font-size:8px;letter-spacing:.14em;color:#222;`;
 
-// Hero preview cards are static — no API needed
 const HERO_PREVIEWS = [
   { id:"RE · 450",  title:"The Himalayan Hat",  tag:"Seat Cowl · ₹6,990",       desc:"Turns the 450's backside from sensible to sculptural." },
   { id:"Triumph",   title:"The Knuckle Duster", tag:"Scrambler Guards · ₹4,490", desc:"CF shells for your hands. Looks like Hinckley. Didn't." },
@@ -167,66 +172,24 @@ const HERO_PREVIEWS = [
 // ─── MAIN ─────────────────────────────────────────────────────
 export default function CarbonationBS() {
 
-  // ── State — mirrors Evidence.jsx pattern, one per category ──
-  const [reProducts,   setReProducts]   = useState([])
-  const [trProducts,   setTrProducts]   = useState([])
-  const [techProducts, setTechProducts] = useState([])
-
-  const [reLoading,   setReLoading]   = useState(true)
-  const [trLoading,   setTrLoading]   = useState(true)
-  const [techLoading, setTechLoading] = useState(true)
-
-  const [reError,   setReError]   = useState(null)
-  const [trError,   setTrError]   = useState(null)
-  const [techError, setTechError] = useState(null)
-
-  // ── Fetches — swap category strings to match your DB names ──
-  useEffect(() => {
-    const fetchRE = async () => {
-      try {
-        const res = await getProductsByCategoryName("bs_royal_enfield")
-        console.log("BS RE:", res)
-        setReProducts(res)
-      } catch (err) {
-        console.error(err)
-        setReError(err.message)
-      } finally {
-        setReLoading(false)
-      }
-    }
-    fetchRE()
-  }, [])
+  const [products, setProducts] = useState([])
+  const [loading,  setLoading]  = useState(true)
+  const [error,    setError]    = useState(null)
 
   useEffect(() => {
-    const fetchTriumph = async () => {
+    const fetchProducts = async () => {
       try {
-        const res = await getProductsByCategoryName("bs_triumph")
-        console.log("BS Triumph:", res)
-        setTrProducts(res)
+        const res = await getProductsByCategoryName("carbonations")
+        console.log("Carbonation products:", res)
+        setProducts(res)
       } catch (err) {
         console.error(err)
-        setTrError(err.message)
+        setError(err.message)
       } finally {
-        setTrLoading(false)
+        setLoading(false)
       }
     }
-    fetchTriumph()
-  }, [])
-
-  useEffect(() => {
-    const fetchTech = async () => {
-      try {
-        const res = await getProductsByCategoryName("bs_tech_edc")
-        console.log("BS Tech/EDC:", res)
-        setTechProducts(res)
-      } catch (err) {
-        console.error(err)
-        setTechError(err.message)
-      } finally {
-        setTechLoading(false)
-      }
-    }
-    fetchTech()
+    fetchProducts()
   }, [])
 
   const goToEngineering = () => { window.location.href = "/carbonation" }
@@ -297,59 +260,35 @@ export default function CarbonationBS() {
 
         <Ticker items={BS_TICKER_ITEMS} dark={true}/>
 
-        {/* ── RE PRODUCTS ── */}
+        {/* ── PRODUCTS ── */}
         <DivBar $borderTop="rgba(230,48,24,.1)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">Royal Enfield Range</DivBarLabel>
+          <DivBarLabel $color="rgba(230,48,24,.4)">Carbonation — BS Series</DivBarLabel>
           <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)"/>
-          <DivBarId $color="rgba(230,48,24,.3)">BS-RE · {reProducts.length} PARTS</DivBarId>
+          <DivBarId $color="rgba(230,48,24,.3)">
+            {loading ? "LOADING…" : `${products.length} PARTS`}
+          </DivBarId>
         </DivBar>
+
         <BSSecHead>
-          <Eyebrow $bs>Moto — RE Line</Eyebrow>
+          <Eyebrow $bs>BS Series — Full Range</Eyebrow>
           <CondHead $size="clamp(32px,4vw,52px)" $em={T.bs} style={{marginBottom:10}}>
-            Built for Bulletheads. By engineers who respect the machine.
+            Real carbon. Built for the rest of <em>us.</em>
           </CondHead>
           <p style={{fontSize:13.5,color:T.g5,lineHeight:1.85,fontWeight:300,maxWidth:580}}>
-            Bolt-on, OEM-fit. Factory holes line up because we measured actual bikes, not spec sheets.
+            Every part — moto, tech, EDC — fetched from the same honest catalogue. Genuine T700. Made in Bengaluru. Zero performance claims.
           </p>
         </BSSecHead>
-        <BsGrid3>
-          {reLoading && <StateMsg>Loading RE parts…</StateMsg>}
-          {reError   && <StateMsg $error>Error loading RE parts</StateMsg>}
-          {!reLoading && !reError && reProducts.map(p=><CarbonationCard key={p.id} product={p}/>)}
-        </BsGrid3>
 
-        {/* ── TRIUMPH PRODUCTS ── */}
-        <DivBar $borderTop="rgba(230,48,24,.08)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">Triumph Range</DivBarLabel>
-          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)"/>
-          <DivBarId $color="rgba(230,48,24,.3)">BS-TR · {trProducts.length} PARTS</DivBarId>
-        </DivBar>
-        <BSSecHead>
-          <Eyebrow $bs>Moto — Triumph Line</Eyebrow>
-          <CondHead $size="clamp(32px,4vw,52px)" $em={T.bs} style={{marginBottom:10}}>
-            For riders who paid the premium and want the rest to match.
-          </CondHead>
-          <p style={{fontSize:13.5,color:T.g5,lineHeight:1.85,fontWeight:300,maxWidth:580}}>
-            Scrambler 400X and Speed 400. Designed to complement the factory aesthetic, not fight it.
-          </p>
-        </BSSecHead>
-        <BsGrid2>
-          {trLoading && <StateMsg>Loading Triumph parts…</StateMsg>}
-          {trError   && <StateMsg $error>Error loading Triumph parts</StateMsg>}
-          {!trLoading && !trError && trProducts.map(p=><CarbonationCard key={p.id} product={p}/>)}
-        </BsGrid2>
-
-        {/* ── TECH + EDC ── */}
-        <DivBar $borderTop="rgba(230,48,24,.08)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">Tech & EDC</DivBarLabel>
-          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)"/>
-          <DivBarId $color="rgba(230,48,24,.3)">BS-TECH / BS-EDC · {techProducts.length} ITEMS</DivBarId>
-        </DivBar>
-        <BsGrid4>
-          {techLoading && <StateMsg>Loading Tech & EDC…</StateMsg>}
-          {techError   && <StateMsg $error>Error loading Tech & EDC</StateMsg>}
-          {!techLoading && !techError && techProducts.map(p=><CarbonationCard key={p.id} product={p}/>)}
-        </BsGrid4>
+        <BsGrid>
+          {loading && <StateMsg>Loading parts…</StateMsg>}
+          {error   && <StateMsg $error>Error: {error}</StateMsg>}
+          {!loading && !error && products.length === 0 && (
+            <StateMsg>No products found in this category.</StateMsg>
+          )}
+          {!loading && !error && products.map(p => (
+            <CarbonationCard key={p.id} product={p} />
+          ))}
+        </BsGrid>
 
         {/* ── FINISHES ── */}
         <DivBar>
