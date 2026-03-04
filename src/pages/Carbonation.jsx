@@ -498,7 +498,7 @@ const EngId = styled.div`
 const EngTitle = styled.div`
   font-family: ${T.ffCond};
   font-weight: 900;
-  font-size: 22px;
+  font-size: 25px;
   letter-spacing: 0.03em;
   color: ${T.wht};
   line-height: 1;
@@ -716,12 +716,16 @@ const PsNum = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: ${T.ffMono};
-  font-weight: 400;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: #2a2a2a;
+  font-family: ${T.ffCond};
+  font-weight: 900;
+  font-size: 52px;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.04);
   padding: 20px 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  user-select: none;
 `;
 const PsContent = styled.div`
   background: #060606;

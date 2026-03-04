@@ -559,10 +559,10 @@ const RoadNode = styled.div`
     margin-bottom: 5px;
   }
   p {
-    font-size: 11.5px;
+    font-size: 12.5px;
     line-height: 1.8;
     color: ${({ done }) =>
-      done ? "rgba(90,122,92,.55)" : "rgba(58,74,59,.6)"};
+      done ? "rgba(90,122,92,1)" : "rgba(58,74,59,.9)"};
     font-weight: 300;
   }
 `;
