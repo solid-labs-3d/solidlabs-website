@@ -85,7 +85,7 @@ export default function Nav({ page }) {
 
 <li className="nav-dropdown">
   <Link
-    to="/carbonation"
+    
     className={page === "carbonation" || page === "CarbonationBs" ? "active" : ""}
   >
     CARBONATION
