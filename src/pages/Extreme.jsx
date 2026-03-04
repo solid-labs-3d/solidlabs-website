@@ -1809,130 +1809,6 @@ export default function Extreme() {
         ))}
       </div>
 
-      {/* ══ SERVICE STACK OVERVIEW ════════════════
-      <section
-        className="sec-pad"
-        style={{
-          background: "#030610",
-          borderBottom: "1px solid rgba(30,122,255,.1)",
-        }}
-      >
-        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)" }}>
-          <h2 className="sh-t" style={{ color: "#f0ede6" }}>
-            Our Full Stack
-          </h2>
-          <span
-            style={{
-              fontFamily: "var(--ff-mono)",
-              fontSize: "8.5px",
-              letterSpacing: ".2em",
-              textTransform: "uppercase",
-              color: "rgba(30,122,255,.3)",
-            }}
-          >
-            Every process — one team
-          </span>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 2,
-            background: "rgba(30,122,255,.08)",
-          }}
-          className="rv d1"
-        >
-          {SERVICE_STACK.map((s) => (
-            <div
-              key={s.label}
-              style={{
-                background: "#030610",
-                padding: "28px 24px",
-                borderBottom: "1px solid rgba(30,122,255,.08)",
-                position: "relative",
-                transition: "background .2s",
-                cursor: s.link ? "pointer" : "default",
-              }}
-              onClick={() => s.link && nav(s.link)}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "#060a14")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background = "#030610")
-              }
-            >
-              {s.soon && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 12,
-                    fontFamily: "var(--ff-mono)",
-                    fontSize: "7px",
-                    letterSpacing: ".14em",
-                    textTransform: "uppercase",
-                    color: "#1e7aff",
-                    border: "1px solid rgba(30,122,255,.3)",
-                    padding: "2px 7px",
-                  }}
-                >
-                  Soon
-                </div>
-              )}
-              {s.link && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 12,
-                    fontFamily: "var(--ff-mono)",
-                    fontSize: "7px",
-                    letterSpacing: ".1em",
-                    color: "rgba(30,122,255,.4)",
-                  }}
-                >
-                  →
-                </div>
-              )}
-              <div
-                style={{
-                  fontFamily: "var(--ff-cond)",
-                  fontWeight: 900,
-                  fontSize: 28,
-                  color: "rgba(30,122,255,.4)",
-                  marginBottom: 10,
-                  lineHeight: 1,
-                }}
-              >
-                {s.icon}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-cond)",
-                  fontWeight: 800,
-                  fontSize: 18,
-                  color: "#f0ede6",
-                  marginBottom: 6,
-                  lineHeight: 1.1,
-                }}
-              >
-                {s.label}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: "9px",
-                  letterSpacing: ".1em",
-                  color: "rgba(30,122,255,.5)",
-                  textTransform: "uppercase",
-                }}
-              >
-                {s.sub}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* ══ ZOOM CAPABILITIES ═════════════════════ */}
       <div className="ex-zoom-sec">
@@ -1945,7 +1821,7 @@ export default function Extreme() {
               fontFamily: "var(--ff-mono)",
               fontSize: " 8px",
               letterSpacing: ".2em",
-              textTransform: "uppercase",
+             
               border: "1px solid rgba(30,122,255,.15)",
             }}
           >
