@@ -17,22 +17,24 @@ export function removeFromCart(id) {
 
 /* ───────────────── CART COMPONENT ───────────────── */
 
-let toggleCartExternal = null   // used by navbar
+let toggleCartExternal = null
 
 export default function Cart() {
+
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [authorized, setAuthorized] = useState(false)
 
-  /* Make navbar able to toggle cart */
+  /* Allow navbar to toggle cart */
   useEffect(() => {
     toggleCartExternal = () => setOpen(prev => !prev)
   }, [])
 
-  /* Listen for cart item changes */
+  /* Listen for cart updates */
   useEffect(() => {
     cart.listeners.push(setItems)
+
     return () => {
       cart.listeners = cart.listeners.filter(f => f !== setItems)
     }
@@ -40,11 +42,39 @@ export default function Cart() {
 
   const total = items.reduce((s, i) => s + i.price, 0)
 
+  /* ───── WHATSAPP ORDER FUNCTION ───── */
+
+  const sendToWhatsApp = () => {
+
+    if (items.length === 0) {
+      alert("Cart is empty")
+      return
+    }
+
+    const phone = "918123120292"
+
+    let message = "Hello SolidLabs,%0A%0AI want to place an order:%0A%0A"
+
+    items.forEach((item, index) => {
+      message += `${index + 1}. ${item.name} - ₹${item.price}%0A`
+    })
+
+    message += `%0ATotal: ₹${total}%0A%0AOrdered from website.`
+
+    const whatsappURL = `https://wa.me/${phone}?text=${message}`
+
+    window.open(whatsappURL, "_blank")
+  }
+
   return (
     <>
       <div id="cart-overlay" className={open ? 'open' : ''}>
+
         <div className="cart-head">
-          <div className="cart-head-t">Cart ({items.length})</div>
+          <div className="cart-head-t">
+            Cart ({items.length})
+          </div>
+
           <button
             className="cart-close"
             onClick={() => setOpen(false)}
@@ -54,13 +84,24 @@ export default function Cart() {
         </div>
 
         <div className="cart-body">
+
           {items.length === 0 ? (
-            <div className="cart-empty">No items yet.</div>
+
+            <div className="cart-empty">
+              No items yet.
+            </div>
+
           ) : (
+
             items.map(item => (
+
               <div className="cart-item" key={item.id}>
+
                 <div>
-                  <div className="cart-item-name">{item.name}</div>
+                  <div className="cart-item-name">
+                    {item.name}
+                  </div>
+
                   <div style={{
                     fontFamily: 'var(--ff-mono)',
                     fontSize: 8,
@@ -77,6 +118,7 @@ export default function Cart() {
                   alignItems: 'flex-end',
                   gap: 6
                 }}>
+
                   <div className="cart-item-price">
                     ₹{item.price.toLocaleString()}
                   </div>
@@ -97,54 +139,73 @@ export default function Cart() {
                   >
                     Remove
                   </button>
+
                 </div>
+
               </div>
+
             ))
+
           )}
+
         </div>
 
         <div className="cart-foot">
+
           <div className="cart-total">
-            <div className="cart-total-l">Total</div>
+
+            <div className="cart-total-l">
+              Total
+            </div>
+
             <div className="cart-total-n">
               ₹{total.toLocaleString()}
             </div>
+
           </div>
 
           <button
             className="btn-or"
             style={{ width: '100%', textAlign: 'center' }}
             onClick={() => {
+
               if (!authorized) {
+
                 setShowLogin(true)
+
               } else {
+
                 setOpen(false)
-                document.getElementById('contact-sec')
-                  ?.scrollIntoView({ behavior: 'smooth' })
+                sendToWhatsApp()
+
               }
+
             }}
           >
             Proceed to Order →
           </button>
+
         </div>
+
       </div>
 
       {/* LOGIN MODAL */}
+
       <LoginModal
         open={showLogin}
         onClose={() => setShowLogin(false)}
         onSuccess={() => {
           setAuthorized(true)
           setOpen(false)
-          document.getElementById('contact-sec')
-            ?.scrollIntoView({ behavior: 'smooth' })
+          sendToWhatsApp()
         }}
       />
+
     </>
   )
 }
 
-/* ───────────────── NAVBAR TOGGLE EXPORT ───────────────── */
+/* ───────────────── NAVBAR TOGGLE ───────────────── */
 
 export function useCartToggle() {
   return () => {
