@@ -116,6 +116,7 @@
   color: rgba(100, 130, 170, 0.8);
     font-family: var(--ff-cond);
   margin-bottom: 28px;
+  letter-spacing: 2px;
 }
 .ex-cap-specs {
   display: flex;

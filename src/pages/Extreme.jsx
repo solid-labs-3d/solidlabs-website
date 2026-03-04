@@ -2123,7 +2123,7 @@ export default function Extreme() {
             style={{
               fontFamily: "var(--ff-mono)",
               fontSize: "8.5px",
-              letterSpacing: ".2em",
+              letterSpacing: "2em",
               textTransform: "uppercase",
               color: "rgba(30,122,255,.3)",
             }}
