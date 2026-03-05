@@ -19,6 +19,11 @@ const SERVICES = [
   { label: 'Extreme Engineering',  path: '/extreme' },
 ]
 
+/* ── helper — fires the modal open event from anywhere ── */
+export function openContactModal() {
+  window.dispatchEvent(new Event('open-contact-modal'))
+}
+
 export default function Nav({ page }) {
   const [scrolled,    setScrolled]    = useState(false)
   const [mobileOpen,  setMobileOpen]  = useState(false)
@@ -49,11 +54,10 @@ export default function Nav({ page }) {
     window.scrollTo(0, 0)
   }
 
+  /* ── Get Quote now opens the modal directly — no navigation ── */
   const goQuote = () => {
-    goTo('/')
-    setTimeout(() => {
-      document.getElementById('contact-sec')?.scrollIntoView({ behavior: 'smooth' })
-    }, 80)
+    setMobileOpen(false)
+    openContactModal()
   }
 
   const [open, setOpen] = useState(false);
@@ -75,38 +79,31 @@ export default function Nav({ page }) {
           <li><Link to="/originals"  className={page==='originals'  ?'active':''}>SL Originals</Link></li>
           <li><Link to="/precision"  className={page==='precision'  ?'active':''}>Precision B2B</Link></li>
 
-          {/* Services dropdown */}
           {/* Extreme Eng link (dropdown removed) */}
-<li>
-  <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
-    EXTREAM ENG </Link>
-</li>
+          <li>
+            <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
+              EXTREAM ENG
+            </Link>
+          </li>
 
+          <li className="nav-dropdown">
+            <Link
+              className={page === "carbonation" || page === "CarbonationBs" ? "active" : ""}
+            >
+              CARBONATION
+            </Link>
+            <div className="nav-dropdown-menu">
+              <Link to="/carbonation">CN Division</Link>
+              <Link to="/CarbonationBs">BS Series</Link>
+            </div>
+          </li>
 
-<li className="nav-dropdown">
-  <Link
-    
-    className={page === "carbonation" || page === "CarbonationBs" ? "active" : ""}
-  >
-    CARBONATION
-  </Link>
-
-  <div className="nav-dropdown-menu">
-    <Link to="/carbonation">CN Division</Link>
-    <Link to="/CarbonationBs">BS Series</Link>
-  </div>
-</li>
-
-
-
-
-<li>
-  <Link to="/greenloop" className={page === 'greenloop' ? 'active' : ''}>
-    GREENLOOP
-  </Link>
-</li>
-<li><Link to="/how-it-works" className={page==='how-it-works'?'active':''}>How It Works</Link></li>
-
+          <li>
+            <Link to="/greenloop" className={page === 'greenloop' ? 'active' : ''}>
+              GREENLOOP
+            </Link>
+          </li>
+          <li><Link to="/how-it-works" className={page==='how-it-works'?'active':''}>How It Works</Link></li>
           <li><Link to="/evidence"   className={page==='evidence'   ?'active':''}>Field Evidence</Link></li>
           <li><Link to="/about"      className={page==='about'      ?'active':''}>About Us</Link></li>
           <li>
@@ -119,12 +116,9 @@ export default function Nav({ page }) {
 
         {/* Desktop actions */}
         <div className="nav-actions">
-           <button
-      className="nav-cart-btn"
-      onClick={toggleCart}
-    >
-      Cart <span id="cart-count">0</span>
-    </button>
+          <button className="nav-cart-btn" onClick={toggleCart}>
+            Cart <span id="cart-count">0</span>
+          </button>
           <button className="nav-cta" onClick={goQuote}>Get Quote</button>
 
           {/* Hamburger */}
