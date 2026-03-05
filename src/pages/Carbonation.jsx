@@ -76,6 +76,7 @@ const Mono = styled.span`
   letter-spacing: ${(p) => p.$ls || ".14em"};
   text-transform: uppercase;
   color: ${(p) => p.$color || T.g4};
+  filter: brightness(5);
 `;
 
 const CondHead = styled.h2`
@@ -218,6 +219,7 @@ const DivBarLabel = styled.span`
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: ${(p) => p.$color || "#222"};
+  filter: brightness(5);
   white-space: nowrap;
 `;
 const DivBarRule = styled.div`
@@ -231,6 +233,7 @@ const DivBarId = styled.span`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: ${(p) => p.$color || "#222"};
+  filter: brightness(5);
   white-space: nowrap;
 `;
 
@@ -948,6 +951,7 @@ const FooterCopy = styled.span`
   font-size: 8px;
   letter-spacing: 0.14em;
   color: #222;
+  filter: brightness(5);
 `;
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────

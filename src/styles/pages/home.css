@@ -790,7 +790,7 @@
   font-size: 8px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--g3);
+  color: #fffafafa;
   margin-top: 8px;
 }
 
@@ -1154,7 +1154,7 @@
   font-size: 8px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--g3);
+  color: #fffafafa;
 }
 
 .fsub {
