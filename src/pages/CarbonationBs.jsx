@@ -45,6 +45,7 @@ const Eyebrow = styled.div`
   font-size: 8.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  
   color: ${(p) => (p.$bs ? "rgba(230,48,24,.7)" : T.cnm)};
   display: flex;
   align-items: center;
@@ -188,6 +189,8 @@ const DivBarLabel = styled.span`
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: ${(p) => p.$color || "#222"};
+  filter: brightness(7);
+
   white-space: nowrap;
 `;
 const DivBarRule = styled.div`
@@ -201,6 +204,7 @@ const DivBarId = styled.span`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: ${(p) => p.$color || "#222"};
+  filter: brightness(7);
   white-space: nowrap;
 `;
 
@@ -885,6 +889,7 @@ const FooterCopy = styled.span`
   font-size: 8px;
   letter-spacing: 0.14em;
   color: #222;
+  filter: brightness(5);
 `;
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────
@@ -1109,11 +1114,11 @@ export default function CarbonationBS() {
 
         {/* RE PRODUCTS */}
         <DivBar $borderTop="rgba(230,48,24,.1)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">
+          <DivBarLabel $color="rgba(230,48,24,5)">
             Royal Enfield Range
           </DivBarLabel>
-          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)" />
-          <DivBarId $color="rgba(230,48,24,.3)">BS-RE · 6 PARTS</DivBarId>
+          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,5),transparent)" />
+          <DivBarId $color="rgba(230,48,24,5)">BS-RE · 6 PARTS</DivBarId>
         </DivBar>
         <BSSecHead>
           <Eyebrow $bs>Moto — RE Line</Eyebrow>
@@ -1145,9 +1150,9 @@ export default function CarbonationBS() {
 
         {/* TRIUMPH PRODUCTS */}
         <DivBar $borderTop="rgba(230,48,24,.08)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">Triumph Range</DivBarLabel>
-          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)" />
-          <DivBarId $color="rgba(230,48,24,.3)">BS-TR · 4 PARTS</DivBarId>
+          <DivBarLabel $color="rgba(230,48,24,5)">Triumph Range</DivBarLabel>
+          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,5),transparent)" />
+          <DivBarId $color="rgba(230,48,24,5)">BS-TR · 4 PARTS</DivBarId>
         </DivBar>
         <BSSecHead>
           <Eyebrow $bs>Moto — Triumph Line</Eyebrow>
@@ -1179,9 +1184,9 @@ export default function CarbonationBS() {
 
         {/* TECH + EDC */}
         <DivBar $borderTop="rgba(230,48,24,.08)">
-          <DivBarLabel $color="rgba(230,48,24,.4)">Tech & EDC</DivBarLabel>
-          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,.2),transparent)" />
-          <DivBarId $color="rgba(230,48,24,.3)">
+          <DivBarLabel $color="rgba(230,48,24,5)">Tech & EDC</DivBarLabel>
+          <DivBarRule $bg="linear-gradient(90deg,rgba(230,48,24,5),transparent)" />
+          <DivBarId $color="rgba(230,48,24,5)">
             BS-TECH / BS-EDC · 7 ITEMS
           </DivBarId>
         </DivBar>

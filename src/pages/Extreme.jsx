@@ -2247,7 +2247,7 @@ export default function Extreme() {
             </svg>
             <span className="fl-name">SOLIDLABS</span>
           </div>
-          <div className="fl-copy" style={{ color: "rgba(30,122,255,.3)" }}>
+          <div className="fl-copy" style={{ color: "rgba(30,122,255,5)" }}>
             © 2025 SolidLabs · Extreme Engineering · Bengaluru
           </div>
         </div>

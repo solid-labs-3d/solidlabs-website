@@ -326,7 +326,7 @@ const SecHead = styled.div`
     font-size: 8px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(58, 170, 74, 0.25);
+    color: rgba(58, 170, 74, 7);
   }
 `;
 
@@ -667,7 +667,7 @@ const FooterCopy = styled.div`
   font-family: ${ffMono};
   font-size: 8px;
   letter-spacing: 0.14em;
-  color: rgba(58, 170, 74, 0.3);
+  color: rgba(58, 170, 74, 5);
 `;
 
 /* ═══════════════════════════════════════════
@@ -1299,7 +1299,7 @@ export default function GreenLoop() {
           <span className="by">by SolidLabs</span>
         </FooterLogo>
         <FooterCopy>
-          © 2026 SolidLabs Technologies · GreenLoop Initiative · Yelahanka,
+          © 2025 SolidLabs Technologies · GreenLoop Initiative · Yelahanka,
           Bengaluru
         </FooterCopy>
       </Footer>

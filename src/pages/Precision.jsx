@@ -183,7 +183,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#08070a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Services</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>04 — What We Offer</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>04 — What We Offer</span>
         </div>
         <div className="yw-cap-grid">
           {CAPABILITIES.map((c,i) => (
@@ -214,7 +214,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#06060a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Materials</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>05 — What We Print With</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>05 — What We Print With</span>
         </div>
         <div className="rv d1" style={{ overflowX:'auto' }}>
           <table className="mat-table" style={{ width:'100%' }}>
@@ -248,7 +248,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#08070a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Our Process</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>06 — How B2B Works</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>06 — How B2B Works</span>
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:2, background:'#2a2208' }}>
           {PROCESS_STEPS.map((s,i) => (
@@ -277,7 +277,7 @@ export default function Precision() {
             </svg>
             <span className="fl-name">SOLIDLABS</span>
           </div>
-          <div className="fl-copy" style={{ color:'#3a3008' }}>© 2025 SolidLabs · Precision B2B · Bengaluru</div>
+          <div className="fl-copy" style={{ color:'#3a3008',filter: "brightness(7)"  }}>© 2025 SolidLabs · Precision B2B · Bengaluru</div>
         </div>
       </footer>
     </div>
