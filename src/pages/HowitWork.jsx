@@ -93,7 +93,7 @@ function LayerDiagram() {
                   key={ci}
                   style={{
                     flex: 1,
-                    background: ci % 2 === 0 ? "#202020" : "#161616",
+                    background: ci % 2 === 0 ? "rgb(255 247 247 / 28%)" : "#202020",
                     borderLeft: "1px solid #282828",
                   }}
                 />
