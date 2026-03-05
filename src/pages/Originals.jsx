@@ -672,8 +672,8 @@ export default function Originals() {
               color: "#ffffff",
             }}
           >
-            SL-
-            <em style={{ fontStyle: "normal", color: "#f05c1e" }}>ORIGINALS</em>
+            SL
+            <em style={{ fontStyle: "normal", color: "#f05c1e" }}>-ORIGINALS</em>
           </span>
         </div>
         <div className="eyebrow or rv" style={{ position: "relative" }}>

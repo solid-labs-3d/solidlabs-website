@@ -961,12 +961,12 @@ export default function GreenLoop() {
 
           <H1>
             WASTE
-            <br />
+           
             IN.
             <br />
-            <span className="green">VALUE</span>
-            <br />
-            OUT.
+            <span className="green">VALUE OUT.</span>
+              
+            
           </H1>
 
           <HeroDesc>

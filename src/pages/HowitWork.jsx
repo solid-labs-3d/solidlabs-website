@@ -609,6 +609,18 @@ const PRINT_STEPS = [
   },
 ];
 
+function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
+  const s = size,
+    h = Math.round(size * 0.917);
+  return (
+    <svg width={s} height={h} viewBox="0 0 56 52" fill="none">
+      <polygon points="8,1 46,1 52,14 14,14" fill={colors[0]} />
+      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]} />
+      <polygon points="2,39 40,39 46,52 8,52" fill={colors[2]} />
+    </svg>
+  );
+}
+
 const QUALITY_FACTORS = [
   {
     name: "Layer Height",
@@ -707,6 +719,29 @@ export default function Learn() {
       {/* ── HERO ── */}
       <section className="learn-hero">
         <div className="learn-hero-bg" />
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          <LogoMark size={25} colors={["#f05c1e", "#c44820", "#7a2e0f"]} />
+          <span
+            style={{
+              fontFamily: "Arial Narrow, sans-serif",
+              fontWeight: 900,
+              fontSize: 30,
+              letterSpacing: ".08em",
+              color: "#ffffff",
+            }}
+          >
+          HOW
+            <em style={{ fontStyle: "normal", color: "#f05c1e" }}>-IT-WORKS</em>
+          </span>
+        </div>
         <div className="eyebrow or rv">Education · How It Works</div>
         <h1 className="learn-h1 rv d1">
           HOW
