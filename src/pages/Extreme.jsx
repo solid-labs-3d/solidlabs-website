@@ -111,6 +111,18 @@ const EX_FAQ = [
   },
 ];
 
+function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
+  const s = size,
+    h = Math.round(size * 0.917);
+  return (
+    <svg width={s} height={h} viewBox="0 0 56 52" fill="none">
+      <polygon points="8,1 46,1 52,14 14,14" fill={colors[0]} />
+      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]} />
+      <polygon points="2,39 40,39 46,52 8,52" fill={colors[2]} />
+    </svg>
+  );
+}
+
 const CHIP_ACTIONS = {
   "SLA specs": "sla print specs",
   "Resin types": "resin types",
@@ -1730,6 +1742,28 @@ export default function Extreme() {
         <div className="ex-hero-grid" />
         <div className="ex-hero-glow" />
         <div className="ex-hero-scan" />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          <LogoMark size={25} colors={["#1e8ef0", "#1060c4", "#0a3a7a"]} />
+          <span
+            style={{
+              fontFamily: "Arial Narrow, sans-serif",
+              fontWeight: 900,
+              fontSize: 30,
+              letterSpacing: ".08em",
+              color: "#ffffff",
+            }}
+          >
+            EXTREM
+            <em style={{ fontStyle: "normal", color: "#1e7aff" }}>-ENG</em>
+          </span>
+        </div>
         <div className="ex-hero-data">
           {[
             ["SYS", "ONLINE"],
