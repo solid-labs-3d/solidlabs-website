@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useReveal } from '../hooks/useReveal'
 import { useNavigate } from 'react-router-dom'
-import { addToCart } from '../components/Cart'
+import { cart, addToCart, increaseQty, decreaseQty, getCartItem } from '../components/Cart'
 import { getProductsByCategoryName } from '../api/apiClient'
 
 const TICKER_ITEMS = [
@@ -11,6 +11,25 @@ const TICKER_ITEMS = [
 ]
 
 function ProductCard({ product, delay = '' }) {
+
+  const [qty, setQty] = useState(0)
+
+  useEffect(() => {
+
+    const update = () => {
+      const item = getCartItem(product.id)
+      setQty(item ? item.qty : 0)
+    }
+
+    update()
+
+    cart.listeners.push(update)
+
+    return () => {
+      cart.listeners = cart.listeners.filter(f => f !== update)
+    }
+
+  }, [product.id])
 
   return (
     <div className={`oc rv ${delay}`}>
@@ -39,14 +58,42 @@ function ProductCard({ product, delay = '' }) {
           ₹{Number(product.price).toLocaleString('en-IN')}
         </div>
 
-        <button
-          className="obtn"
-          onClick={() =>
-            addToCart(product.id, product.name, product.price)
-          }
-        >
-          Add to Cart
-        </button>
+        {qty === 0 ? (
+
+          <button
+            className="obtn"
+            onClick={() =>
+              addToCart(product.id, product.name, product.price)
+            }
+          >
+            Add to Cart
+          </button>
+
+        ) : (
+
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+
+            <button
+              className="obtn"
+              onClick={() => decreaseQty(product.id)}
+            >
+              -
+            </button>
+
+            <span style={{ color: "#fff", fontSize: 14 }}>
+              {qty}
+            </span>
+
+            <button
+              className="obtn"
+              onClick={() => increaseQty(product.id)}
+            >
+              +
+            </button>
+
+          </div>
+
+        )}
       </div>
 
     </div>

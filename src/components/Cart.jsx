@@ -4,38 +4,83 @@ import { createCart, updateCart } from "../api/apiClient"
 
 /* ───────────────── CART STORE ───────────────── */
 
-export const cart = { items: [], listeners: [] }
+export const cart = {
+  items: [],
+  listeners: []
+}
+
+function notify() {
+  cart.listeners.forEach(fn => fn([...cart.items]))
+}
+
+export function getCartItem(product_id) {
+  return cart.items.find(i => i.product_id === product_id)
+}
+
+export async function increaseQty(product_id) {
+
+  const cart_id = localStorage.getItem("cart_id")
+
+  await updateCart(cart_id, product_id, "increase")
+
+  const item = cart.items.find(i => i.product_id === product_id)
+
+  if (item) item.qty += 1
+
+  notify()
+}
+
+export async function decreaseQty(product_id) {
+
+  const cart_id = localStorage.getItem("cart_id")
+
+  await updateCart(cart_id, product_id, "decrease")
+
+  const item = cart.items.find(i => i.product_id === product_id)
+
+  if (!item) return
+
+  if (item.qty > 1) {
+    item.qty -= 1
+  } else {
+    cart.items = cart.items.filter(i => i.product_id !== product_id)
+  }
+
+  notify()
+}
 
 export async function addToCart(product_id, name, price) {
 
   let cart_id = localStorage.getItem("cart_id")
 
-  /* create cart first time */
-
   if (!cart_id) {
 
-    const cart = await createCart()
-
-    cart_id = cart.id
+    const cartData = await createCart()
+    cart_id = cartData.id
 
     localStorage.setItem("cart_id", cart_id)
   }
 
-  /* update backend */
-
   await updateCart(cart_id, product_id, "add")
 
-  /* update frontend */
+  const existing = cart.items.find(i => i.product_id === product_id)
 
-  cart.items.push({
-    id: Date.now(),
-    product_id,
-    name,
-    price
-  })
+  if (existing) {
+    existing.qty += 1
+  } else {
 
-  cart.listeners.forEach(fn => fn([...cart.items]))
+    cart.items.push({
+      product_id,
+      name,
+      price,
+      qty: 1
+    })
+
+  }
+
+  notify()
 }
+
 export async function removeFromCart(product_id) {
 
   const cart_id = localStorage.getItem("cart_id")
@@ -70,8 +115,7 @@ export default function Cart() {
     }
   }, [])
 
-  const total = items.reduce((s, i) => s + i.price, 0)
-
+  const total = items.reduce((s, i) => s + (i.price * i.qty), 0)
   return (
     <>
       <div id="cart-overlay" className={open ? 'open' : ''}>
@@ -90,7 +134,7 @@ export default function Cart() {
             <div className="cart-empty">No items yet.</div>
           ) : (
             items.map(item => (
-              <div className="cart-item" key={item.id}>
+              <div className="cart-item" key={item.product_id}>
                 <div>
                   <div className="cart-item-name">{item.name}</div>
                   <div style={{
@@ -109,26 +153,37 @@ export default function Cart() {
                   alignItems: 'flex-end',
                   gap: 6
                 }}>
-                  <div className="cart-item-price">
-                    ₹{item.price.toLocaleString()}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+
+                    <button
+                      onClick={() => decreaseQty(item.product_id)}
+                      style={{
+                        padding: "4px 10px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      -
+                    </button>
+
+                    <span style={{ minWidth: 20, textAlign: "center" }}>
+                      {item.qty}
+                    </span>
+
+                    <button
+                      onClick={() => increaseQty(item.product_id)}
+                      style={{
+                        padding: "4px 10px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      +
+                    </button>
+
                   </div>
 
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    style={{
-                      fontFamily: 'var(--ff-mono)',
-                      fontSize: 7,
-                      letterSpacing: '.12em',
-                      textTransform: 'uppercase',
-                      padding: '4px 8px',
-                      background: 'var(--s2)',
-                      color: 'var(--g4)',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Remove
-                  </button>
+                  <div className="cart-item-price">
+                    ₹{(item.price * item.qty).toLocaleString()}
+                  </div>
                 </div>
               </div>
             ))
