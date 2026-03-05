@@ -1299,7 +1299,7 @@ export default function GreenLoop() {
           <span className="by">by SolidLabs</span>
         </FooterLogo>
         <FooterCopy>
-          © 2025 SolidLabs Technologies · GreenLoop Initiative · Yelahanka,
+          © 2026 SolidLabs Technologies · GreenLoop Initiative · Yelahanka,
           Bengaluru
         </FooterCopy>
       </Footer>

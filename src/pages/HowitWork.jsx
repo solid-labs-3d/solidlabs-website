@@ -1140,7 +1140,7 @@ export default function Learn() {
             <span className="fl-name">SOLIDLABS</span>
           </div>
           <div className="fl-copy">
-            © 2025 SolidLabs · How 3D Printing Works · Bengaluru
+            © 2026 SolidLabs · How 3D Printing Works · Bengaluru
           </div>
         </div>
       </footer>

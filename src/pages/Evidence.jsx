@@ -286,7 +286,7 @@ export default function Evidence() {
             <span className="fl-name">SOLIDLABS</span>
           </div>
           <div className="fl-copy">
-            © 2025 SolidLabs · Field Evidence · Bengaluru
+            © 2026 SolidLabs · Field Evidence · Bengaluru
           </div>
         </div>
       </footer>

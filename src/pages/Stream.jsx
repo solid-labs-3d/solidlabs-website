@@ -636,7 +636,7 @@ export default function Stream() {
           </div>
 
           <div className="fl-copy">
-            © 2025 SolidLabs · Live Stream · Bengaluru
+            © 2026 SolidLabs · Live Stream · Bengaluru
           </div>
         </div>
       </footer>

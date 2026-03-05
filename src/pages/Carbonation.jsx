@@ -1532,7 +1532,7 @@ export default function CarboNation() {
               </FooterName>
             </div>
             <FooterCopy>
-              © 2025 SolidLabs Technologies · CarboNation Division · Bengaluru
+              © 2026 SolidLabs Technologies · CarboNation Division · Bengaluru
             </FooterCopy>
           </FooterInner>
         </Footer>

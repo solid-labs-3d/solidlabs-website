@@ -491,7 +491,7 @@ export default function About() {
             <span className="fl-name">SOLIDLABS</span>
           </div>
           <div className="fl-copy">
-            © 2025 SolidLabs · Bengaluru · Founded 2024 · Anyday, Anytime.
+            © 2026 SolidLabs · Bengaluru · Founded 2024 · Anyday, Anytime.
           </div>
         </div>
       </footer>
