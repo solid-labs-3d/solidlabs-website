@@ -911,12 +911,12 @@ export default function CarbonationBS() {
                 marginBottom: 20,
               }}
             >
-              <LogoMark size={18} colors={[T.bs, T.bsm, T.bsd]} />
+              <LogoMark size={25} colors={[T.bs, T.bsm, T.bsd]} />
               <span
                 style={{
                   fontFamily: T.ffCond,
                   fontWeight: 900,
-                  fontSize: 13,
+                  fontSize: 30,
                   letterSpacing: ".08em",
                   color: T.wht,
                 }}
@@ -927,7 +927,7 @@ export default function CarbonationBS() {
               <span
                 style={{
                   fontFamily: T.ffMono,
-                  fontSize: "6.5px",
+                  fontSize: "10px",
                   letterSpacing: ".2em",
                   textTransform: "uppercase",
                   color: T.bs,
