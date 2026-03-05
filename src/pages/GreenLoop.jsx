@@ -658,7 +658,7 @@ const FooterLogo = styled.div`
     font-family: ${ffMono};
     font-size: 7px;
     letter-spacing: 0.1em;
-    color: rgba(58, 170, 74, 0.3);
+    color: rgba(58, 170, 74, 7);
     margin-left: 6px;
   }
 `;
