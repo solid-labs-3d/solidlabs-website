@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   return (
-    <div className="page-home" style = {{marginTop: 15}}>
+    <div className="page-home" style={{ marginTop: 15 }}>
       {/* ── HERO ── */}
       <section id="hero">
         <div className="hero-bg" />
@@ -156,6 +156,35 @@ export default function Home() {
               desc: "Electronics sourcing, PCB enclosures, full assembly, IoT integration, jigs and fixtures. For engineers who need more than a print.",
               page: "/extreme",
               accent: "var(--bl)",
+              btnLabel: "EXPLORE →",
+              specs: [
+                { label: "ELECTRONICS", value: "SOURCED" },
+                { label: "FIRMWARE", value: "FLASHED" },
+                { label: "ASSEMBLY", value: "TESTED" },
+              ],
+            },
+
+            {
+              cls: "yw-card",
+              n: "04 — CARBONATION",
+              name: "Carbonation",
+              desc: "Drones fail at joints. Carbonation builds airframes where the structure is the solution — integrated, continuous fibre paths, not bolted-together panels.",
+              page: "/carbonation",
+              accent: "var(--yw)",
+              btnLabel: "GET QUOTE →",
+              specs: [
+                { label: "TOLERANCE", value: "±0.2MM" },
+                { label: "BATCH", value: "1–500" },
+                { label: "LEAD TIME", value: "24H–7D" },
+              ],
+            },
+            {
+              cls: "yw-card",
+              n: "06 — GREEN LOOP",
+              name: "Green Loop",
+              desc: "GreenLoop is SolidLabs' commitment to closing the material loop — collecting plastic waste from local manufacturers, processing it, and turning it into new products. Not landfill. Not a PR claim. A manufacturing system.",
+              page: "/greenloop",
+              accent: "#22c55e",
               btnLabel: "EXPLORE →",
               specs: [
                 { label: "ELECTRONICS", value: "SOURCED" },
