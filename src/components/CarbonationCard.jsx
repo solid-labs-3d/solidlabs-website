@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { cart, addToCart, increaseQty, decreaseQty, getCartItem } from "../components/Cart";
 
 // ─── TOKENS ──────────────────────────────────────────────────
 const T = {
@@ -173,15 +175,35 @@ const BsBadge = styled.span`
     slug        string   – e.g. "carbon-drone-frame"
 */
 export default function CarbonationCard({ product, onClick }) {
-  const {
+    const {
+    id,
     name,
     description,
     price,
     image_url,
     sku,
     material,
-    stock,
+    stock
   } = product;
+
+  const [qty, setQty] = useState(0)
+
+  useEffect(() => {
+
+    const update = () => {
+      const item = getCartItem(product.id)
+      setQty(item ? item.qty : 0)
+    }
+
+    update()
+
+    cart.listeners.push(update)
+
+    return () => {
+      cart.listeners = cart.listeners.filter(f => f !== update)
+    }
+
+  }, [product.id])
 
   const inStock = stock > 0;
 
@@ -222,6 +244,69 @@ export default function CarbonationCard({ product, onClick }) {
           <BsTag>{material}</BsTag>
           {inStock && <BsTag>Ready to Ship</BsTag>}
         </BsTags>
+
+
+        {/* CART BUTTON */}
+
+        <div style={{ marginTop: "14px" }}>
+
+          {qty === 0 ? (
+
+            <button
+              style={{
+                width: "100%",
+                padding: "10px",
+                background: "#e63018",
+                color: "#fff",
+                border: "none",
+                fontSize: "11px",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                cursor: "pointer"
+              }}
+              onClick={(e) => {
+                e.stopPropagation()
+                addToCart(product.id, product.name, product.price)
+              }}
+            >
+              Add To Cart
+            </button>
+
+          ) : (
+
+            <div style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "14px",
+              alignItems: "center",
+              marginTop: "6px"
+            }}>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  decreaseQty(product.id)
+                }}
+              >
+                −
+              </button>
+
+              <span>{qty}</span>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  increaseQty(product.id)
+                }}
+              >
+                +
+              </button>
+
+            </div>
+
+          )}
+
+        </div>
       </BsBody>
 
     </BsCard>
