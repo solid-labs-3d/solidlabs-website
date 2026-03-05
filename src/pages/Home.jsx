@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReveal } from "../hooks/useReveal";
 import { Ticker, Footer, SectionHeader } from "../components/Shared";
 import { addToCart } from "../components/Cart";
+import ReviewCard from "../components/ReviewCard";
+import ContactCard, { ContactModal, openContactModal } from "../components/ContactCard";
+import { getFeedback, getClients } from "../api/apiClient";
 
 const TICKER_ITEMS = [
   "SL Originals",
@@ -20,16 +23,27 @@ export default function Home() {
   const nav = useNavigate();
   useReveal();
 
-  const goQuote = () => {
-    window.scrollTo(0, 0);
-    setTimeout(
-      () =>
-        document
-          .getElementById("contact-sec")
-          ?.scrollIntoView({ behavior: "smooth" }),
-      80,
-    );
-  };
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+
+  const [clients, setClients] = useState([]);
+const [clientsLoading, setClientsLoading] = useState(true);
+
+useEffect(() => {
+  getClients()
+    .then((data) => setClients(data))
+    .catch((err) => console.error("Failed to fetch clients:", err))
+    .finally(() => setClientsLoading(false));
+}, []);
+
+  useEffect(() => {
+    getFeedback()
+      .then((data) => setReviews(data))
+      .catch((err) => console.error("Failed to fetch reviews:", err))
+      .finally(() => setReviewsLoading(false));
+  }, []);
+
+  const goQuote = () => openContactModal();
 
   return (
     <div className="page-home" style={{ marginTop: 15 }}>
@@ -249,112 +263,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* ── SERVICES OVERVIEW ── */}
-      {/* <section className="sec-pad" style={{ background: "var(--s1)" }}>
-        <SectionHeader title="All Services" sub="Full Capability Stack" />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3,1fr)",
-            gap: 2,
-            background: "var(--s2)",
-          }}
-        >
-          {[
-            {
-              name: "FDM 3D Printing",
-              tag: "Most Popular",
-              route: "/learn",
-              spec: "0.2mm layers · PLA+ PETG ABS TPU · 24h",
-            },
-            {
-              name: "SLA Resin Printing",
-              tag: "High Detail",
-              route: "/sla-printing",
-              spec: "0.05mm layers · Standard / Tough / Flex",
-            },
-            {
-              name: "Injection Moulding",
-              tag: "High Volume",
-              route: "/injection-moulding",
-              spec: "100+ units · ABS PP HDPE Nylon",
-            },
-            {
-              name: "Vacuum Forming",
-              tag: "Large Format",
-              route: "/vacuum-forming",
-              spec: "PETG ABS HIPS · Up to 600×400mm",
-            },
-            {
-              name: "Carbon Fibre",
-              tag: "Lightweight",
-              route: "/carbon-fibre",
-              spec: "CFRP · Hand layup · 1.5 g/cm³",
-            },
-            {
-              name: "Extreme Engineering",
-              tag: "R&D",
-              route: "/extreme",
-              spec: "Multi-material · Embedded electronics",
-            },
-          ].map((s) => (
-            <div
-              key={s.name}
-              onClick={() => nav(s.route)}
-              style={{
-                background: "var(--blk)",
-                padding: "40px 32px",
-                cursor: "none",
-                transition: "background .2s",
-              }}
-              className="rv"
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "var(--s1)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background = "var(--blk)")
-              }
-            >
-              <div
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: 8,
-                  letterSpacing: ".16em",
-                  textTransform: "uppercase",
-                  color: "var(--or)",
-                  marginBottom: 12,
-                }}
-              >
-                {s.tag}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-cond)",
-                  fontWeight: 800,
-                  fontSize: 24,
-                  marginBottom: 10,
-                }}
-              >
-                {s.name}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: 9,
-                  letterSpacing: ".12em",
-                  textTransform: "uppercase",
-                  color: "var(--g3)",
-                  borderTop: "1px solid var(--s2)",
-                  paddingTop: 12,
-                }}
-              >
-                {s.spec}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* ── HOW IT WORKS ── */}
       <section className="sec-pad">
@@ -731,94 +639,75 @@ export default function Home() {
           sub="Field Reports · Real Work"
         />
         <div className="rev-grid">
-          {[
-            {
-              quote:
-                "SolidLabs turned our CAD into working prototypes overnight. The quality was spot-on — we went straight from print to investor demo.",
-              name: "Arjun Mehta",
-              role: "CTO · Robotics Startup",
-            },
-            {
-              quote:
-                "We've tried 4 print services. SolidLabs is the only one that actually reads the brief. Tolerances were bang on for our PCB enclosures.",
-              name: "Priya Nair",
-              role: "Hardware Lead · IoT Company",
-            },
-            {
-              quote:
-                "Ordered a batch of 50 functional parts for our lab. Every single one passed QC. That's not normal — that's remarkable.",
-              name: "Dr. Venkat R.",
-              role: "Research Engineer · IISc",
-            },
-          ].map((r) => (
-            <div className="rev-card rv" key={r.name}>
-              <div className="rev-stars">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="rev-star" />
-                ))}
-              </div>
-              <p className="rev-txt">{r.quote}</p>
-              <div className="rev-auth">
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    background: "var(--or)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "var(--ff-cond)",
-                    fontWeight: 900,
-                    fontSize: 20,
-                    color: "var(--blk)",
-                  }}
-                >
-                  {r.name[0]}
-                </div>
-                <div>
-                  <div className="rev-name">{r.name}</div>
-                  <div className="rev-role">{r.role}</div>
-                </div>
-              </div>
-            </div>
-          ))}
+          {reviewsLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="rev-card"
+                style={{
+                  background: "var(--s2)",
+                  border: "1px solid rgba(240,92,30,0.08)",
+                  padding: 32,
+                  opacity: 0.4,
+                  minHeight: 200,
+                }}
+              />
+            ))
+          ) : reviews.length > 0 ? (
+            reviews.map((r) => (
+              <ReviewCard
+                key={r.id || r._id || r.name}
+                quote={r.description}
+                name={r.name}
+                status={r.status}
+              />
+            ))
+          ) : (
+            <p style={{ color: "var(--g3)", gridColumn: "1/-1", textAlign: "center" }}>
+              No reviews yet.
+            </p>
+          )}
         </div>
       </section>
 
       {/* ── TRUSTED BY ── */}
-      <section className="sec-pad" style={{ background: "var(--blk)" }}>
-        <div className="tb-header">
-          <SectionHeader title="Trusted By" />
-          <div className="tb-sub">CLIENT PORTFOLIO · 340+ COMPANIES</div>
-        </div>
+{/* ── TRUSTED BY ── */}
+<section className="sec-pad" style={{ background: "var(--blk)" }}>
+  <div className="tb-header">
+    <SectionHeader title="Trusted By" />
+    <div className="tb-sub">
+      CLIENT PORTFOLIO · {clientsLoading ? "..." : `${clients.length}+ COMPANIES`}
+    </div>
+  </div>
 
-        <div className="tb-grid">
-          {[
-            { n: "CLIENT 01", t: "IOT STARTUP" },
-            { n: "CLIENT 02", t: "AERIAL SYSTEMS CO." },
-            { n: "CLIENT 03", t: "INDUSTRIAL AUTOMATION CO." },
-            { n: "CLIENT 04", t: "D2C HARDWARE BRAND" },
-            { n: "CLIENT 05", t: "MEDTECH STARTUP" },
-            { n: "CLIENT 06", t: "ROBOTICS TEAM" },
-            { n: "CLIENT 07", t: "CONSUMER GOODS CO." },
-            { n: "CLIENT 08", t: "TECH COMPANY BLR" },
-            { n: "CLIENT 09", t: "ENGINEERING CONSULTANCY" },
-            { n: "CLIENT 10", t: "UAV SYSTEMS" },
-            { n: "CLIENT 11", t: "DESIGN STUDIO" },
-            { n: "CLIENT 12", t: "ROBOTICS COMPETITION" },
-          ].map((c) => (
-            <div className="tb-cell rv" key={c.n}>
-              <div className="tb-name">{c.n}</div>
-              <div className="tb-type">{c.t}</div>
-            </div>
-          ))}
+  <div className="tb-grid">
+    {clientsLoading ? (
+      Array.from({ length: 12 }).map((_, i) => (
+        <div className="tb-cell" key={i} style={{ opacity: 0.3 }}>
+          <div className="tb-name">CLIENT {String(i + 1).padStart(2, "0")}</div>
+          <div className="tb-type">LOADING...</div>
         </div>
+      ))
+    ) : clients.length > 0 ? (
+      clients.map((c, i) => (
+        <div className="tb-cell rv" key={c.id || i}>
+          <div className="tb-name">{c.name.toUpperCase()}</div>
+          <div className="tb-type">{c.description.toUpperCase()}</div>
+        </div>
+      ))
+    ) : (
+      <p style={{ color: "var(--g3)", gridColumn: "1/-1", textAlign: "center" }}>
+        No clients yet.
+      </p>
+    )}
+  </div>
 
-        <div className="tb-footer">
-          340+ CLIENTS · STARTUPS · ENTERPRISES · RESEARCH LABS · D2C BRANDS
-        </div>
-      </section>
+  <div className="tb-footer">
+    {clientsLoading
+      ? "LOADING CLIENTS..."
+      : `${clients.length}+ CLIENTS · STARTUPS · ENTERPRISES · RESEARCH LABS · D2C BRANDS`}
+  </div>
+</section>
 
       {/* ── SUPPORT ── */}
       {/* ── SUPPORT ── */}
@@ -1085,137 +974,8 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      {/* ── CONTACT ── */}
-      <div id="contact-sec">
-        {/* LEFT */}
-        <div className="con-l">
-          <h2 className="con-t rv">
-            GET IN
-            <br />
-            TOUCH
-          </h2>
-
-          <div className="con-det rv d1">
-            <div className="cd-l">EMAIL</div>
-            <a className="cd-v" href="mailto:hello@solidlabs.in">
-              [email protected]
-            </a>
-          </div>
-
-          <div className="con-det rv d2">
-            <div className="cd-l">PHONE / WHATSAPP</div>
-            <a className="cd-v" href="https://wa.me/919876543210">
-              +91 98765 43210
-            </a>
-          </div>
-
-          <div className="con-det rv d3">
-            <div className="cd-l">LOCATION</div>
-            <span className="cd-v">Bengaluru, Karnataka, India</span>
-          </div>
-
-          <div className="con-det rv d4">
-            <div className="cd-l">SUPPORT HOURS</div>
-            <span className="cd-v" style={{ color: "var(--or)" }}>
-              Anyday · 8am – 10pm IST
-            </span>
-          </div>
-
-          <p className="con-note rv d5">
-            You'll hear from a real engineer, not a bot. We review every file
-            before printing and flag any issues upfront — that's how we maintain
-            98% first-pass accuracy.
-          </p>
-        </div>
-
-        {/* RIGHT */}
-        <div className="con-r">
-          <div className="con-r-eyebrow">SEND A MESSAGE</div>
-
-          <div className="ff">
-            <label className="fl">NAME</label>
-            <input className="fi" type="text" placeholder="Your name" />
-          </div>
-
-          <div className="ff">
-            <label className="fl">EMAIL</label>
-            <input className="fi" type="email" placeholder="you@company.com" />
-          </div>
-
-          <div className="ff">
-            <label className="fl">PROJECT BRIEF</label>
-            <textarea
-              className="ft"
-              placeholder="Describe your part, quantity, material, timeline..."
-            />
-          </div>
-
-          <div className="ff">
-            <label className="fl">UPLOAD FILE (STL, STEP, OBJ, PDF, PNG)</label>
-            <div
-              id="fup"
-              onClick={() => document.getElementById("file-inp").click()}
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                style={{ marginBottom: 8 }}
-              >
-                <line
-                  x1="12"
-                  y1="16"
-                  x2="12"
-                  y2="4"
-                  stroke="var(--g3)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <polyline
-                  points="8,8 12,4 16,8"
-                  stroke="var(--g3)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <line
-                  x1="4"
-                  y1="20"
-                  x2="20"
-                  y2="20"
-                  stroke="var(--g3)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div className="fup-label">DROP FILE OR CLICK TO UPLOAD</div>
-              <input
-                type="file"
-                accept=".stl,.step,.obj,.pdf,.png"
-                onChange={(e) => {
-                  const f = e.target.files[0];
-                  if (f)
-                    document.getElementById("fup").style.borderColor =
-                      "#f05c1e";
-                }}
-                style={{ display: "none" }}
-                id="file-inp"
-              />
-            </div>
-          </div>
-
-          <button
-            className="fsub"
-            onClick={(e) => {
-              e.target.textContent = "Sent! We'll reply within 2 hours →";
-              e.target.style.background = "#22cc44";
-            }}
-          >
-            SEND MESSAGE →
-          </button>
-        </div>
-      </div>
+      <ContactCard />
+      <ContactModal />
 
       <Footer
         links={[
