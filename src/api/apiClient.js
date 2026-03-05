@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'http://192.168.0.10:5000/api'
 
 // ─── Axios instance ──────────────────────────────────────────────────────────
 const apiClient = axios.create({
@@ -67,5 +67,32 @@ export async function updateCart(cart_id, product_id, action) {
   })
   return data
 }
+
+export async function getFeedback() {
+  const res = await apiClient.get('/feedback/get')
+  return res.data.data || []
+}
+
+// Add this function to your existing apiClient.js file
+
+export async function sendContactEmail({ name, email, description, file }) {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("description", description);
+  if (file) {
+    formData.append("file", file);
+  }
+
+  const res = await apiClient.post("/email/solidlabs", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+}
+
+export const getClients = async () => {
+  const res = await apiClient.get("/clients/list");
+  return res.data.data || res.data || [];
+};
 
 export default apiClient

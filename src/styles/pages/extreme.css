@@ -5,7 +5,7 @@
 .ex-hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 60% 40%, rgba(30,122,255,.1), transparent 65%); }
 .ex-hero-scan { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, rgba(30,122,255,.6), transparent); animation: scan 4s linear infinite; top: 0; }
 .ex-hero-data { position: absolute; top: 30%; right: 48px; display: flex; flex-direction: column; gap: 8px; opacity: 0; animation: fadeup .8s ease 1.2s forwards; }
-.ex-data-line { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .14em; color: rgba(30,122,255,.5); }
+.ex-data-line { font-family: var(--ff-mono); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: rgba(30,122,255,.5); }
 .ex-data-line span { color: rgba(30,122,255,.9); }
 .ex-h1 { font-family: var(--ff-cond); font-weight: 900; font-size: clamp(72px,13vw,170px); line-height: .83; letter-spacing: .01em; margin-bottom: 36px; position: relative; }
 .ex-h1 em { font-style: italic; color: var(--bl); }
@@ -17,7 +17,7 @@
 .ex-cap-title em { font-style: italic; color: var(--bl); }
 .ex-cap-desc { font-size: 14px; color: rgba(100,130,170,.8); line-height: 1.8; margin-bottom: 28px; }
 .ex-cap-specs { display: flex; flex-wrap: wrap; gap: 8px; }
-.ex-spec { font-family: var(--ff-mono); font-size: 7.5px; letter-spacing: .14em;  padding: 6px 12px; border: 1px solid rgba(30,122,255,.25); color: rgba(30,122,255,.8); }
+.ex-spec { font-family: var(--ff-mono); font-size: 7.5px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 12px; border: 1px solid rgba(30,122,255,.25); color: rgba(30,122,255,.8); }
 .ex-visual { display: flex; align-items: center; justify-content: center; min-height: 280px; background: rgba(14,22,40,.8); border: 1px solid rgba(30,122,255,.12); position: relative; overflow: hidden; }
 .ex-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(30,122,255,.1); }
 .ex-stat { background: #020408; padding: 48px 32px; display: flex; flex-direction: column; gap: 8px; }
