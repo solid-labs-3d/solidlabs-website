@@ -80,19 +80,28 @@ function ProductCard({ product, delay = "" }) {
         {qty === 0 ? (
           <button
             className="obtn"
-            onClick={() => addToCart(product.id, product.name, product.price)}
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product.id, product.name, product.price,product.sku);
+            }}
           >
             Add to Cart
           </button>
         ) : (
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <button className="obtn" onClick={() => decreaseQty(product.id)}>
+            <button className="obtn" onClick={(e) => {
+              e.stopPropagation();
+              decreaseQty(product.id);
+            }}>
               -
             </button>
 
             <span style={{ color: "#fff", fontSize: 14 }}>{qty}</span>
 
-            <button className="obtn" onClick={() => increaseQty(product.id)}>
+            <button className="obtn" onClick={(e) => {
+              e.stopPropagation();
+              increaseQty(product.id);
+            }}>
               +
             </button>
           </div>
@@ -231,8 +240,8 @@ export default function Originals() {
 
         {/* Error */}
         {error && (
-          <div style={{ color: "red", padding: 40 }}>
-            Error loading products
+          <div style={{ color: "white", padding: 40 }}>
+            No products found. Please check back later.
           </div>
         )}
 

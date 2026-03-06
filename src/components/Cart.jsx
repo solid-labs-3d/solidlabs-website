@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import LoginModal from './LoginModal'
-import { createCart, updateCart } from "../api/apiClient"
+import { createCart, updateCart, placeOrder } from "../api/apiClient"
 
 /* ───────────────── CART STORE ───────────────── */
 
@@ -13,88 +13,95 @@ function notify() {
   cart.listeners.forEach(fn => fn([...cart.items]))
 }
 
+function openWhatsApp(items, total) {
+  const phone = "918123120292"
+
+  const itemLines = items.map(item =>
+    `• ${item.name} (Product No: ${item.sku}) x${item.qty} = ₹${(item.price * item.qty).toLocaleString()}`
+  ).join("\n")
+
+  const message =
+`🛒 *New Order Received!*
+
+${itemLines}
+
+─────────────────
+💰 *Total: ₹${total.toLocaleString()}*
+
+_Sent from SolidLabs website_`
+
+  const encoded = encodeURIComponent(message)
+  window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank")
+}
+
 export function getCartItem(product_id) {
   return cart.items.find(i => i.product_id === product_id)
 }
 
 export async function increaseQty(product_id) {
-
   const cart_id = localStorage.getItem("cart_id")
-
   await updateCart(cart_id, product_id, "increase")
-
   const item = cart.items.find(i => i.product_id === product_id)
-
   if (item) item.qty += 1
-
   notify()
 }
 
 export async function decreaseQty(product_id) {
-
   const cart_id = localStorage.getItem("cart_id")
-
   await updateCart(cart_id, product_id, "decrease")
-
   const item = cart.items.find(i => i.product_id === product_id)
-
   if (!item) return
-
   if (item.qty > 1) {
     item.qty -= 1
   } else {
     cart.items = cart.items.filter(i => i.product_id !== product_id)
   }
-
   notify()
 }
 
-export async function addToCart(product_id, name, price) {
+export async function addToCart(product_id, name, price, sku) {
 
   let cart_id = localStorage.getItem("cart_id")
 
   if (!cart_id) {
-
     const cartData = await createCart()
     cart_id = cartData.id
-
     localStorage.setItem("cart_id", cart_id)
   }
 
-  await updateCart(cart_id, product_id, "add")
+  const res = await updateCart(cart_id, product_id, "add")
+
+  if (res.cart_id) {
+    localStorage.setItem("cart_id", res.cart_id)
+  }
 
   const existing = cart.items.find(i => i.product_id === product_id)
 
   if (existing) {
     existing.qty += 1
   } else {
-
     cart.items.push({
       product_id,
       name,
       price,
+      sku,        // ← stored here
       qty: 1
     })
-
   }
 
   notify()
 }
 
 export async function removeFromCart(product_id) {
-
   const cart_id = localStorage.getItem("cart_id")
-
   await updateCart(cart_id, product_id, "remove")
-
   cart.items = cart.items.filter(i => i.product_id !== product_id)
-
   cart.listeners.forEach(fn => fn([...cart.items]))
 }
 
 /* ───────────────── CART COMPONENT ───────────────── */
 
-let toggleCartExternal = null   // used by navbar
+let toggleCartExternal = null
 
 export default function Cart() {
   const [items, setItems] = useState([])
@@ -102,12 +109,43 @@ export default function Cart() {
   const [showLogin, setShowLogin] = useState(false)
   const [authorized, setAuthorized] = useState(false)
 
-  /* Make navbar able to toggle cart */
+  const handlePlaceOrder = async () => {
+    try {
+
+      const cart_id = localStorage.getItem("cart_id")
+      const user_id = localStorage.getItem("user_id")
+
+      if (!cart_id || !user_id) {
+        alert("Missing cart or user")
+        return
+      }
+
+      await placeOrder(cart_id, user_id)
+
+      // capture BEFORE clearing
+      const orderItems = [...cart.items]
+      const orderTotal = orderItems.reduce((s, i) => s + (i.price * i.qty), 0)
+
+      alert("Order placed successfully!")
+
+      // clear cart
+      cart.items = []
+      notify()
+      setOpen(false)
+
+      // open whatsapp
+      openWhatsApp(orderItems, orderTotal)
+
+    } catch (err) {
+      console.error(err)
+      alert("Failed to place order")
+    }
+  }
+
   useEffect(() => {
     toggleCartExternal = () => setOpen(prev => !prev)
   }, [])
 
-  /* Listen for cart item changes */
   useEffect(() => {
     cart.listeners.push(setItems)
     return () => {
@@ -116,6 +154,7 @@ export default function Cart() {
   }, [])
 
   const total = items.reduce((s, i) => s + (i.price * i.qty), 0)
+
   return (
     <>
       <div id="cart-overlay" className={open ? 'open' : ''}>
@@ -154,13 +193,9 @@ export default function Cart() {
                   gap: 6
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-
                     <button
                       onClick={() => decreaseQty(item.product_id)}
-                      style={{
-                        padding: "4px 10px",
-                        cursor: "pointer"
-                      }}
+                      style={{ padding: "4px 10px", cursor: "pointer" }}
                     >
                       -
                     </button>
@@ -171,14 +206,10 @@ export default function Cart() {
 
                     <button
                       onClick={() => increaseQty(item.product_id)}
-                      style={{
-                        padding: "4px 10px",
-                        cursor: "pointer"
-                      }}
+                      style={{ padding: "4px 10px", cursor: "pointer" }}
                     >
                       +
                     </button>
-
                   </div>
 
                   <div className="cart-item-price">
@@ -205,9 +236,7 @@ export default function Cart() {
               if (!authorized) {
                 setShowLogin(true)
               } else {
-                setOpen(false)
-                document.getElementById('contact-sec')
-                  ?.scrollIntoView({ behavior: 'smooth' })
+                handlePlaceOrder()
               }
             }}
           >
@@ -216,15 +245,13 @@ export default function Cart() {
         </div>
       </div>
 
-      {/* LOGIN MODAL */}
       <LoginModal
         open={showLogin}
         onClose={() => setShowLogin(false)}
-        onSuccess={() => {
+        onSuccess={async (user) => {
+          localStorage.setItem("user_id", user.id)  // ← set first
           setAuthorized(true)
-          setOpen(false)
-          document.getElementById('contact-sec')
-            ?.scrollIntoView({ behavior: 'smooth' })
+          await handlePlaceOrder()                   // ← then place order
         }}
       />
     </>

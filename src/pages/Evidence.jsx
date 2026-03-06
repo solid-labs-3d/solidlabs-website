@@ -6,9 +6,9 @@ import { getProductsByCategoryName } from '../api/apiClient'
 
 function EvidenceCard({ p, i }) {
 
-  const [qty,setQty] = useState(0)
+  const [qty, setQty] = useState(0)
 
-  useEffect(()=>{
+  useEffect(() => {
 
     const update = () => {
       const item = getCartItem(p.id)
@@ -23,7 +23,7 @@ function EvidenceCard({ p, i }) {
       cart.listeners = cart.listeners.filter(f => f !== update)
     }
 
-  },[p.id])
+  }, [p.id])
 
   return (
     <div className={`ev-card rv d${(i % 3) + 1}`}>
@@ -42,17 +42,17 @@ function EvidenceCard({ p, i }) {
 
       {p.image_url && (
         <div style={{
-          margin:"10px 0",
-          display:"flex",
-          justifyContent:"center"
+          margin: "10px 0",
+          display: "flex",
+          justifyContent: "center"
         }}>
           <img
             src={p.image_url}
             alt={p.name}
             style={{
-              width:120,
-              height:80,
-              objectFit:"contain"
+              width: 120,
+              height: 80,
+              objectFit: "contain"
             }}
           />
         </div>
@@ -62,28 +62,28 @@ function EvidenceCard({ p, i }) {
         Material: {p.material || "PLA+"}
       </div>
 
-      <div style={{marginTop:12}}>
+      <div style={{ marginTop: 12 }}>
 
         {qty === 0 ? (
 
           <button
             className="obtn"
-            onClick={() => addToCart(p.id, p.name, p.price)}
+            onClick={() => addToCart(p.id, p.name, p.price, p.sku)}  // ← sku added
           >
             Add to Cart
           </button>
 
         ) : (
 
-          <div style={{display:"flex",gap:10,alignItems:"center"}}>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
 
-            <button onClick={()=>decreaseQty(p.id)}>
+            <button onClick={() => decreaseQty(p.id)}>
               -
             </button>
 
             <span>{qty}</span>
 
-            <button onClick={()=>increaseQty(p.id)}>
+            <button onClick={() => increaseQty(p.id)}>
               +
             </button>
 

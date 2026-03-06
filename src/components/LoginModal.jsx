@@ -1,112 +1,108 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
+import { createUser,attachUserToCart } from "../api/apiClient"
 
 export default function LoginModal({ open, onClose, onSuccess }) {
-  const [step, setStep] = useState("phone")
-  const [phone, setPhone] = useState("")
-  const [otp, setOtp] = useState(["", "", "", ""])
 
-  const inputsRef = useRef([])
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
 
   useEffect(() => {
     if (open) {
-      setStep("phone")
+      setName("")
       setPhone("")
-      setOtp(["", "", "", ""])
     }
   }, [open])
 
   if (!open) return null
 
-  const handleOtpChange = (value, index) => {
-    if (!/^\d?$/.test(value)) return
 
-    const updated = [...otp]
-    updated[index] = value
-    setOtp(updated)
+  const handleLogin = async () => {
 
-    if (value && index < 3) {
-      inputsRef.current[index + 1]?.focus()
-    }
-
-    if (!value && index > 0) {
-      inputsRef.current[index - 1]?.focus()
-    }
+  if (!name || phone.length !== 10) {
+    alert("Enter valid details");
+    return;
   }
 
-  const verifyOtp = () => {
-    if (otp.join("") === "0000") {
-      onSuccess()
-      onClose()
-    } else {
-      alert("Invalid OTP")
+  try {
+
+    const user = await createUser(name, phone);
+
+    console.log("User returned:", user); // ← add this to see what comes back
+
+    if (!user || !user.id) {
+      alert("Login failed - no user returned");
+      return;
     }
+
+    const user_id = user.id;
+
+    localStorage.setItem("user_id", user_id);
+
+    const cart_id = localStorage.getItem("cart_id");
+
+    if (cart_id) {
+      await attachUserToCart(cart_id, user_id);
+    }
+
+    alert("Login successful");
+
+    onSuccess(user);   // ← pass user here
+    onClose();
+
+  } catch (error) {
+    console.error(error);
+    alert("Login failed");
   }
+};
+
+
 
   return (
     <div style={overlayStyle}>
       <div style={modalStyle}>
-        
+
         <div style={headerStyle}>
           <div style={titleStyle}>Login</div>
           <button onClick={onClose} style={closeStyle}>✕</button>
         </div>
 
-        {step === "phone" && (
-          <>
-            <div style={labelStyle}>Enter Mobile Number</div>
+        <div style={labelStyle}>Enter Name</div>
 
-            <input
-              type="tel"
-              maxLength={10}
-              value={phone}
-              onChange={(e) => {
-                if (/^\d*$/.test(e.target.value)) {
-                  setPhone(e.target.value)
-                }
-              }}
-              style={inputStyle}
-              placeholder="10 Digit Number"
-            />
+        <input
+          type="text"
+          value={name}
+          onChange={(e)=>setName(e.target.value)}
+          style={inputStyle}
+          placeholder="Your Name"
+        />
 
-            <button
-              style={buttonStyle}
-              disabled={phone.length !== 10}
-              onClick={() => setStep("otp")}
-            >
-              Send OTP →
-            </button>
-          </>
-        )}
+        <div style={labelStyle}>Enter Mobile Number</div>
 
-        {step === "otp" && (
-          <>
-            <div style={labelStyle}>Enter 4 Digit OTP</div>
+        <input
+          type="tel"
+          maxLength={10}
+          value={phone}
+          onChange={(e)=>{
+            if(/^\d*$/.test(e.target.value)){
+              setPhone(e.target.value)
+            }
+          }}
+          style={inputStyle}
+          placeholder="10 Digit Number"
+        />
 
-            <div style={{ display: "flex", gap: 10, marginBottom: 24 }}>
-              {otp.map((digit, i) => (
-                <input
-                  key={i}
-                  ref={(el) => (inputsRef.current[i] = el)}
-                  type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleOtpChange(e.target.value, i)}
-                  style={otpBoxStyle}
-                />
-              ))}
-            </div>
+        <button
+          style={buttonStyle}
+          onClick={handleLogin}
+        >
+          Login →
+        </button>
 
-            <button style={buttonStyle} onClick={verifyOtp}>
-              Verify →
-            </button>
-
-            <div style={hintStyle}>Temporary OTP: 0000</div>
-          </>
-        )}
       </div>
     </div>
   )
 }
+
 
 /* ─── Styles ───────────────────────── */
 
@@ -170,17 +166,6 @@ const inputStyle = {
   fontSize: 14
 }
 
-const otpBoxStyle = {
-  width: 60,
-  height: 60,
-  textAlign: "center",
-  background: "#0e0e0e",
-  border: "1px solid #1e1e1e",
-  color: "#c8e600",
-  fontSize: 22,
-  fontWeight: 900
-}
-
 const buttonStyle = {
   width: "100%",
   padding: "14px 0",
@@ -192,11 +177,4 @@ const buttonStyle = {
   textTransform: "uppercase",
   cursor: "pointer",
   color: "#000"
-}
-
-const hintStyle = {
-  marginTop: 14,
-  fontSize: 10,
-  color: "#555",
-  fontFamily: "var(--ff-mono)"
 }

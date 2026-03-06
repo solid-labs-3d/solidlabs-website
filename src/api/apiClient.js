@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://192.168.0.10:5000/api'
+const BASE_URL = 'http://localhost:5000/api'
 
 // ─── Axios instance ──────────────────────────────────────────────────────────
 const apiClient = axios.create({
@@ -94,5 +94,43 @@ export const getClients = async () => {
   const res = await apiClient.get("/clients/list");
   return res.data.data || res.data || [];
 };
+
+
+export async function placeOrder(cart_id, user_id) {
+
+  const { data } = await apiClient.post("/orders/place", {
+    cart_id,
+    user_id
+  })
+
+  return data
+}
+
+
+export async function getUserOrders(user_id) {
+
+  const { data } = await apiClient.get(`/orders/user/${user_id}`)
+
+  return data.data || []
+
+}
+
+export async function createUser(name, phone) {
+  const { data } = await apiClient.post("/users/create", {
+    name,
+    phone_number:phone
+  })
+
+  return data.data
+}
+
+export async function attachUserToCart(cart_id, user_id) {
+  const res = await apiClient.post("/cart/attach-user", {
+    cart_id,
+    user_id
+  });
+
+  return res.data;
+}
 
 export default apiClient

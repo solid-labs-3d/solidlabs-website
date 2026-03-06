@@ -266,7 +266,7 @@ export default function CarbonationCard({ product, onClick }) {
               }}
               onClick={(e) => {
                 e.stopPropagation()
-                addToCart(product.id, product.name, product.price)
+                addToCart(product.id, product.name, product.price,product.sku)
               }}
             >
               Add To Cart
