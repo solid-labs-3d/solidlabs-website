@@ -14,7 +14,7 @@ function notify() {
 }
 
 function openWhatsApp(items, total) {
-  const phone = "918123120292"
+  const phone = "919876543210" // ← replace with your number, in international format without '+' or dashes
 
   const itemLines = items.map(item =>
     `• ${item.name} (Product No: ${item.sku}) x${item.qty} = ₹${(item.price * item.qty).toLocaleString()}`
