@@ -21,7 +21,7 @@ function openWhatsApp(items, total) {
   ).join("\n")
 
   const message =
-`🛒 *New Order Received!*
+`🛒 *Hi SolidLabs! 👋 I'd like to place an order:*
 
 ${itemLines}
 
