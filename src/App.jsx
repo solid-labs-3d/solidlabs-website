@@ -21,7 +21,7 @@ import HowitWork from "./pages/HowitWork";
 import GreenLoop from "./pages/GreenLoop";
 import CarboNation from "./pages/Carbonation";
 import CarbonationBs from "./pages/CarbonationBs";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 // Page accent colours — used by cursor and nav
 export const PAGE_COLORS = {
