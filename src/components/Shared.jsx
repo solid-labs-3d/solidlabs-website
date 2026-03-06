@@ -40,7 +40,7 @@ export function Footer({ links = [] }) {
       {links.length > 0 && (
         <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
           {links.map(l => (
-            <a key={l.label} href={l.href} style={{ fontFamily: 'var(--ff-mono)', fontSize: 8, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--g3)', textDecoration: 'none' }}>
+            <a key={l.label} href={l.href} style={{ fontFamily: 'var(--ff-mono)', fontSize: 8, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--g3)', textDecoration: 'none', filter: 'brightness(5)' }}>
               {l.label}
             </a>
           ))}

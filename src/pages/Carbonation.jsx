@@ -232,7 +232,7 @@ const DivBarId = styled.span`
   font-size: 7.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: ${(p) => p.$color || "#222"};
+  color: ${(p) => p.$color || "#c8e600"};
   filter: brightness(5);
   white-space: nowrap;
 `;
@@ -950,7 +950,7 @@ const FooterCopy = styled.span`
   font-family: ${T.ffMono};
   font-size: 8px;
   letter-spacing: 0.14em;
-  color: #222;
+  color: #c8e600;
   filter: brightness(5);
 `;
 
@@ -980,7 +980,7 @@ export default function CarboNation() {
                 marginBottom: 32,
               }}
             >
-              <LogoMark size={60} />
+              <LogoMark size={30} />
               <div>
                 <div
                   style={{
@@ -1166,7 +1166,7 @@ export default function CarboNation() {
                 <br />
                 No shortcuts.
               </CondHead>
-              <Mono $color="#333">Process</Mono>
+              <Mono $color="#c8e600">Process</Mono>
             </SectionHead>
 
             <div
@@ -1384,7 +1384,7 @@ export default function CarboNation() {
                 <br />
                 for hard problems.
               </CondHead>
-              <Mono $color="#333">Engineering</Mono>
+              <Mono $color="#c8e600">Engineering</Mono>
             </SectionHead>
             <p
               style={{
