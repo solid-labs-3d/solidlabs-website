@@ -96,6 +96,18 @@ const PROCESS_STEPS = [
   { n:'04', t:'Print & QC',      d:'Every part is measured with digital calipers. Any deviation triggers a reprint. You get what you specified — not a near-miss.' },
 ]
 
+function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
+  const s = size,
+    h = Math.round(size * 0.917);
+  return (
+    <svg width={s} height={h} viewBox="0 0 56 52" fill="none">
+      <polygon points="8,1 46,1 52,14 14,14" fill={colors[0]} />
+      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]} />
+      <polygon points="2,39 40,39 46,52 8,52" fill={colors[2]} />
+    </svg>
+  );
+}
+
 export default function Precision() {
   const nav = useNavigate()
   useReveal()
@@ -108,6 +120,28 @@ export default function Precision() {
       <section className="yw-hero">
         <div className="yw-hero-bg"/>
         <div className="yw-hero-grid"/>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+         <LogoMark size={25} colors={["#f5d000", "#c9a800", "#7a6500"]} />
+          <span
+            style={{
+              fontFamily: "Arial Narrow, sans-serif",
+              fontWeight: 900,
+              fontSize: 30,
+              letterSpacing: ".08em",
+              color: "#ffffff",
+            }}
+          >
+            PRECISION
+            <em style={{ fontStyle: "normal", color: "#f0c020" }}>-B2B </em>
+          </span>
+        </div>
         <div className="eyebrow yw rv" style={{ position:'relative' }}>02 — Precision B2B · Engineering Grade</div>
         <h1 className="yw-h1 rv d1" style={{ position:'relative' }}>
           PRECISION<br/>PARTS.<br/><em>ENGINEERED.</em>
@@ -149,7 +183,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#08070a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Services</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>04 — What We Offer</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>04 — What We Offer</span>
         </div>
         <div className="yw-cap-grid">
           {CAPABILITIES.map((c,i) => (
@@ -180,7 +214,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#06060a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Materials</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>05 — What We Print With</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>05 — What We Print With</span>
         </div>
         <div className="rv d1" style={{ overflowX:'auto' }}>
           <table className="mat-table" style={{ width:'100%' }}>
@@ -214,7 +248,7 @@ export default function Precision() {
       <section className="sec-pad" style={{ background:'#08070a', borderColor:'#2a2208' }}>
         <div className="sh rv" style={{ borderColor:'#2a2208' }}>
           <h2 className="sh-t">Our Process</h2>
-          <span className="sh-s" style={{ color:'#3a3008' }}>06 — How B2B Works</span>
+          <span className="sh-s" style={{ color:'#3a3008',filter: "brightness(7)"  }}>06 — How B2B Works</span>
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:2, background:'#2a2208' }}>
           {PROCESS_STEPS.map((s,i) => (
@@ -243,7 +277,7 @@ export default function Precision() {
             </svg>
             <span className="fl-name">SOLIDLABS</span>
           </div>
-          <div className="fl-copy" style={{ color:'#3a3008' }}>© 2025 SolidLabs · Precision B2B · Bengaluru</div>
+          <div className="fl-copy" style={{ color:'#3a3008',filter: "brightness(7)"  }}>© 2025 SolidLabs · Precision B2B · Bengaluru</div>
         </div>
       </footer>
     </div>

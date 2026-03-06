@@ -1,770 +1,1308 @@
-import { useRef } from 'react'
-import styled, { keyframes, createGlobalStyle } from 'styled-components'
+import { useEffect, useRef } from "react";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 
-// ─── TOKENS ──────────────────────────────────────────────────────────────────
-const T = {
-  gl:  '#3aaa4a', glm: '#2a7a3a', gld: '#1a4a24',
-  gl2: '#4fd860', glg: '#a8e6b0',
-  blk: '#060606', s0: '#0e0e0e', s1: '#141414', s2: '#1e1e1e',
-  g3: '#555', g4: '#777', g5: '#999',
-  wht: '#f0ede6',
-  ffCond: "'Barlow Condensed', sans-serif",
-  ffBody: "'Barlow', sans-serif",
-  ffMono: "'DM Mono', monospace",
-}
+/* ─── TOKENS ─── */
+const gl = "#3aaa4a";
+const glm = "#2a7a3a";
+const gld = "#1a4a24";
+const glo = "#4dcf61";
+const blk = "#080808";
+const s0 = "#0e0e0e";
+const s1 = "#141414";
+const s2 = "#1e1e1e";
+const s3 = "#282828";
+const g3 = "#555";
+const g4 = "#777";
+const g5 = "#999";
+const wht = "#f0ede6";
+const ffCond = "'Barlow Condensed', sans-serif";
+const ffBody = "'Barlow', sans-serif";
+const ffMono = "'DM Mono', monospace";
 
-// ─── KEYFRAMES ───────────────────────────────────────────────────────────────
-const glPulse  = keyframes`0%,100%{opacity:1}50%{opacity:.15}`
-const glScan   = keyframes`from{top:0}to{top:100%}`
-const tickAnim = keyframes`from{transform:translateX(0)}to{transform:translateX(-50%)}`
-const fadeUp   = keyframes`from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}`
-const spinLoop = keyframes`from{transform:rotate(0deg)}to{transform:rotate(360deg)}`
-const dashFlow = keyframes`to{stroke-dashoffset:0}`
+/* ─── KEYFRAMES ─── */
+const fadeUp = keyframes`from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}`;
+const glTravel = keyframes`from{stroke-dashoffset:1000}to{stroke-dashoffset:0}`;
+const glSpin = keyframes`from{transform:rotate(0deg)}to{transform:rotate(360deg)}`;
+const scanLine = keyframes`from{top:0}to{top:100%}`;
+const pulse = keyframes`0%,100%{opacity:1}50%{opacity:.15}`;
 
-// ─── GLOBAL FONTS ─────────────────────────────────────────────────────────────
+/* ─── GLOBAL ─── */
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:${T.blk};color:${T.wht};font-family:${T.ffBody};font-weight:300;}
-`
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: ${blk}; color: ${wht}; font-family: ${ffBody}; font-weight: 300; overflow-x: hidden; }
+`;
 
-// ─── SHARED ───────────────────────────────────────────────────────────────────
-const Page = styled.div`background:#060606;`
+/* ═══════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════ */
+const HeroSection = styled.section`
+  min-height: 88vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 48px;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+  background: #060f07;
+  border-bottom: 1px solid #1a2e1b;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+`;
 
-const Section = styled.section`
-  border-bottom:1px solid ${p => p.$border || '#001408'};
-  position:relative;overflow:hidden;
-`
+const HeroRadialBg = styled.div`
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 65% 45%,
+    rgba(58, 170, 74, 0.07),
+    transparent 65%
+  );
+  pointer-events: none;
+`;
 
-const Pad = styled.div`padding:${p => p.$sm ? '60px 48px' : '88px 48px'};`
+const HeroGrid = styled.div`
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(58, 170, 74, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 170, 74, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+`;
+
+const HeroLeft = styled.div`
+  padding-top: 120px;
+  padding-bottom: 80px;
+  position: relative;
+  z-index: 1;
+`;
+
+const LogoRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: ${fadeUp} 0.7s ease 0.1s forwards;
+`;
+
+const LogoText = styled.div`
+  .name {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    color: ${gl};
+    line-height: 1;
+    .bright {
+      color: ${glo};
+    }
+  }
+  .sub {
+    font-family: ${ffMono};
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(58, 170, 74, 0.4);
+    margin-top: 3px;
+  }
+`;
 
 const Eyebrow = styled.div`
-  font-family:${T.ffMono};font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:${T.glm};
-  display:flex;align-items:center;gap:12px;margin-bottom:14px;
-  &::before{content:'';width:18px;height:1px;background:${T.gl};flex-shrink:0;}
-`
+  font-family: ${ffMono};
+  font-size: 8.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: ${gl};
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: ${fadeUp} 0.7s ease 0.2s forwards;
+  &::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: ${gl};
+    display: inline-block;
+    flex-shrink: 0;
+  }
+`;
 
-const Mono = styled.span`
-  font-family:${T.ffMono};font-size:${p => p.$size || '8px'};
-  letter-spacing:${p => p.$ls || '.14em'};text-transform:uppercase;
-  color:${p => p.$color || T.g4};
-`
+const H1 = styled.h1`
+  font-family: ${ffCond};
+  font-weight: 900;
+  font-size: clamp(60px, 9vw, 120px);
+  line-height: 0.86;
+  color: ${wht};
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: ${fadeUp} 0.9s ease 0.3s forwards;
+  .green {
+    color: ${gl};
+  }
+`;
 
-const CondHead = styled.h2`
-  font-family:${T.ffCond};font-weight:900;
-  font-size:${p => p.$size || 'clamp(32px,4vw,52px)'};
-  letter-spacing:.02em;color:${p => p.$color || T.wht};line-height:.9;
-  em{font-style:italic;color:${p => p.$em || T.gl};}
-`
+const HeroDesc = styled.p`
+  font-size: 14px;
+  line-height: 1.85;
+  color: ${g5};
+  max-width: 460px;
+  font-weight: 300;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: ${fadeUp} 0.7s ease 0.45s forwards;
+`;
 
-const BtnGL = styled.button`
-  font-family:${T.ffMono};font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
-  padding:13px 26px;background:${T.gl};color:#000;border:none;cursor:pointer;
-  transition:background .2s;display:inline-flex;align-items:center;gap:8px;
-  &:hover{background:${T.wht};}
-`
+const HeroStats = styled.div`
+  display: flex;
+  gap: 0;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: ${fadeUp} 0.7s ease 0.5s forwards;
+`;
+
+const HeroStat = styled.div`
+  flex: 1;
+  ${({ border }) =>
+    border && `padding-left: 16px; border-left: 1px solid #1a2e1b;`}
+  .n {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 1;
+    color: ${gl};
+  }
+  .l {
+    font-family: ${ffMono};
+    font-size: 7px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(58, 170, 74, 0.35);
+    margin-top: 5px;
+    line-height: 1.8;
+  }
+`;
+
+const HeroBtns = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: ${fadeUp} 0.7s ease 0.6s forwards;
+`;
+
+const BtnGreen = styled.button`
+  font-family: ${ffMono};
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 13px 24px;
+  background: ${gl};
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: ${wht};
+  }
+`;
 
 const BtnGhost = styled.button`
-  font-family:${T.ffMono};font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
-  padding:12px 26px;background:transparent;color:${T.wht};
-  border:1px solid #282828;cursor:pointer;transition:border-color .2s;
-  &:hover{border-color:${T.wht};}
-`
+  font-family: ${ffMono};
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  background: transparent;
+  color: ${wht};
+  border: 1px solid ${s3};
+  cursor: pointer;
+  transition: border-color 0.2s;
+  &:hover {
+    border-color: ${wht};
+  }
+`;
 
-// ─── DIVBAR ──────────────────────────────────────────────────────────────────
-const DivBar = styled.div`
-  height:34px;background:#0a0a0a;border-bottom:1px solid #141414;
-  ${p => p.$borderTop ? 'border-top:1px solid '+p.$borderTop+';' : ''}
-  padding:0 48px;display:flex;align-items:center;gap:14px;
-`
-const DivBarLabel = styled.span`
-  font-family:${T.ffMono};font-size:7.5px;letter-spacing:.24em;text-transform:uppercase;
-  color:${p => p.$color || '#222'};white-space:nowrap;
-`
-const DivBarRule = styled.div`
-  flex:1;height:1px;background:${p => p.$bg || 'linear-gradient(90deg,#1a1a1a,transparent)'};
-`
-const DivBarId = styled.span`
-  font-family:${T.ffMono};font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:${p => p.$color || '#222'};white-space:nowrap;
-`
+const HeroRight = styled.div`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0;
+  animation: ${fadeUp} 0.9s ease 0.35s forwards;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 
-// ─── TICKER ──────────────────────────────────────────────────────────────────
-const TickerWrap = styled.div`overflow:hidden;padding:9px 0;background:${T.gl};`
-const TickerTrack = styled.div`
-  display:flex;white-space:nowrap;animation:${tickAnim} 32s linear infinite;
-`
-const TickItem = styled.span`
-  font-family:${T.ffCond};font-weight:800;font-size:13px;letter-spacing:.12em;
-  text-transform:uppercase;padding:0 22px;flex-shrink:0;color:#000;
-`
-const TickDot = styled.span`opacity:.3;margin:0 8px;`
+const DiagramWrap = styled.div`
+  position: relative;
+  width: 360px;
+  height: 360px;
+`;
 
-const GL_TICKER_ITEMS = [
-  'Prepreg Offcuts Reclaimed','Vendor Collection · Bengaluru','CF Fibre to Pellet',
-  'Closed-Loop Feedstock','Zero Landfill Mandate','3R: Reduce Reuse Recycle',
-  'Waste Traceability','ISO 14001 Pathway','Short-Fibre Compounding',
-  'Circular by Design','Made in India','SolidLabs GreenLoop',
-]
+const SpinRing = styled.div`
+  position: absolute;
+  inset: -14px;
+  border: 1px dashed rgba(58, 170, 74, 0.07);
+  border-radius: 50%;
+  animation: ${glSpin} 60s linear infinite;
+`;
 
-function Ticker({ items }) {
-  const doubled = [...items, ...items]
-  return (
-    <TickerWrap>
-      <TickerTrack>
-        {doubled.map((t, i) => (
-          <TickItem key={i}>{t}<TickDot>·</TickDot></TickItem>
-        ))}
-      </TickerTrack>
-    </TickerWrap>
-  )
-}
+/* ═══════════════════════════════════════════
+   STAT BAND
+═══════════════════════════════════════════ */
+const StatBand = styled.div`
+  background: #0d160e;
+  border-bottom: 1px solid #1a2e1b;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
 
-// ─── LOGO MARK ───────────────────────────────────────────────────────────────
-function LogoMark({ size = 60, colors = ['#3aaa4a','#2a7a3a','#1a4a24'] }) {
-  const s = size, h = Math.round(size * 0.917)
+const StatBandItem = styled.div`
+  padding: 32px 28px;
+  border-right: 1px solid #1a2e1b;
+  background: ${({ highlight }) =>
+    highlight ? "rgba(26,74,36,.25)" : "transparent"};
+  &:last-child {
+    border-right: none;
+  }
+  .n {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 0.9;
+    color: ${({ red }) => (red ? "#e05030" : gl)};
+    margin-bottom: 6px;
+  }
+  .l {
+    font-family: ${ffMono};
+    font-size: 7.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(58, 170, 74, 0.3);
+    line-height: 1.8;
+  }
+`;
+
+/* ═══════════════════════════════════════════
+   SECTION SHARED
+═══════════════════════════════════════════ */
+const SecPad = styled.section`
+  padding: 88px 48px;
+  background: ${({ bg }) => bg || "#060f07"};
+  border-bottom: 1px solid #1a2e1b;
+  @media (max-width: 768px) {
+    padding: 56px 20px;
+  }
+`;
+
+const SecHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid #1a2e1b;
+  padding-bottom: 16px;
+  margin-bottom: 48px;
+  h2 {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: clamp(32px, 4vw, 52px);
+    color: ${wht};
+  }
+  span {
+    font-family: ${ffMono};
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(58, 170, 74, 7);
+  }
+`;
+
+/* ═══════════════════════════════════════════
+   5 STAGES GRID
+═══════════════════════════════════════════ */
+const StagesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: #1a2e1b;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+`;
+
+const StageCard = styled.div`
+  background: #060f07;
+  padding: 32px 22px;
+  position: relative;
+  transition: background 0.2s;
+  &:hover {
+    background: #0a140a;
+  }
+  .big-num {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 48px;
+    color: rgba(58, 170, 74, 0.05);
+    line-height: 1;
+    position: absolute;
+    top: 12px;
+    right: 14px;
+  }
+  .icon {
+    width: 34px;
+    height: 34px;
+    border: 1px solid ${({ iconBorder }) => iconBorder || "rgba(58,170,74,.25)"};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .title {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 18px;
+    color: ${wht};
+    margin-bottom: 7px;
+  }
+  .desc {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: ${g5};
+    font-weight: 300;
+  }
+  .tag {
+    font-family: ${ffMono};
+    font-size: 7px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: ${gl};
+    margin-top: 12px;
+    border-top: 1px solid rgba(58, 170, 74, 0.08);
+    padding-top: 10px;
+  }
+`;
+
+/* ═══════════════════════════════════════════
+   MATERIALS SECTION
+═══════════════════════════════════════════ */
+const MaterialsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+`;
+
+const BarLabel = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-family: ${ffMono};
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${g5};
+  margin-bottom: 5px;
+  span {
+    color: ${({ red }) =>
+      red ? "#e05030" : ({ yellow }) => (yellow ? "#d4e830" : gl)};
+  }
+`;
+
+const BarTrack = styled.div`
+  height: 6px;
+  background: rgba(58, 170, 74, 0.08);
+`;
+
+const BarFill = styled.div`
+  height: 100%;
+  background: ${({ pattern }) =>
+    pattern
+      ? "repeating-linear-gradient(90deg,rgba(58,170,74,.3) 0px,rgba(58,170,74,.3) 8px,transparent 8px,transparent 14px)"
+      : ({ red }) =>
+          red ? "rgba(224,80,48,.3)" : ({ dim }) => (dim ? glm : gl)};
+  width: ${({ width }) => width || "0%"};
+`;
+
+const ValueBox = styled.div`
+  padding: 20px 22px;
+  border: 1px solid rgba(58, 170, 74, 0.15);
+  background: rgba(26, 74, 36, 0.2);
+  margin-bottom: 16px;
+`;
+
+const ValueChips = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+`;
+
+const Chip = styled.span`
+  font-family: ${ffMono};
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${gl};
+  padding: 6px 12px;
+  border: 1px solid rgba(58, 170, 74, 0.25);
+`;
+
+const WarningBox = styled.div`
+  padding: 20px 22px;
+  border: 1px solid rgba(224, 80, 48, 0.2);
+  background: rgba(224, 80, 48, 0.04);
+  .title {
+    font-family: ${ffMono};
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e05030;
+    margin-bottom: 8px;
+  }
+  p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: ${g5};
+    font-weight: 300;
+  }
+`;
+
+const MatSubLabel = styled.div`
+  font-family: ${ffMono};
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(58, 170, 74, 0.4);
+  margin-bottom: 20px;
+`;
+
+/* ═══════════════════════════════════════════
+   ROADMAP
+═══════════════════════════════════════════ */
+const RoadmapWrap = styled.div`
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      ${gl},
+      ${gl} 60%,
+      rgba(58, 170, 74, 0.15)
+    );
+  }
+`;
+
+const RoadmapGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+`;
+
+const RoadNode = styled.div`
+  padding: 0 18px 0 0;
+  position: relative;
+  .dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: ${({ done }) => (done ? gl : "#121c13")};
+    border: ${({ done }) =>
+      done
+        ? "none"
+        : `1px solid rgba(58,170,74,${({ faint }) => (faint ? ".12" : ".2")})`};
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+    ${({ done, glow }) =>
+      done &&
+      glow &&
+      `box-shadow: 0 0 0 3px rgba(58,170,74,.15), 0 0 14px rgba(58,170,74,.3);`}
+  }
+  .date {
+    font-family: ${ffMono};
+    font-size: 8px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: ${({ done }) => (done ? gl : "rgba(58,170,74,.25)")};
+    margin-bottom: 6px;
+  }
+  .title {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 16px;
+    color: ${({ done }) => (done ? wht : g4)};
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: ${({ done }) => (done ? "rgba(90,122,92,1)" : "rgba(58,74,59,.9)")};
+    font-weight: 300;
+  }
+`;
+
+/* ═══════════════════════════════════════════
+   CTA
+═══════════════════════════════════════════ */
+const CtaSection = styled.section`
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+  background: #060f07;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 60% at 50% 50%,
+      rgba(26, 74, 36, 0.4),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    padding: 72px 20px;
+  }
+`;
+
+const CtaH = styled.h2`
+  font-family: ${ffCond};
+  font-weight: 900;
+  font-size: clamp(52px, 9vw, 110px);
+  line-height: 0.86;
+  color: ${wht};
+  margin-bottom: 16px;
+  position: relative;
+  .green {
+    color: ${gl};
+  }
+`;
+
+const CtaDesc = styled.p`
+  font-size: 14px;
+  color: ${g5};
+  max-width: 420px;
+  line-height: 1.85;
+  font-weight: 300;
+  margin: 0 auto 32px;
+  position: relative;
+`;
+
+const CtaBtns = styled.div`
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  position: relative;
+  flex-wrap: wrap;
+`;
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+const Footer = styled.footer`
+  background: #060f07;
+  border-top: 1px solid #1a2e1b;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  @media (max-width: 768px) {
+    padding: 28px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const FooterLogo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .name {
+    font-family: ${ffCond};
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: ${gl};
+    .bright {
+      color: ${glo};
+    }
+  }
+  .by {
+    font-family: ${ffMono};
+    font-size: 7px;
+    letter-spacing: 0.1em;
+    color: rgba(58, 170, 74, 7);
+    margin-left: 6px;
+  }
+`;
+
+const FooterCopy = styled.div`
+  font-family: ${ffMono};
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: rgba(58, 170, 74, 5);
+`;
+
+/* ═══════════════════════════════════════════
+   SVG LOGO
+═══════════════════════════════════════════ */
+const SolidLabsMark = ({ size = 52 }) => (
+  <svg
+    width={size}
+    height={Math.round(size * 0.93)}
+    viewBox="0 0 56 52"
+    fill="none"
+  >
+    <polygon points="8,1 46,1 52,14 14,14" fill={gl} />
+    <polygon points="5,20 43,20 49,33 11,33" fill={glm} />
+    <polygon points="2,39 40,39 46,52 8,52" fill={gld} />
+  </svg>
+);
+
+/* ═══════════════════════════════════════════
+   CIRCULAR DIAGRAM SVG
+═══════════════════════════════════════════ */
+const CircularDiagram = () => (
+  <svg
+    viewBox="0 0 400 400"
+    fill="none"
+    style={{ width: "100%", height: "100%", position: "absolute", inset: 0 }}
+  >
+    <defs>
+      <radialGradient id="glCentre" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#1a4a24" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#060f07" stopOpacity="0.98" />
+      </radialGradient>
+    </defs>
+
+    {/* orbit track */}
+    <circle
+      cx="200"
+      cy="200"
+      r="140"
+      stroke="rgba(58,170,74,.1)"
+      strokeWidth="1.5"
+      strokeDasharray="4 6"
+    />
+
+    {/* travelling dots */}
+    {[0, 1.33, 2.66].map((delay, i) => (
+      <circle
+        key={i}
+        cx="200"
+        cy="200"
+        r="5"
+        fill={i === 1 ? gl : glo}
+        style={{
+          transformOrigin: "200px 200px",
+          animation: `glOrbit 4s linear ${delay}s infinite`,
+        }}
+      />
+    ))}
+
+    {/* 5 nodes */}
+    {[
+      {
+        cx: 200,
+        cy: 60,
+        label: "1",
+        text: "COLLECT",
+        sub: "vendor pickup",
+        tx: 200,
+        ty: 88,
+        lx: 152,
+        ly: 76,
+        lw: 96,
+      },
+      {
+        cx: 333,
+        cy: 145,
+        label: "2",
+        text: "SORT",
+        sub: "by type",
+        tx: 371,
+        ty: 136,
+        lx: 346,
+        ly: 124,
+        lw: 50,
+      },
+      {
+        cx: 281,
+        cy: 308,
+        label: "3",
+        text: "SHRED",
+        sub: "extrude",
+        tx: 317,
+        ty: 300,
+        lx: 292,
+        ly: 288,
+        lw: 50,
+      },
+      {
+        cx: 119,
+        cy: 308,
+        label: "4",
+        text: "MAKE",
+        sub: "new parts",
+        tx: 83,
+        ty: 300,
+        lx: 58,
+        ly: 288,
+        lw: 50,
+      },
+      {
+        cx: 67,
+        cy: 145,
+        label: "5",
+        text: "RETURN",
+        sub: "value",
+        tx: 30,
+        ty: 136,
+        lx: 4,
+        ly: 124,
+        lw: 52,
+      },
+    ].map((n) => (
+      <g key={n.label}>
+        <circle
+          cx={n.cx}
+          cy={n.cy}
+          r="14"
+          fill="#0d160e"
+          stroke={gl}
+          strokeWidth="1.5"
+        />
+        <text
+          x={n.cx}
+          y={n.cy + 5}
+          textAnchor="middle"
+          fontFamily="Barlow Condensed,sans-serif"
+          fontWeight="900"
+          fontSize="12"
+          fill={gl}
+        >
+          {n.label}
+        </text>
+        <rect
+          x={n.lx}
+          y={n.ly}
+          width={n.lw}
+          height="28"
+          rx="1"
+          fill="rgba(6,15,7,.94)"
+          stroke="rgba(58,170,74,.2)"
+          strokeWidth="1"
+        />
+        <text
+          x={n.tx}
+          y={n.ty}
+          textAnchor="middle"
+          fontFamily="DM Mono,monospace"
+          fontSize="7"
+          letterSpacing="1.5"
+          fill={gl}
+        >
+          {n.text}
+        </text>
+        <text
+          x={n.tx}
+          y={n.ty + 10}
+          textAnchor="middle"
+          fontFamily="Barlow,sans-serif"
+          fontSize="8.5"
+          fill="rgba(58,170,74,.45)"
+        >
+          {n.sub}
+        </text>
+      </g>
+    ))}
+
+    {/* centre mark */}
+    <circle
+      cx="200"
+      cy="200"
+      r="52"
+      fill="url(#glCentre)"
+      stroke="rgba(58,170,74,.12)"
+      strokeWidth="1"
+    />
+    <polygon points="184,191 216,191 221,202 189,202" fill={gl} />
+    <polygon points="182,206 214,206 219,217 187,217" fill={glm} />
+    <polygon points="180,221 212,221 217,232 185,232" fill={gld} />
+    <text
+      x="200"
+      y="184"
+      textAnchor="middle"
+      fontFamily="Barlow Condensed,sans-serif"
+      fontWeight="900"
+      fontSize="8"
+      letterSpacing="2"
+      fill="rgba(58,170,74,.5)"
+    >
+      GREENLOOP
+    </text>
+  </svg>
+);
+
+function LogoMark({ size = 60, colors = ["#c8e600", "#9ab200", "#5a6800"] }) {
+  const s = size,
+    h = Math.round(size * 0.917);
   return (
     <svg width={s} height={h} viewBox="0 0 56 52" fill="none">
-      <polygon points="8,1 46,1 52,14 14,14"  fill={colors[0]}/>
-      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]}/>
-      <polygon points="2,39 40,39 46,52 8,52"  fill={colors[2]}/>
+      <polygon points="8,1 46,1 52,14 14,14" fill={colors[0]} />
+      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]} />
+      <polygon points="2,39 40,39 46,52 8,52" fill={colors[2]} />
     </svg>
-  )
+  );
 }
-
-// ─── SECTION HEAD ────────────────────────────────────────────────────────────
-const SectionHead = styled.div`
-  display:flex;justify-content:space-between;align-items:baseline;
-  border-bottom:1px solid #141414;padding-bottom:18px;margin-bottom:52px;
-`
-
-// ─── HERO ────────────────────────────────────────────────────────────────────
-const HeroGrid = styled.div`
-  min-height:92vh;display:grid;grid-template-columns:1fr 1fr;
-  position:relative;overflow:hidden;border-bottom:1px solid #001408;background:#060606;
-  @media(max-width:768px){grid-template-columns:1fr;}
-`
-const HeroGlow = styled.div`
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 55% 40%,rgba(58,170,74,.05),transparent 65%);
-  pointer-events:none;
-`
-const HeroScan = styled.div`
-  position:absolute;left:0;right:0;height:1px;z-index:2;
-  background:linear-gradient(90deg,transparent,${T.gl} 40%,${T.gl} 60%,transparent);
-  opacity:.05;animation:${glScan} 12s linear infinite;pointer-events:none;
-`
-const HeroLeft = styled.div`
-  position:relative;z-index:3;padding:130px 48px 72px;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  border-right:1px solid rgba(58,170,74,.06);
-  @media(max-width:768px){padding:130px 20px 60px;border-right:none;}
-`
-const HeroRight = styled.div`
-  position:relative;z-index:3;
-  display:flex;align-items:center;justify-content:center;padding:40px;
-  @media(max-width:768px){display:none;}
-`
-const Reg = styled.div`
-  position:absolute;width:14px;height:14px;
-  ${p => p.$tl ? 'top:16px;left:16px;border-top:1px solid rgba(58,170,74,.3);border-left:1px solid rgba(58,170,74,.3);' : ''}
-  ${p => p.$tr ? 'top:16px;right:16px;border-top:1px solid rgba(58,170,74,.3);border-right:1px solid rgba(58,170,74,.3);' : ''}
-  ${p => p.$bl ? 'bottom:16px;left:16px;border-bottom:1px solid rgba(58,170,74,.3);border-left:1px solid rgba(58,170,74,.3);' : ''}
-  ${p => p.$br ? 'bottom:16px;right:16px;border-bottom:1px solid rgba(58,170,74,.3);border-right:1px solid rgba(58,170,74,.3);' : ''}
-`
-const HeroH1 = styled.h1`
-  font-family:${T.ffCond};font-weight:900;
-  font-size:clamp(60px,10vw,140px);line-height:.84;letter-spacing:.01em;margin-bottom:28px;
-  animation:${fadeUp} .9s ease .25s both;
-  em{font-style:italic;color:${T.gl};}
-`
-const HeroStats = styled.div`
-  display:flex;border-top:1px solid #141414;padding-top:20px;gap:0;
-`
-const StatItem = styled.div`
-  flex:1;
-  &+&{padding-left:16px;border-left:1px solid #141414;}
-`
-const StatNum = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:26px;line-height:1;color:${T.wht};
-  span{color:${T.gl};font-size:15px;margin-left:2px;}
-`
-const StatLabel = styled.div`
-  font-family:${T.ffMono};font-size:7px;letter-spacing:.14em;text-transform:uppercase;
-  color:#444;margin-top:5px;line-height:1.6;
-`
-
-// ─── STATUS CARD ─────────────────────────────────────────────────────────────
-const StatusDot = styled.div`
-  width:6px;height:6px;border-radius:50%;background:${T.gl};
-  animation:${glPulse} 2.4s ease-in-out infinite;
-`
-const StatusCard = styled.div`
-  width:100%;max-width:300px;background:rgba(6,6,6,.96);border:1px solid #1e2e1e;
-`
-const StatusHead = styled.div`
-  background:#0a0e0a;border-bottom:1px solid #1a2a1a;
-  padding:10px 14px;display:flex;align-items:center;justify-content:space-between;
-`
-const StatusLbl = styled.span`font-family:${T.ffMono};font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:${T.gl};`
-const StatusRow = styled.div`
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:9px 14px;border-bottom:1px solid #141414;
-  &:last-child{border-bottom:none;}
-`
-const StatusKey = styled.span`font-family:${T.ffMono};font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:#333;`
-const StatusVal = styled.span`
-  font-family:${T.ffCond};font-weight:700;font-size:15px;letter-spacing:.03em;color:${T.wht};
-  sup{font-family:${T.ffMono};font-weight:300;font-size:7px;color:${T.gl};margin-left:2px;}
-`
-
-// ─── CIRCULAR LOOP VISUAL ────────────────────────────────────────────────────
-function CircularLoopVisual({ size = 220 }) {
-  const cx = size / 2
-  const r = size * 0.38
-  const stages = [
-    { label: 'COLLECT',   icon: '↑', angle: -90 },
-    { label: 'SORT',      icon: '◈', angle: -18 },
-    { label: 'PROCESS',   icon: '⚙', angle: 54  },
-    { label: 'COMPOUND',  icon: '◉', angle: 126 },
-    { label: 'SUPPLY',    icon: '→', angle: 198 },
-  ]
-  const toRad = deg => (deg * Math.PI) / 180
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      {/* Outer ring */}
-      <circle cx={cx} cy={cx} r={r} stroke={T.gld} strokeWidth="1" fill="none" strokeDasharray="4 8" />
-      {/* Inner glow ring */}
-      <circle cx={cx} cy={cx} r={r * 0.6} stroke={`rgba(58,170,74,.08)`} strokeWidth="1" fill="none" />
-      {/* Center logomark-ish */}
-      <text x={cx} y={cx - 8} textAnchor="middle" fontFamily={T.ffCond} fontSize="22" fontWeight="900" fill={T.gl} letterSpacing="2">GL</text>
-      <text x={cx} y={cx + 8} textAnchor="middle" fontFamily={T.ffMono} fontSize="6" fill={T.glm} letterSpacing="3">GREENLOOP</text>
-      {/* Stage nodes */}
-      {stages.map(({ label, icon, angle }) => {
-        const rad = toRad(angle)
-        const nx = cx + r * Math.cos(rad)
-        const ny = cx + r * Math.sin(rad)
-        const lx = cx + (r + 26) * Math.cos(rad)
-        const ly = cx + (r + 26) * Math.sin(rad)
-        return (
-          <g key={label}>
-            <circle cx={nx} cy={ny} r={12} fill="#0a0a0a" stroke={T.gl} strokeWidth="1" />
-            <text x={nx} y={ny + 4} textAnchor="middle" fontSize="10" fill={T.gl}>{icon}</text>
-            <text x={lx} y={ly + 3} textAnchor="middle" fontFamily={T.ffMono} fontSize="5.5" fill={T.glm} letterSpacing="1">{label}</text>
-          </g>
-        )
-      })}
-      {/* Connecting arrows between nodes */}
-      {stages.map(({ angle }, i) => {
-        const nextAngle = stages[(i + 1) % stages.length].angle
-        const midAngle = (angle + nextAngle) / 2
-        const rad = toRad(midAngle)
-        const ax = cx + (r + 3) * Math.cos(rad)
-        const ay = cx + (r + 3) * Math.sin(rad)
-        return (
-          <text key={`arr-${i}`} x={ax} y={ay + 3} textAnchor="middle" fontSize="7" fill={`rgba(58,170,74,.4)`}>›</text>
-        )
-      })}
-    </svg>
-  )
-}
-
-// ─── LOOP STAGE CARDS ────────────────────────────────────────────────────────
-const StageGrid = styled.div`
-  display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#001408;
-  @media(max-width:900px){grid-template-columns:1fr 1fr;}
-  @media(max-width:500px){grid-template-columns:1fr;}
-`
-const StageCard = styled.div`
-  background:#060606;padding:44px 32px;position:relative;overflow:hidden;
-  transition:background .2s;
-  &:hover{background:#060e06;}
-  &::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-    background:${T.gl};transform:scaleX(0);transform-origin:left;
-    transition:transform .35s ease;}
-  &:hover::after{transform:scaleX(1);}
-`
-const StageNum = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:52px;color:#0d1a0d;
-  line-height:1;margin-bottom:20px;
-`
-const StageIcon = styled.div`
-  width:36px;height:36px;border:1px solid ${T.gld};display:flex;
-  align-items:center;justify-content:center;margin-bottom:16px;
-  font-size:16px;color:${T.gl};
-`
-const StageTitle = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:22px;letter-spacing:.03em;
-  color:${T.wht};line-height:1;margin-bottom:6px;
-`
-const StageTag = styled.div`
-  font-family:${T.ffMono};font-size:7px;letter-spacing:.16em;text-transform:uppercase;
-  color:${T.glm};margin-bottom:12px;
-`
-const StageDesc = styled.p`
-  font-size:13px;color:${T.g4};line-height:1.8;font-weight:300;margin-bottom:16px;
-`
-const StageSpecs = styled.ul`list-style:none;display:flex;flex-direction:column;gap:5px;`
-const StageSpecItem = styled.li`
-  font-family:${T.ffMono};font-size:7px;letter-spacing:.1em;color:#333;
-  display:flex;align-items:baseline;gap:6px;
-  &::before{content:'·';color:${T.gl};font-size:10px;line-height:1;}
-`
-
-const LOOP_STAGES = [
-  {
-    n:'01', icon:'↑', title:'Collect', tag:'Vendor · Workshop · Site',
-    desc:'Scheduled vendor pickup from fabrication workshops, motorsport teams, and drone manufacturers in Bengaluru. Prepreg offcuts, cured scrap, dry fibre waste — all accepted.',
-    specs:['Minimum 500g per collection','Scheduled fortnightly runs','Traceability tag issued on pickup'],
-  },
-  {
-    n:'02', icon:'◈', title:'Sort', tag:'Cured · Uncured · Dry Fibre',
-    desc:'Incoming waste is classified by state — cured laminate, uncured prepreg, dry woven fabric, and contaminated scrap. Each stream follows a different processing route.',
-    specs:['Cured: shredded to short-fibre','Uncured: re-cure then process','Contaminated: pyrolysis pathway'],
-  },
-  {
-    n:'03', icon:'⚙', title:'Process', tag:'Shred · Mill · Pellet',
-    desc:'Cured CF scrap is granulated and milled into short-fibre feedstock. Fibre length 0.2–6mm. Contamination measured by LOI. Rejected lots are returned to the pyrolysis stream.',
-    specs:['Fibre length 0.2–6mm','LOI < 1% target','Batch traceability retained'],
-  },
-  {
-    n:'04', icon:'◉', title:'Compound', tag:'CF + PA6 · CF + PP · CF + ABS',
-    desc:'Short CF fibre is compounded with engineering thermoplastic carriers — PA6, PP, ABS. The result is a pelletised CF-reinforced compound for injection moulding applications.',
-    specs:['CF loading 15–40% by weight','Tensile strength 2–4× base polymer','Custom formulations available'],
-  },
-  {
-    n:'05', icon:'→', title:'Supply', tag:'Pellet · Sheet · Compound',
-    desc:'Compounded pellets are supplied back into manufacturing. Closed loop: SolidLabs uses returned compound in non-structural brackets, housings, and jigs. Surplus sold to moulders.',
-    specs:['Standard 25kg sacks','Custom blend on 100kg+ order','Certificate of recycled content'],
-  },
-]
-
-// ─── MATERIAL ACCEPTANCE ─────────────────────────────────────────────────────
-const AcceptGrid = styled.div`display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#001408;@media(max-width:768px){grid-template-columns:1fr 1fr;}`
-const AcceptCard = styled.div`
-  background:#060606;padding:32px 28px;
-  border-left:2px solid ${p => p.$ok ? T.gl : '#2a1a1a'};
-`
-const AcceptMark = styled.div`
-  width:22px;height:22px;border-radius:50%;
-  background:${p => p.$ok ? 'rgba(58,170,74,.12)' : 'rgba(80,20,20,.12)'};
-  border:1px solid ${p => p.$ok ? T.gl : '#4a2020'};
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:${p => p.$ok ? T.gl : '#4a2020'};
-  margin-bottom:12px;
-`
-const AcceptTitle = styled.div`font-family:${T.ffCond};font-weight:900;font-size:18px;color:${T.wht};margin-bottom:4px;`
-const AcceptTag = styled.div`font-family:${T.ffMono};font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:${p => p.$ok ? T.glm : '#4a2020'};margin-bottom:8px;`
-const AcceptDesc = styled.p`font-size:12.5px;color:${T.g4};line-height:1.75;font-weight:300;`
-
-const ACCEPT_ITEMS = [
-  { ok:true,  title:'Prepreg Offcuts',    tag:'Uncured · Any fibre system', desc:'Dry offcuts and trimmings from the cutting table. Minimum 200g per bag. Label with resin system if known.' },
-  { ok:true,  title:'Cured Scrap',        tag:'Laminates · Tubes · Sheets',  desc:'Cured panels, broken tooling, rejected parts. All fibre systems accepted. Contamination assessed on arrival.' },
-  { ok:true,  title:'Dry Fibre Waste',    tag:'Woven · UD · Hybrid',         desc:'Unimpregnated fabric offcuts, fraying, and short lengths. Bagged separately from prepreg — fibre integrity better retained.' },
-  { ok:true,  title:'CF/Kevlar Hybrid',   tag:'Mixed weave · Separated OK',  desc:'Hybrid weaves accepted. Note: Kevlar fibres are separated and composted / landfill-diverted. CF content recovered.' },
-  { ok:false, title:'Contaminated Scrap', tag:'Oil · Solvent · Paint',       desc:'Heavily contaminated CF not suitable for short-fibre recovery. Directed to pyrolysis partners. Still collected — just slower stream.' },
-  { ok:false, title:'Glass Fibre / GFRP', tag:'Not accepted · CFRP only',    desc:'GreenLoop is a CFRP-only circuit. Glass fibre contamination degrades CF compound quality. Please separate before submission.' },
-]
-
-// ─── VENDOR SECTION ──────────────────────────────────────────────────────────
-const VendorPanel = styled.div`
-  display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#001408;
-  @media(max-width:768px){grid-template-columns:1fr;}
-`
-const VendorCard = styled.div`
-  background:#060606;padding:52px 44px;
-`
-const VendorBig = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:clamp(44px,6vw,80px);
-  line-height:.86;letter-spacing:.01em;color:${T.wht};margin-bottom:16px;
-  em{font-style:italic;color:${T.gl};}
-`
-const VendorForm = styled.div`display:flex;flex-direction:column;gap:12px;max-width:380px;`
-const VendorInput = styled.div`
-  border:1px solid #1e1e1e;background:#0a0a0a;
-  padding:11px 14px;font-family:${T.ffMono};font-size:8px;letter-spacing:.14em;
-  text-transform:uppercase;color:#333;display:flex;justify-content:space-between;
-  align-items:center;cursor:text;
-  &:hover{border-color:#2a2a2a;}
-`
-const VendorRow = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:12px;`
-
-// ─── IMPACT STATS ────────────────────────────────────────────────────────────
-const ImpactBand = styled.div`
-  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#001408;
-  @media(max-width:768px){grid-template-columns:1fr 1fr;}
-`
-const ImpactCard = styled.div`
-  background:#060606;padding:44px 32px;text-align:center;
-  position:relative;overflow:hidden;
-  &::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-    width:40px;height:80px;
-    background:radial-gradient(ellipse at 50% 100%,rgba(58,170,74,.06),transparent 70%);
-    pointer-events:none;}
-`
-const ImpactNum = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:clamp(36px,4vw,56px);
-  line-height:1;color:${T.gl};letter-spacing:.02em;margin-bottom:6px;
-  span{font-size:.5em;color:${T.glm};}
-`
-const ImpactLabel = styled.div`
-  font-family:${T.ffMono};font-size:7px;letter-spacing:.18em;text-transform:uppercase;
-  color:#333;line-height:1.7;
-`
-
-// ─── ROADMAP ─────────────────────────────────────────────────────────────────
-const RoadmapWrap = styled.div`
-  position:relative;padding:0 48px;
-  &::before{content:'';position:absolute;left:48px;top:0;bottom:0;width:1px;background:linear-gradient(${T.gld},transparent);}
-`
-const RoadStep = styled.div`
-  display:grid;grid-template-columns:200px 1fr;gap:40px;
-  padding:40px 0 40px 32px;border-bottom:1px solid #0d0d0d;position:relative;
-  &:last-child{border-bottom:none;}
-  @media(max-width:768px){grid-template-columns:1fr;padding-left:20px;}
-`
-const RoadDot = styled.div`
-  position:absolute;left:-5px;top:48px;width:10px;height:10px;
-  border-radius:50%;background:${p => p.$active ? T.gl : '#1e2e1e'};
-  border:1px solid ${p => p.$active ? T.gl : T.gld};
-  box-shadow:${p => p.$active ? `0 0 10px rgba(58,170,74,.4)` : 'none'};
-`
-const RoadDate = styled.div`
-  font-family:${T.ffMono};font-size:8px;letter-spacing:.2em;text-transform:uppercase;
-  color:${p => p.$active ? T.gl : '#333'};padding-top:6px;
-`
-const RoadTitle = styled.div`
-  font-family:${T.ffCond};font-weight:900;font-size:22px;color:${T.wht};margin-bottom:6px;
-`
-const RoadDesc = styled.p`font-size:13.5px;color:${T.g4};line-height:1.8;font-weight:300;`
-const RoadTag = styled.span`
-  font-family:${T.ffMono};font-size:6.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:${p => p.$active ? '#000' : T.glm};background:${p => p.$active ? T.gl : 'transparent'};
-  border:1px solid ${p => p.$active ? T.gl : T.gld};padding:2px 8px;display:inline-block;margin-bottom:12px;
-`
-
-const ROADMAP = [
-  {
-    date:'Q1 2024 · Live', title:'Bengaluru Pilot', tag:'Active', active:true,
-    desc:'Scheduled collection from 12 workshops in Electronic City and Peenya industrial areas. 800kg CF scrap diverted from landfill in the first quarter.',
-  },
-  {
-    date:'Q3 2024 · Complete', title:'Short-Fibre Compound Line', tag:'Complete', active:true,
-    desc:'Shredder and twin-screw extruder commissioned. First CF/PA6 compound batch produced. Tensile strength 2.4× base PA6 at 25% CF loading.',
-  },
-  {
-    date:'Q2 2025 · In Progress', title:'Vendor Portal Launch', tag:'In Progress', active:true,
-    desc:'Self-serve vendor registration, collection scheduling, and waste certificate download. Currently in closed beta with 8 partner fabricators.',
-  },
-  {
-    date:'Q4 2025 · Planned', title:'Pan-India Collection Network', tag:'Planned', active:false,
-    desc:'Partner logistics nodes in Mumbai, Chennai, Hyderabad, and Pune. Target: 5 tonnes CF scrap per month across all nodes.',
-  },
-  {
-    date:'2026 · Roadmap', title:'Pyrolysis Stream', tag:'Roadmap', active:false,
-    desc:'Partnership with pyrolysis facility for contaminated CF recovery. Targets fibre lengths 10–50mm with surface treatment for structural reuse.',
-  },
-]
-
-// ─── CTA ─────────────────────────────────────────────────────────────────────
-const CtaSection = styled.section`
-  padding:100px 48px;text-align:center;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;
-  background:#060606;border-top:1px solid #141414;
-  &::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-    width:60%;height:220px;
-    background:radial-gradient(ellipse at 50% 100%,rgba(58,170,74,.06),transparent 70%);
-    pointer-events:none;}
-`
-
-const Footer = styled.footer`background:${T.blk};border-top:1px solid #141414;`
-const FooterInner = styled.div`
-  padding:36px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
-`
-const FooterLogo = styled.div`display:flex;align-items:center;gap:10px;`
-const FooterName = styled.span`font-family:${T.ffCond};font-weight:900;font-size:15px;letter-spacing:.06em;`
-const FooterCopy = styled.span`font-family:${T.ffMono};font-size:8px;letter-spacing:.14em;color:#222;`
-
-// ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════
+   MAIN COMPONENT
+═══════════════════════════════════════════ */
 export default function GreenLoop() {
-  const loopRef = useRef(null)
-  const vendorRef = useRef(null)
+  const materialsRef = useRef(null);
+  const roadmapRef = useRef(null);
+
+  useEffect(() => {
+    /* Inject orbit keyframe for SVG circles dynamically */
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes glOrbit {
+       from { transform: rotate(0deg) translateY(-140px) rotate(0deg); }
+       to   { transform: rotate(360deg) translateY(-140px) rotate(-360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
       <GlobalStyle />
-      <Page>
 
-        {/* ── HERO ── */}
-        <HeroGrid>
-          <HeroGlow />
-          <HeroScan />
-          <HeroLeft>
-            <div style={{ display:'flex', alignItems:'center', gap:18, marginBottom:32 }}>
-              <LogoMark size={60} />
-              <div>
-                <div style={{ fontFamily:T.ffCond, fontWeight:900, fontSize:24, letterSpacing:'.08em', lineHeight:1, color:T.wht }}>
-                  GREEN<span style={{ color:T.gl }}>LOOP</span>
-                </div>
-                <div style={{ fontFamily:T.ffMono, fontSize:7, letterSpacing:'.22em', textTransform:'uppercase', color:T.glm, marginTop:4 }}>
-                  Circular CF · SolidLabs
-                </div>
+      {/* ── HERO ── */}
+      <HeroSection>
+        <HeroRadialBg />
+        <HeroGrid />
+
+        <HeroLeft>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 8,
+              marginBottom: 20,
+            }}
+          >
+            <LogoMark size={25} colors={["#22c55e", "#16a34a", "#14532d"]} />
+            <div>
+              <span
+                style={{
+                  fontFamily: "Arial Narrow, sans-serif",
+                  fontWeight: 900,
+                  fontSize: 30,
+                  letterSpacing: ".08em",
+                  color: "#ffffff",
+                  lineHeight: 1,
+                }}
+              >
+                GREEN
+                <em style={{ fontStyle: "normal", color: "#16a34a" }}>LOOP</em>
+              </span>
+              <br/>
+              <div
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "7px",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "#22c55e",
+                  padding: "0px 10px",
+                  display: "inline-block",
+                  marginTop: 4,
+                }}
+              >
+                 Circular Manufacturing Initiative
               </div>
             </div>
+          </div>
 
-            <Eyebrow>GL Initiative · Circular Manufacturing · Bengaluru</Eyebrow>
+          <Eyebrow>Circular Manufacturing Initiative</Eyebrow>
 
-            <HeroH1>
-              WASTE<br/>BACK TO<br/><em>WORK.</em>
-            </HeroH1>
+          <H1>
+            WASTE
+           
+            IN.
+            <br />
+            <span className="green">VALUE OUT.</span>
+              
+            
+          </H1>
 
-            <p style={{ fontSize:14, lineHeight:1.85, color:T.g5, maxWidth:420, fontWeight:300, marginBottom:32 }}>
-              Carbon fibre is too valuable to end up in a bin. GreenLoop collects CF scrap from fabricators across Bengaluru, processes it into short-fibre compound, and closes the loop back into manufacturing.
-            </p>
+          <HeroDesc>
+            GreenLoop is SolidLabs' commitment to closing the material loop —
+            collecting plastic waste from local manufacturers, processing it,
+            and turning it into new products. Not landfill. Not a PR claim. A
+            manufacturing system.
+          </HeroDesc>
 
-            <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginBottom:40 }}>
-              <BtnGL onClick={() => loopRef.current?.scrollIntoView({ behavior:'smooth' })}>The Loop →</BtnGL>
-              <BtnGhost onClick={() => vendorRef.current?.scrollIntoView({ behavior:'smooth' })}>Register as Vendor →</BtnGhost>
-            </div>
+          <HeroStats>
+            <HeroStat>
+              <div className="n">0 kg</div>
+              <div className="l">
+                Waste Processed
+                <br />
+                Starting 2026
+              </div>
+            </HeroStat>
+            <HeroStat border>
+              <div className="n">₹0</div>
+              <div className="l">
+                Paid to Vendors
+                <br />
+                Building Now
+              </div>
+            </HeroStat>
+            <HeroStat border>
+              <div className="n">100%</div>
+              <div className="l">
+                Honest Intention
+                <br />
+                No Greenwashing
+              </div>
+            </HeroStat>
+          </HeroStats>
 
-            <HeroStats>
-              <StatItem>
-                <StatNum>800<span>kg</span></StatNum>
-                <StatLabel>CF diverted<br/>first quarter</StatLabel>
-              </StatItem>
-              <StatItem>
-                <StatNum>2.4<span>×</span></StatNum>
-                <StatLabel>Tensile vs<br/>base polymer</StatLabel>
-              </StatItem>
-              <StatItem>
-                <StatNum>5<span>t/mo</span></StatNum>
-                <StatLabel>Target capacity<br/>pan-India</StatLabel>
-              </StatItem>
-            </HeroStats>
-          </HeroLeft>
+          <HeroBtns>
+            <BtnGreen onClick={() => scrollTo("gl-contact")}>
+              Send Waste Our Way →
+            </BtnGreen>
+            <BtnGhost onClick={() => scrollTo("gl-roadmap")}>
+              View Roadmap
+            </BtnGhost>
+          </HeroBtns>
+        </HeroLeft>
 
-          <HeroRight>
-            <Reg $tl /><Reg $tr /><Reg $bl /><Reg $br />
-            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:32, width:'100%', maxWidth:320 }}>
-              <CircularLoopVisual size={240} />
-              <StatusCard>
-                <StatusHead>
-                  <StatusLbl>Loop Status · GL-BLR-01</StatusLbl>
-                  <StatusDot />
-                </StatusHead>
-                {[
-                  ['Collection','Fortnightly','BLR'],
-                  ['Vendors','12 active',null],
-                  ['Processed','800 kg','Q1'],
-                  ['Compound','CF/PA6 25%',null],
-                  ['Status',<span style={{ color:T.gl }}>◉ ACTIVE</span>,null],
-                ].map(([k, v, sup], i) => (
-                  <StatusRow key={i}>
-                    <StatusKey>{k}</StatusKey>
-                    <StatusVal>{v}{sup && <sup>{sup}</sup>}</StatusVal>
-                  </StatusRow>
-                ))}
-              </StatusCard>
-            </div>
-          </HeroRight>
-        </HeroGrid>
+        <HeroRight>
+          <DiagramWrap>
+            <SpinRing />
+            <CircularDiagram />
+          </DiagramWrap>
+        </HeroRight>
+      </HeroSection>
 
-        {/* ── TICKER ── */}
-        <Ticker items={GL_TICKER_ITEMS} />
+      {/* ── STAT BAND ── */}
+      <StatBand>
+        <StatBandItem red>
+          <div className="n">8M+</div>
+          <div className="l">
+            Tonnes plastic
+            <br />
+            to landfill p/a India
+          </div>
+        </StatBandItem>
+        <StatBandItem highlight>
+          <div className="n">~60%</div>
+          <div className="l">
+            Industrial scrap
+            <br />
+            technically recyclable
+          </div>
+        </StatBandItem>
+        <StatBandItem highlight>
+          <div className="n">₹0</div>
+          <div className="l">
+            Most vendors receive
+            <br />
+            for plastic offcuts
+          </div>
+        </StatBandItem>
+        <StatBandItem>
+          <div className="n">2026</div>
+          <div className="l">
+            GreenLoop
+            <br />
+            collections begin
+          </div>
+        </StatBandItem>
+      </StatBand>
 
-        {/* ── LOOP DIVBAR ── */}
-        <DivBar ref={loopRef} id="gl-loop">
-          <DivBarLabel $color={`rgba(58,170,74,.4)`}>The 5-Stage Loop</DivBarLabel>
-          <DivBarRule $bg={`linear-gradient(90deg,rgba(58,170,74,.2),transparent)`} />
-          <DivBarId $color={`rgba(58,170,74,.3)`}>COLLECT → SUPPLY</DivBarId>
-        </DivBar>
-
-        {/* ── LOOP STAGES ── */}
-        <Section $border="#141414">
-          <Pad>
-            <SectionHead>
-              <CondHead $size="clamp(32px,4vw,52px)">Closed loop.<br/>No excuses.</CondHead>
-              <Mono $color="#333">Process</Mono>
-            </SectionHead>
-            <p style={{ fontSize:13.5, color:T.g5, lineHeight:1.85, fontWeight:300, maxWidth:640, marginTop:12, marginBottom:52 }}>
-              Every kilogram that enters GreenLoop is traced from collection point to final compound batch. Nothing leaves the system unaccounted for.
-            </p>
-          </Pad>
-          <StageGrid>
-            {LOOP_STAGES.map(s => (
-              <StageCard key={s.n}>
-                <StageNum>{s.n}</StageNum>
-                <StageIcon>{s.icon}</StageIcon>
-                <StageTitle>{s.title}</StageTitle>
-                <StageTag>{s.tag}</StageTag>
-                <StageDesc>{s.desc}</StageDesc>
-                <StageSpecs>{s.specs.map((sp, i) => <StageSpecItem key={i}>{sp}</StageSpecItem>)}</StageSpecs>
-              </StageCard>
-            ))}
-          </StageGrid>
-        </Section>
-
-        {/* ── IMPACT BAND ── */}
-        <DivBar>
-          <DivBarLabel>Impact Numbers</DivBarLabel>
-          <DivBarRule />
-          <DivBarId>CURRENT · BLR PILOT</DivBarId>
-        </DivBar>
-        <ImpactBand>
+      {/* ── 5 STAGES ── */}
+      <SecPad bg="#060f07">
+        <SecHead>
+          <h2>Five stages. Honest about every one.</h2>
+          <span>Process</span>
+        </SecHead>
+        <StagesGrid>
           {[
-            { n:'800', unit:'kg',  label:'CF scrap diverted\nfirst quarter' },
-            { n:'12',  unit:'+',   label:'Active vendor\npartners' },
-            { n:'25',  unit:'%',   label:'CF loading in\nstandard compound' },
-            { n:'0',   unit:'%',   label:'Landfill target\nfor cured CF' },
-          ].map(({ n, unit, label }) => (
-            <ImpactCard key={n+unit}>
-              <ImpactNum>{n}<span>{unit}</span></ImpactNum>
-              <ImpactLabel>{label}</ImpactLabel>
-            </ImpactCard>
+            {
+              num: "01",
+              icon: "♻",
+              iconBorder: "rgba(58,170,74,.25)",
+              title: "Collect",
+              desc: "Pick up plastic purge material, offcuts, and failed prints. No sorting required on your end. Free in Yelahanka.",
+              tag: "Free · Yelahanka area",
+            },
+            {
+              num: "02",
+              icon: "⬡",
+              iconBorder: "rgba(58,170,74,.2)",
+              title: "Sort & Grade",
+              desc: "Separated by polymer — PLA, PETG, ABS, Nylon. Contaminated material to certified disposal, not the back door.",
+              tag: "PLA · PETG · ABS · Nylon",
+            },
+            {
+              num: "03",
+              icon: "⚙",
+              iconBorder: "rgba(58,170,74,.3)",
+              title: "Shred & Extrude",
+              desc: "Clean sorted material is shredded and re-extruded into usable filament. Target: 68% yield per kg in. We publish the actual number.",
+              tag: "In-house processing · 2027",
+            },
+            {
+              num: "04",
+              icon: "◈",
+              iconBorder: "rgba(58,170,74,.2)",
+              title: "Make",
+              desc: "Reclaimed filament goes into SL Originals products. Every recycled item is labelled with its material origin. No hidden blends.",
+              tag: "SL Originals · Recycled Range",
+            },
+            {
+              num: "05",
+              icon: "↗",
+              iconBorder: "rgba(58,170,74,.2)",
+              title: "Return Value",
+              desc: "Vendors receive payment, product credit, or discounts on Precision B2B orders. Your waste has real value. We make that concrete.",
+              tag: "Credit · Discount · Cash",
+            },
+          ].map((s) => (
+            <StageCard key={s.num} iconBorder={s.iconBorder}>
+              <div className="big-num">{s.num}</div>
+              <div className="icon">{s.icon}</div>
+              <div className="title">{s.title}</div>
+              <p className="desc">{s.desc}</p>
+              <div className="tag">{s.tag}</div>
+            </StageCard>
           ))}
-        </ImpactBand>
+        </StagesGrid>
+      </SecPad>
 
-        {/* ── MATERIAL ACCEPTANCE ── */}
-        <DivBar $borderTop="#141414">
-          <DivBarLabel>What We Accept</DivBarLabel>
-          <DivBarRule />
-          <DivBarId>CFRP ONLY</DivBarId>
-        </DivBar>
-        <Section $border="#141414">
-          <Pad>
-            <SectionHead>
-              <CondHead $size="clamp(32px,4vw,52px)">Know your waste.<br/>We handle the rest.</CondHead>
-              <Mono $color="#333">Acceptance</Mono>
-            </SectionHead>
-            <p style={{ fontSize:13.5, color:T.g5, lineHeight:1.85, fontWeight:300, maxWidth:640, marginTop:12 }}>
-              CF scrap from any resin system, any fibre grade. Separate your CF from glass and you're good to go.
-            </p>
-          </Pad>
-          <AcceptGrid>
-            {ACCEPT_ITEMS.map(a => (
-              <AcceptCard key={a.title} $ok={a.ok}>
-                <AcceptMark $ok={a.ok}>{a.ok ? '✓' : '✕'}</AcceptMark>
-                <AcceptTitle>{a.title}</AcceptTitle>
-                <AcceptTag $ok={a.ok}>{a.tag}</AcceptTag>
-                <AcceptDesc>{a.desc}</AcceptDesc>
-              </AcceptCard>
-            ))}
-          </AcceptGrid>
-        </Section>
-
-        {/* ── VENDOR REGISTRATION ── */}
-        <DivBar ref={vendorRef} id="gl-vendor" $borderTop={`rgba(58,170,74,.12)`}>
-          <DivBarLabel $color={`rgba(58,170,74,.4)`}>Vendor Registration</DivBarLabel>
-          <DivBarRule $bg={`linear-gradient(90deg,rgba(58,170,74,.2),transparent)`} />
-          <DivBarId $color={`rgba(58,170,74,.3)`}>JOIN THE LOOP</DivBarId>
-        </DivBar>
-        <VendorPanel>
-          <VendorCard>
-            <Eyebrow>Become a GreenLoop Vendor</Eyebrow>
-            <VendorBig>
-              Your scrap<br/>is our <em>feedstock.</em>
-            </VendorBig>
-            <p style={{ fontSize:13.5, color:T.g5, lineHeight:1.85, fontWeight:300, maxWidth:440, marginBottom:28 }}>
-              Register your workshop for scheduled CF collection. You get a waste certificate, we get the feedstock. No charges. No paperwork beyond the form.
-            </p>
-            <div style={{ display:'flex', flexDirection:'column', gap:10, marginBottom:20 }}>
+      {/* ── MATERIALS ── */}
+      <SecPad bg="#0d160e">
+        <SecHead>
+          <h2>Know your plastic. We do.</h2>
+        </SecHead>
+        <MaterialsGrid>
+          {/* Left: acceptance bars */}
+          <div>
+            <MatSubLabel>Acceptance Rate by Polymer</MatSubLabel>
+            <div style={{ display: "flex", flexDirection: "column", gap: 13 }}>
               {[
-                '✓ Scheduled fortnightly pickup',
-                '✓ Waste diversion certificate issued',
-                '✓ Batch traceability on request',
-                '✓ No minimum quantity',
-              ].map(item => (
-                <div key={item} style={{ fontFamily:T.ffMono, fontSize:'8px', letterSpacing:'.12em', textTransform:'uppercase', color:T.glm }}>{item}</div>
+                { label: "PLA", val: "95% accepted", width: "95%", dim: false },
+                {
+                  label: "PETG",
+                  val: "90% accepted",
+                  width: "90%",
+                  dim: false,
+                },
+                { label: "ABS", val: "80% accepted", width: "80%", dim: false },
+                {
+                  label: "Nylon PA6 / PA12",
+                  val: "75% accepted",
+                  width: "75%",
+                  dim: true,
+                },
+                {
+                  label: "TPU / Flex",
+                  val: "Building · 2026",
+                  width: "40%",
+                  pattern: true,
+                  yellow: true,
+                },
+                {
+                  label: "Contaminated / Mixed",
+                  val: "Certified Disposal",
+                  width: "100%",
+                  red: true,
+                },
+              ].map((b) => (
+                <div key={b.label}>
+                  <BarLabel red={b.red} yellow={b.yellow}>
+                    <span style={{ color: g5 }}>{b.label}</span>
+                    <span
+                      style={{
+                        color: b.red ? "#e05030" : b.yellow ? "#d4e830" : gl,
+                      }}
+                    >
+                      {b.val}
+                    </span>
+                  </BarLabel>
+                  <BarTrack>
+                    <BarFill
+                      width={b.width}
+                      pattern={b.pattern}
+                      red={b.red}
+                      dim={b.dim}
+                    />
+                  </BarTrack>
+                </div>
               ))}
             </div>
-          </VendorCard>
-
-          <VendorCard style={{ background:'#080e08', borderLeft:`1px solid #0a1a0a` }}>
-            <Mono $size="7px" $color={T.glm} style={{ letterSpacing:'.22em', display:'block', marginBottom:20 }}>Vendor Registration Form</Mono>
-            <VendorForm>
-              <VendorRow>
-                <VendorInput>Company Name <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-                <VendorInput>City / Zone <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-              </VendorRow>
-              <VendorInput>Contact Name <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-              <VendorInput>Email / Phone <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-              <VendorRow>
-                <VendorInput>Avg. Monthly CF Waste <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-                <VendorInput>Primary Fibre System <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-              </VendorRow>
-              <VendorInput>Workshop Address <span style={{ color:'#1a2a1a' }}>___</span></VendorInput>
-              <BtnGL style={{ width:'100%', justifyContent:'center', marginTop:4 }}>
-                Register for Collection →
-              </BtnGL>
-              <Mono $size="7px" $color="#1e2e1e" style={{ letterSpacing:'.12em', display:'block', textAlign:'center', marginTop:4 }}>
-                We respond within 48h · Bengaluru first · Pan-India by Q4 2025
-              </Mono>
-            </VendorForm>
-          </VendorCard>
-        </VendorPanel>
-
-        {/* ── ROADMAP ── */}
-        <DivBar $borderTop="#141414">
-          <DivBarLabel>Roadmap</DivBarLabel>
-          <DivBarRule />
-          <DivBarId>2024–2026</DivBarId>
-        </DivBar>
-        <Section $border="#141414">
-          <Pad>
-            <SectionHead>
-              <CondHead $size="clamp(32px,4vw,52px)">Where we are.<br/>Where we're going.</CondHead>
-              <Mono $color="#333">Timeline</Mono>
-            </SectionHead>
-          </Pad>
-          <RoadmapWrap>
-            {ROADMAP.map(r => (
-              <RoadStep key={r.date}>
-                <RoadDot $active={r.active} />
-                <div>
-                  <RoadDate $active={r.active}>{r.date}</RoadDate>
-                </div>
-                <div>
-                  <RoadTag $active={r.active}>{r.tag}</RoadTag>
-                  <RoadTitle>{r.title}</RoadTitle>
-                  <RoadDesc>{r.desc}</RoadDesc>
-                </div>
-              </RoadStep>
-            ))}
-          </RoadmapWrap>
-        </Section>
-
-        {/* ── CTA ── */}
-        <CtaSection>
-          <Eyebrow style={{ justifyContent:'center', marginBottom:14 }}>Close the Loop</Eyebrow>
-          <CondHead $size="clamp(44px,7vw,96px)" style={{ marginBottom:16, lineHeight:.86 }}>
-            CF scrap waiting<br/>in your <em>bin?</em>
-          </CondHead>
-          <p style={{ fontSize:14, color:T.g5, maxWidth:420, lineHeight:1.85, fontWeight:300, marginBottom:32 }}>
-            Register as a GreenLoop vendor, schedule a collection, and get your waste diversion certificate. No charges. No minimum quantity. Just close the loop.
-          </p>
-          <div style={{ display:'flex', gap:10, flexWrap:'wrap', justifyContent:'center' }}>
-            <BtnGL onClick={() => vendorRef.current?.scrollIntoView({ behavior:'smooth' })}>Register as Vendor →</BtnGL>
-            <BtnGhost>Download Info Pack</BtnGhost>
           </div>
-          <Mono $size="7.5px" $color="#222" style={{ marginTop:18, letterSpacing:'.14em', display:'block' }}>
-            Bengaluru pilot active · Pan-India Q4 2025 · SolidLabs GreenLoop Initiative
-          </Mono>
-        </CtaSection>
 
-        {/* ── FOOTER ── */}
-        <Footer>
-          <FooterInner>
-            <FooterLogo>
-              <LogoMark size={22} />
-              <FooterName>GREEN<span style={{ color:T.gl }}>LOOP</span></FooterName>
-            </FooterLogo>
-            <FooterCopy>© 2025 SolidLabs Technologies · GreenLoop Initiative · Bengaluru</FooterCopy>
-          </FooterInner>
-        </Footer>
+          {/* Right: value back + warning */}
+          <div>
+            <MatSubLabel>What You Get Back</MatSubLabel>
+            <ValueBox>
+              <ValueChips>
+                <Chip>Cash Payment</Chip>
+                <Chip>Product Credit</Chip>
+                <Chip>B2B Discounts</Chip>
+              </ValueChips>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: g5,
+                  lineHeight: 1.8,
+                  fontWeight: 300,
+                }}
+              >
+                No minimum volumes. No paperwork overhead. If you're in
+                Yelahanka or nearby, we'll come to you. If you're elsewhere,
+                drop off at our facility.
+              </p>
+            </ValueBox>
+            <WarningBox>
+              <div className="title">What We Can't Take</div>
+              <p>
+                Food-contaminated plastic, painted/coated parts, composite
+                materials with resin matrix, PVC, PS foam. We'll tell you
+                directly and help find certified disposal.
+              </p>
+            </WarningBox>
+          </div>
+        </MaterialsGrid>
+      </SecPad>
 
-      </Page>
+      {/* ── ROADMAP ── */}
+      <SecPad bg="#060f07" id="gl-roadmap">
+        <SecHead>
+          <h2>Plans, not promises.</h2>
+          <span>Every item has a date</span>
+        </SecHead>
+        <RoadmapWrap>
+          <RoadmapGrid>
+            {[
+              {
+                done: true,
+                glow: true,
+                date: "Q1 2026",
+                title: "Material Tracking",
+                desc: "Log every spool by supplier, job, and waste output. Build the honest baseline.",
+              },
+              {
+                done: true,
+                date: "Q2 2026",
+                title: "Vendor Collections",
+                desc: "Structured pickup from Yelahanka manufacturers. Start small, prove the model.",
+              },
+              {
+                done: true,
+                date: "Q3–Q4 2026",
+                title: "First Recycled Products",
+                desc: "SL Originals products from reclaimed material. Clearly labelled. Honestly described.",
+              },
+              {
+                done: false,
+                date: "2027",
+                title: "In-House Processing",
+                desc: "Shredder and filament extruder on-site. Close the loop. No third-party dependency.",
+              },
+              {
+                done: false,
+                faint: true,
+                date: "2028",
+                title: "Emissions Report",
+                desc: "Scope 1 and 2 measured and published. Good number or bad — it goes out there.",
+              },
+            ].map((r, i) => (
+              <RoadNode key={i} done={r.done} glow={r.glow} faint={r.faint}>
+                <div className="dot" />
+                <div className="date">{r.date}</div>
+                <div className="title">{r.title}</div>
+                <p>{r.desc}</p>
+              </RoadNode>
+            ))}
+          </RoadmapGrid>
+        </RoadmapWrap>
+      </SecPad>
+
+      {/* ── CTA ── */}
+      <CtaSection id="gl-contact">
+        <CtaH>
+          CLOSE
+          <br />
+          THE
+          <br />
+          <span className="green">LOOP.</span>
+        </CtaH>
+        <CtaDesc>
+          GreenLoop isn't a sustainability pledge. It's a manufacturing system
+          we're building, one vendor at a time. No minimum volumes. If you're in
+          Yelahanka, we'll come to you.
+        </CtaDesc>
+        <CtaBtns>
+          <BtnGreen>Send Waste Our Way →</BtnGreen>
+          <BtnGhost onClick={() => scrollTo("gl-roadmap")}>
+            Ask a Question
+          </BtnGhost>
+        </CtaBtns>
+      </CtaSection>
+
+      {/* ── FOOTER ── */}
+      <Footer>
+        <FooterLogo>
+          <SolidLabsMark size={22} />
+          <span className="name">
+            GREEN<span className="bright">LOOP</span>
+          </span>
+          <span className="by">by SolidLabs</span>
+        </FooterLogo>
+        <FooterCopy>
+          © 2026 SolidLabs Technologies · GreenLoop Initiative · Yelahanka,
+          Bengaluru
+        </FooterCopy>
+      </Footer>
     </>
-  )
+  );
 }

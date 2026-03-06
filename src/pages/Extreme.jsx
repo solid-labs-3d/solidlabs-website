@@ -111,6 +111,18 @@ const EX_FAQ = [
   },
 ];
 
+function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
+  const s = size,
+    h = Math.round(size * 0.917);
+  return (
+    <svg width={s} height={h} viewBox="0 0 56 52" fill="none">
+      <polygon points="8,1 46,1 52,14 14,14" fill={colors[0]} />
+      <polygon points="5,20 43,20 49,33 11,33" fill={colors[1]} />
+      <polygon points="2,39 40,39 46,52 8,52" fill={colors[2]} />
+    </svg>
+  );
+}
+
 const CHIP_ACTIONS = {
   "SLA specs": "sla print specs",
   "Resin types": "resin types",
@@ -1599,22 +1611,7 @@ const ZOOM_ITEMS = [
     visual: <IoTSVG />,
     link: null,
   },
-  {
-    num: "05 — SLA Printing",
-    title: "CNC MACHINING",
-    em: "PRECISION",
-    desc: "Precision CNC machining for aluminium, steel, and engineering plastics. Tolerances to ±0.05mm. Combined with our 3D printing and electronics capabilities, this completes the full hardware manufacturing loop.",
-    specs: [
-      "0.025–0.1mm Layers",
-      "±0.05mm XY",
-      "Standard Resin",
-      "Tough Resin",
-      "Castable",
-      "Dental / Biocompat.",
-    ],
-    visual: <SLASVG />,
-    link: "/sla-printing",
-  },
+
   // {
   //   num: "06 — Carbon Fibre",
   //   title: "CARBON",
@@ -1745,6 +1742,28 @@ export default function Extreme() {
         <div className="ex-hero-grid" />
         <div className="ex-hero-glow" />
         <div className="ex-hero-scan" />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          <LogoMark size={25} colors={["#1e8ef0", "#1060c4", "#0a3a7a"]} />
+          <span
+            style={{
+              fontFamily: "Arial Narrow, sans-serif",
+              fontWeight: 900,
+              fontSize: 30,
+              letterSpacing: ".08em",
+              color: "#ffffff",
+            }}
+          >
+            EXTREM
+            <em style={{ fontStyle: "normal", color: "#1e7aff" }}>-ENG</em>
+          </span>
+        </div>
         <div className="ex-hero-data">
           {[
             ["SYS", "ONLINE"],
@@ -1772,7 +1791,9 @@ export default function Extreme() {
           <em>WAY BEYOND.</em>
         </h1>
         <p className="ex-h1-sub rv d2">
-         For engineers who need hardware sourced, electronics integrated, firmware flashed, and fully tested assemblies delivered. We go all the way — from bare PCB to working product.
+          For engineers who need hardware sourced, electronics integrated,
+          firmware flashed, and fully tested assemblies delivered. We go all the
+          way — from bare PCB to working product.
         </p>
       </section>
 
@@ -1809,130 +1830,6 @@ export default function Extreme() {
         ))}
       </div>
 
-      {/* ══ SERVICE STACK OVERVIEW ════════════════
-      <section
-        className="sec-pad"
-        style={{
-          background: "#030610",
-          borderBottom: "1px solid rgba(30,122,255,.1)",
-        }}
-      >
-        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)" }}>
-          <h2 className="sh-t" style={{ color: "#f0ede6" }}>
-            Our Full Stack
-          </h2>
-          <span
-            style={{
-              fontFamily: "var(--ff-mono)",
-              fontSize: "8.5px",
-              letterSpacing: ".2em",
-              textTransform: "uppercase",
-              color: "rgba(30,122,255,.3)",
-            }}
-          >
-            Every process — one team
-          </span>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 2,
-            background: "rgba(30,122,255,.08)",
-          }}
-          className="rv d1"
-        >
-          {SERVICE_STACK.map((s) => (
-            <div
-              key={s.label}
-              style={{
-                background: "#030610",
-                padding: "28px 24px",
-                borderBottom: "1px solid rgba(30,122,255,.08)",
-                position: "relative",
-                transition: "background .2s",
-                cursor: s.link ? "pointer" : "default",
-              }}
-              onClick={() => s.link && nav(s.link)}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "#060a14")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background = "#030610")
-              }
-            >
-              {s.soon && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 12,
-                    fontFamily: "var(--ff-mono)",
-                    fontSize: "7px",
-                    letterSpacing: ".14em",
-                    textTransform: "uppercase",
-                    color: "#1e7aff",
-                    border: "1px solid rgba(30,122,255,.3)",
-                    padding: "2px 7px",
-                  }}
-                >
-                  Soon
-                </div>
-              )}
-              {s.link && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 12,
-                    fontFamily: "var(--ff-mono)",
-                    fontSize: "7px",
-                    letterSpacing: ".1em",
-                    color: "rgba(30,122,255,.4)",
-                  }}
-                >
-                  →
-                </div>
-              )}
-              <div
-                style={{
-                  fontFamily: "var(--ff-cond)",
-                  fontWeight: 900,
-                  fontSize: 28,
-                  color: "rgba(30,122,255,.4)",
-                  marginBottom: 10,
-                  lineHeight: 1,
-                }}
-              >
-                {s.icon}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-cond)",
-                  fontWeight: 800,
-                  fontSize: 18,
-                  color: "#f0ede6",
-                  marginBottom: 6,
-                  lineHeight: 1.1,
-                }}
-              >
-                {s.label}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ff-mono)",
-                  fontSize: "9px",
-                  letterSpacing: ".1em",
-                  color: "rgba(30,122,255,.5)",
-                  textTransform: "uppercase",
-                }}
-              >
-                {s.sub}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* ══ ZOOM CAPABILITIES ═════════════════════ */}
       <div className="ex-zoom-sec">
@@ -1945,8 +1842,10 @@ export default function Extreme() {
               fontFamily: "var(--ff-mono)",
               fontSize: " 8px",
               letterSpacing: ".2em",
-              textTransform: "uppercase",
+             
               border: "1px solid rgba(30,122,255,.15)",
+              position: "relative",
+              overflow: "hidden",
             }}
           >
             <div>
@@ -2032,7 +1931,7 @@ export default function Extreme() {
                 gap: 8,
                 border: "1px solid rgba(30,122,255,.4)",
                 padding: "6px 14px",
-                marginBottom: 20,
+                marginBottom: 2,
               }}
             >
               <div
@@ -2056,7 +1955,12 @@ export default function Extreme() {
                 Machine Installing — Q3 2025
               </span>
             </div>
-            <p className="ex-cap-desc">
+            <p
+              className="ex-cap-desc"
+              style={{
+                marginTop: 12,
+              }}
+            >
               Precision CNC machining for aluminium, steel, and engineering
               plastics. Tolerances to ±0.05mm. This is the final piece in our
               full-loop hardware manufacturing capability — 3D print the
@@ -2065,7 +1969,10 @@ export default function Extreme() {
             </p>
             <p
               className="ex-cap-desc"
-              style={{ marginTop: 12, color: "rgba(30,122,255,.6)" }}
+              style={{
+                marginTop: 12,
+                color: "rgba(30,122,255,.6)",
+              }}
             >
               Early booking briefs accepted now. Launch pricing locked in for
               customers who brief before go-live.
@@ -2120,17 +2027,17 @@ export default function Extreme() {
       {/* ══ CAPABILITY BARS ═══════════════════════ */}
       <section
         className="sec-pad"
-        style={{ background: "#020408", borderColor: "rgba(30,122,255,.1)" }}
+        style={{ background: "#020408", borderColor: "rgba(30,122,255,.1)",marginBottom:0}}
       >
-        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)" }}>
-          <h2 className="sh-t" style={{ color: "#f0ede6" }}>
+        <div className="sh rv" style={{ borderColor: "rgba(30,122,255,.12)",marginTop:0 }}>
+          <h2 className="sh-t" style={{ color: "#f0ede6", fontSize: 72, marginTop:0}}>
             Capability Stack
           </h2>
           <span
             style={{
               fontFamily: "var(--ff-mono)",
               fontSize: "8.5px",
-              letterSpacing: ".2em",
+              letterSpacing: "2em",
               textTransform: "uppercase",
               color: "rgba(30,122,255,.3)",
             }}
@@ -2340,8 +2247,8 @@ export default function Extreme() {
             </svg>
             <span className="fl-name">SOLIDLABS</span>
           </div>
-          <div className="fl-copy" style={{ color: "rgba(30,122,255,.3)" }}>
-            © 2025 SolidLabs · Extreme Engineering · Bengaluru
+          <div className="fl-copy" style={{ color: "rgba(30,122,255,5)" }}>
+            © 2026 SolidLabs · Extreme Engineering · Bengaluru
           </div>
         </div>
       </footer>

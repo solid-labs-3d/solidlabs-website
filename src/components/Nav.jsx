@@ -1,28 +1,54 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCartToggle } from './Cart'
+import { cart } from './Cart'  // ← import cart store
+
 
 const SL_LOGO = (
   <svg width="32" height="30" viewBox="0 0 56 52" fill="none">
-    <polygon points="8,1 46,1 52,14 14,14"  fill="#f05c1e"/>
-    <polygon points="5,20 43,20 49,33 11,33" fill="#c44820"/>
-    <polygon points="2,39 40,39 46,52 8,52"  fill="#7a2e0f"/>
+    <polygon points="8,1 46,1 52,14 14,14" fill="#f05c1e" />
+    <polygon points="5,20 43,20 49,33 11,33" fill="#c44820" />
+    <polygon points="2,39 40,39 46,52 8,52" fill="#7a2e0f" />
   </svg>
 )
 
 const SERVICES = [
-  { label: 'FDM 3D Printing',      path: '/learn' },
-  { label: 'SLA Printing',         path: '/sla-printing' },
-  { label: 'Injection Moulding',   path: '/injection-moulding' },
-  { label: 'Vacuum Forming',       path: '/vacuum-forming' },
-  { label: 'Carbon Fibre',         path: '/carbon-fibre' },
-  { label: 'Extreme Engineering',  path: '/extreme' },
+  { label: 'FDM 3D Printing', path: '/learn' },
+  { label: 'SLA Printing', path: '/sla-printing' },
+  { label: 'Injection Moulding', path: '/injection-moulding' },
+  { label: 'Vacuum Forming', path: '/vacuum-forming' },
+  { label: 'Carbon Fibre', path: '/carbon-fibre' },
+  { label: 'Extreme Engineering', path: '/extreme' },
 ]
 
+/* ── helper — fires the modal open event from anywhere ── */
+export function openContactModal() {
+  window.dispatchEvent(new Event('open-contact-modal'))
+}
+
 export default function Nav({ page }) {
-  const [scrolled,    setScrolled]    = useState(false)
-  const [mobileOpen,  setMobileOpen]  = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
+
+
+  // Inside your Navbar component:
+  const [cartCount, setCartCount] = useState(0)
+
+  useEffect(() => {
+    const update = () => {
+      const total = cart.items.reduce((sum, item) => sum + item.qty, 0)
+      setCartCount(total)
+    }
+
+    update() // run on mount
+
+    cart.listeners.push(update)
+
+    return () => {
+      cart.listeners = cart.listeners.filter(f => f !== update)
+    }
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30)
@@ -49,12 +75,13 @@ export default function Nav({ page }) {
     window.scrollTo(0, 0)
   }
 
+  /* ── Get Quote now opens the modal directly — no navigation ── */
   const goQuote = () => {
-    goTo('/')
-    setTimeout(() => {
-      document.getElementById('contact-sec')?.scrollIntoView({ behavior: 'smooth' })
-    }, 80)
+    setMobileOpen(false)
+    openContactModal()
   }
+
+  const [open, setOpen] = useState(false);
 
   const toggleCart = useCartToggle()
   return (
@@ -70,33 +97,39 @@ export default function Nav({ page }) {
 
         {/* Desktop links */}
         <ul className="nav-links">
-          <li><Link to="/originals"  className={page==='originals'  ?'active':''}>SL Originals</Link></li>
-          <li><Link to="/precision"  className={page==='precision'  ?'active':''}>Precision B2B</Link></li>
+          <li><Link to="/originals" className={page === 'originals' ? 'active' : ''}>SL Originals</Link></li>
+          <li><Link to="/precision" className={page === 'precision' ? 'active' : ''}>Precision B2B</Link></li>
 
-          {/* Services dropdown */}
           {/* Extreme Eng link (dropdown removed) */}
-<li>
-  <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
-    EXTREAM ENG
-  </Link>
-</li>
-<li>
-  <Link to="/carbonation" className={page === 'extreme' ? 'active' : ''}>
-    CARBONATION
-  </Link>
-</li>
-<li>
-  <Link to="/greenloop" className={page === 'extreme' ? 'active' : ''}>
-    GREENLOOP
-  </Link>
-</li>
-<li><Link to="/how-it-works" className={page==='how-it-works'?'active':''}>How It Works</Link></li>
-
-          <li><Link to="/evidence"   className={page==='evidence'   ?'active':''}>Field Evidence</Link></li>
-          <li><Link to="/about"      className={page==='about'      ?'active':''}>About Us</Link></li>
           <li>
-            <Link to="/stream" className={page==='stream'?'active':''}>
-              <span style={{display:'inline-block',width:6,height:6,background:'#ff2222',borderRadius:'50%',animation:'ldot 1.4s ease infinite',marginRight:6,verticalAlign:'middle'}}/>
+            <Link to="/extreme" className={page === 'extreme' ? 'active' : ''}>
+              EXTREAM ENG
+            </Link>
+          </li>
+
+          <li className="nav-dropdown">
+            <Link
+              className={page === "carbonation" || page === "CarbonationBs" ? "active" : ""}
+            >
+              CARBONATION
+            </Link>
+            <div className="nav-dropdown-menu">
+              <Link to="/carbonation">CN Division</Link>
+              <Link to="/CarbonationBs">BS Series</Link>
+            </div>
+          </li>
+
+          <li>
+            <Link to="/greenloop" className={page === 'greenloop' ? 'active' : ''}>
+              GREENLOOP
+            </Link>
+          </li>
+          <li><Link to="/how-it-works" className={page === 'how-it-works' ? 'active' : ''}>How It Works</Link></li>
+          <li><Link to="/evidence" className={page === 'evidence' ? 'active' : ''}>Field Evidence</Link></li>
+          <li><Link to="/about" className={page === 'about' ? 'active' : ''}>About Us</Link></li>
+          <li>
+            <Link to="/stream" className={page === 'stream' ? 'active' : ''}>
+              <span style={{ display: 'inline-block', width: 6, height: 6, background: '#ff2222', borderRadius: '50%', animation: 'ldot 1.4s ease infinite', marginRight: 6, verticalAlign: 'middle' }} />
               Live
             </Link>
           </li>
@@ -104,12 +137,9 @@ export default function Nav({ page }) {
 
         {/* Desktop actions */}
         <div className="nav-actions">
-           <button
-      className="nav-cart-btn"
-      onClick={toggleCart}
-    >
-      Cart <span id="cart-count">0</span>
-    </button>
+          <button className="nav-cart-btn" onClick={toggleCart}>
+            Cart <span id="cart-count">{cartCount}</span>
+          </button>
           <button className="nav-cta" onClick={goQuote}>Get Quote</button>
 
           {/* Hamburger */}
@@ -119,7 +149,7 @@ export default function Nav({ page }) {
             className={mobileOpen ? 'open' : ''}
             onClick={() => setMobileOpen(v => !v)}
           >
-            <span/><span/><span/>
+            <span /><span /><span />
           </button>
         </div>
       </nav>
@@ -128,9 +158,11 @@ export default function Nav({ page }) {
       <div id="mobile-nav" className={mobileOpen ? 'open' : ''} role="dialog" aria-label="Navigation">
         <ul>
           <li><a onClick={() => goTo('/')}>Home</a></li>
-          <li><a onClick={() => goTo('/originals')}><span style={{color:'var(--or)',marginRight:8}}>●</span>SL Originals</a></li>
-          <li><a onClick={() => goTo('/precision')}><span style={{color:'var(--yw)',marginRight:8}}>●</span>Precision B2B</a></li>
-          <li><a onClick={() => goTo('/extreme')}><span style={{color:'var(--bl)',marginRight:8}}>●</span>Extreme Eng.</a></li>
+          <li><a onClick={() => goTo('/originals')}><span style={{ color: 'var(--or)', marginRight: 8 }}>●</span>SL Originals</a></li>
+          <li><a onClick={() => goTo('/precision')}><span style={{ color: 'var(--yw)', marginRight: 8 }}>●</span>Precision B2B</a></li>
+          <li><a onClick={() => goTo('/extreme')}><span style={{ color: 'var(--bl)', marginRight: 8 }}>●</span>Extreme Eng</a></li>
+          <li><a onClick={() => goTo('/carbonation')}><span style={{ color: 'var(--yw)', marginRight: 8 }}>●</span>Carbonation</a></li>
+          <li><a onClick={() => goTo('/greenloop')}><span style={{ color: 'var(--gr)', marginRight: 8 }}>●</span>Greenloop</a></li>
           <li><a onClick={() => goTo('/learn')}>FDM Printing</a></li>
           <li><a onClick={() => goTo('/sla-printing')}>SLA Printing</a></li>
           <li><a onClick={() => goTo('/injection-moulding')}>Injection Moulding</a></li>
@@ -140,13 +172,13 @@ export default function Nav({ page }) {
           <li><a onClick={() => goTo('/about')}>About Us</a></li>
           <li>
             <a onClick={() => goTo('/stream')}>
-              <span style={{display:'inline-block',width:7,height:7,background:'#ff2222',borderRadius:'50%',animation:'ldot 1.4s ease infinite',marginRight:8,verticalAlign:'middle'}}/>
+              <span style={{ display: 'inline-block', width: 7, height: 7, background: '#ff2222', borderRadius: '50%', animation: 'ldot 1.4s ease infinite', marginRight: 8, verticalAlign: 'middle' }} />
               Live Stream
             </a>
           </li>
         </ul>
         <div className="mob-nav-foot">
-          <button className="btn-or" style={{width:'100%',textAlign:'center'}} onClick={goQuote}>Get a Quote →</button>
+          <button className="btn-or" style={{ width: '100%', textAlign: 'center' }} onClick={goQuote}>Get a Quote →</button>
           <div className="mob-nav-sub">Bengaluru · India · Anyday, Anytime</div>
         </div>
       </div>
