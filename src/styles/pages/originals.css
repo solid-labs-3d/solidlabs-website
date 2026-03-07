@@ -3,6 +3,16 @@
 .page-originals {
   background: #0a0400;
 }
+
+.or-hero-title {
+  font-size: 30px;
+}
+
+@media (max-width: 768px) {
+  .or-hero-title {
+    font-size: 20px;
+  }
+}
 .or-hero {
   min-height: 88vh;
   display: flex;

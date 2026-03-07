@@ -592,7 +592,7 @@ video {
 
   /* ── HERO ── */
   #hero {
-    padding: 0 16px 44px;
+    padding: 0 16px 150px;
   }
   .hero-h1 {
     font-size: clamp(46px, 15vw, 68px);
@@ -619,8 +619,8 @@ video {
 
   /* ── HOW IT WORKS — single col on phone ── */
   .how-steps {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 25px !important;
     margin: 0 !important;
   }
   .how-step {

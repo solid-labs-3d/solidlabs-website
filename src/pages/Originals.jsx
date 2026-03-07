@@ -118,6 +118,7 @@ export default function Originals() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isMobile = window.innerWidth <= 720;
 
   const openCart = () =>
     document.getElementById("cart-overlay")?.classList.toggle("open");
@@ -154,6 +155,7 @@ export default function Originals() {
             alignItems: "center",
             gap: 8,
             marginBottom: 20,
+            
           }}
         >
           <LogoMark size={25} colors={["#ff8c00", "#e06500", "#8a3d00"]} />
@@ -164,6 +166,7 @@ export default function Originals() {
               fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
+              fontSize: isMobile ? 25 : 30,
             }}
           >
             SL

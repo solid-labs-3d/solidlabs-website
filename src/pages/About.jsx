@@ -110,6 +110,7 @@ function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
 
 export default function About() {
   useReveal();
+  const isMobile = window.innerWidth <= 720;
 
   return (
     <div style={{ background: "var(--blk)" }}>
@@ -167,6 +168,7 @@ export default function About() {
               fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
+              fontSize: isMobile ? 25 : 30,
             }}
           >
             ABOUT

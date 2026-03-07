@@ -5,7 +5,7 @@ const TICKER_ITEMS = [
   '±0.2mm Tolerance','PLA+ · PETG · ABS · TPU · Nylon',
   '24h Turnaround','1–500 Parts','QC Measured','CAD Review Included',
 ]
-
+ const isMobile = window.innerWidth <= 720;
 const CAPABILITIES = [
   {
     n:'01', name:'Rapid Prototyping',
@@ -136,6 +136,7 @@ export default function Precision() {
               fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
+                fontSize: isMobile ? 25 : 30,
             }}
           >
             PRECISION
