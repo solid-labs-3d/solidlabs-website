@@ -729,7 +729,7 @@ video {
 
   /* ── MOBILE NAV ── */
   #mobile-nav ul li a {
-    font-size: clamp(32px, 10vw, 48px);
+    font-size: clamp(18px, 10vw, 18px);
   }
 }
 
