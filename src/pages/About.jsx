@@ -1,4 +1,5 @@
 import { useReveal } from "../hooks/useReveal";
+import { useState, useEffect } from "react";
 
 const VALUES = [
   {
@@ -110,18 +111,24 @@ function LogoMark({ size = 60, colors = ["#f05c1e", "#c44820", "#7a2e0f"] }) {
 
 export default function About() {
   useReveal();
-  const isMobile = window.innerWidth <= 720;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 720);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 720);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div style={{ background: "var(--blk)" }}>
       {/* HERO */}
       <section
         style={{
-          minHeight: "70vh",
+          minHeight: isMobile ? "60vh" : "70vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          padding: "140px 48px 68px",
+          padding: isMobile ? "100px 24px 48px" : "140px 48px 68px",
           position: "relative",
           overflow: "hidden",
           borderBottom: "1px solid var(--s2)",
@@ -135,24 +142,26 @@ export default function About() {
               "radial-gradient(ellipse 70% 60% at 60% 40%,rgba(240,92,30,.07),transparent 70%)",
           }}
         />
-        {/* Decorative mark */}
+        {/* Decorative mark — hidden on mobile to save space */}
+        {!isMobile && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "3%",
+              transform: "translateY(-50%)",
+              opacity: 0.04,
+            }}
+          >
+            <svg width="500" height="460" viewBox="0 0 500 460" fill="none">
+              <polygon points="60,8 420,8 460,90 100,90" fill="#f05c1e" />
+              <polygon points="40,140 400,140 440,222 80,222" fill="#c44820" />
+              <polygon points="20,272 380,272 420,354 60,354" fill="#7a2e0f" />
+              <polygon points="0,400 340,400 380,472 40,472" fill="#3d1608" />
+            </svg>
+          </div>
+        )}
         <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            right: "3%",
-            transform: "translateY(-50%)",
-            opacity: 0.04,
-          }}
-        >
-          <svg width="500" height="460" viewBox="0 0 500 460" fill="none">
-            <polygon points="60,8 420,8 460,90 100,90" fill="#f05c1e" />
-            <polygon points="40,140 400,140 440,222 80,222" fill="#c44820" />
-            <polygon points="20,272 380,272 420,354 60,354" fill="#7a2e0f" />
-            <polygon points="0,400 340,400 380,472 40,472" fill="#3d1608" />
-          </svg>
-        </div>
-         <div
           style={{
             display: "flex",
             alignItems: "center",
@@ -165,10 +174,9 @@ export default function About() {
             style={{
               fontFamily: "Arial Narrow, sans-serif",
               fontWeight: 900,
-              fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
-              fontSize: isMobile ? 25 : 30,
+              fontSize: isMobile ? 22 : 30,
             }}
           >
             ABOUT
@@ -183,7 +191,7 @@ export default function About() {
           style={{
             fontFamily: "var(--ff-cond)",
             fontWeight: 900,
-            fontSize: "clamp(64px,12vw,148px)",
+            fontSize: isMobile ? "clamp(52px,16vw,80px)" : "clamp(64px,12vw,148px)",
             lineHeight: 0.85,
             letterSpacing: ".01em",
             marginBottom: 28,
@@ -199,7 +207,7 @@ export default function About() {
         <p
           className="rv d2"
           style={{
-            fontSize: 15,
+            fontSize: isMobile ? 14 : 15,
             color: "var(--g5)",
             maxWidth: 580,
             lineHeight: 1.8,
@@ -217,8 +225,8 @@ export default function About() {
       <section
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          minHeight: "70vh",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          minHeight: isMobile ? "auto" : "70vh",
           borderBottom: "1px solid var(--s2)",
         }}
       >
@@ -240,7 +248,7 @@ export default function About() {
               style={{
                 fontFamily: "var(--ff-cond)",
                 fontWeight: 900,
-                fontSize: "clamp(36px,5vw,60px)",
+                fontSize: isMobile ? "clamp(28px,8vw,44px)" : "clamp(36px,5vw,60px)",
                 lineHeight: 0.92,
                 letterSpacing: ".01em",
                 color: "var(--blk)",
@@ -256,7 +264,7 @@ export default function About() {
               style={{
                 fontFamily: "var(--ff-cond)",
                 fontWeight: 900,
-                fontSize: 52,
+                fontSize: isMobile ? 40 : 52,
                 color: "var(--blk)",
                 lineHeight: 1,
               }}
@@ -299,7 +307,19 @@ export default function About() {
               one gets the attention it deserves.
             </p>
           </div>
-          <div className="stats-row">
+          <div
+            className="stats-row"
+            style={
+              isMobile
+                ? {
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: 12,
+                    marginTop: 24,
+                  }
+                : {}
+            }
+          >
             {[
               { n: "5+", l: "Printers" },
               { n: "2+", l: "Years" },
@@ -327,7 +347,7 @@ export default function About() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)",
             gap: 2,
             background: "var(--s2)",
           }}
@@ -337,7 +357,7 @@ export default function About() {
               key={v.title}
               style={{
                 background: v.bg,
-                padding: "44px 28px",
+                padding: isMobile ? "32px 20px" : "44px 28px",
                 cursor: "none",
                 transition: "background .2s",
               }}
@@ -390,8 +410,8 @@ export default function About() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 72,
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gap: isMobile ? 40 : 72,
             alignItems: "start",
           }}
           className="rv"
@@ -435,13 +455,13 @@ export default function About() {
               {FACILITY_STATS.map((s) => (
                 <div
                   key={s.l}
-                  style={{ background: s.bg, padding: "28px 20px" }}
+                  style={{ background: s.bg, padding: isMobile ? "20px 16px" : "28px 20px" }}
                 >
                   <div
                     style={{
                       fontFamily: "var(--ff-cond)",
                       fontWeight: 900,
-                      fontSize: 44,
+                      fontSize: isMobile ? 36 : 44,
                       lineHeight: 1,
                       color: s.nc,
                     }}
@@ -483,7 +503,20 @@ export default function About() {
       <footer
         style={{ background: "var(--blk)", borderTop: "1px solid var(--s2)" }}
       >
-        <div className="site-footer">
+        <div
+          className="site-footer"
+          style={
+            isMobile
+              ? {
+                  flexDirection: "column",
+                  gap: 12,
+                  padding: "24px",
+                  textAlign: "center",
+                  alignItems: "center",
+                }
+              : {}
+          }
+        >
           <div className="fl-logo">
             <svg width="28" height="26" viewBox="0 0 56 52" fill="none">
               <polygon points="8,1 46,1 52,14 14,14" fill="#f05c1e" />
