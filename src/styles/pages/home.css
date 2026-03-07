@@ -1,5 +1,79 @@
 /* ══ HOME PAGE ══ */
+/* ══ HERO — MOBILE RESPONSIVE ══ */
+@media (max-width: 768px) {
+  
+  #hero {
+    min-height: 100svh;
+    padding: 0px 24px 48px;
+    justify-content: flex-end;
+    position: relative; /* ensure children position correctly */
+  }
 
+  /* Hide the large background mark causing the gap */
+  .hero-bgmark {
+    display: none;
+  }
+
+  .hero-eye {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+
+  .hero-h1 {
+    font-size: clamp(52px, 16vw, 80px);
+    line-height: 0.88;
+    margin-bottom: 28px;
+  }
+
+   .hero-visual,
+  .hero-img,
+  .hero-media {
+    display: none;
+  }
+
+  .hero-bot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 20px;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+    line-height: 1.75;
+    max-width: 100%;
+  }
+
+  .hero-btns {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-btns a,
+  .hero-btns button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-bgtext {
+    font-size: clamp(9px, 2.5vw, 13px);
+    bottom: 60px;
+    letter-spacing: 0.18em;
+  }
+}
+
+/* ══ VERY SMALL SCREENS (≤ 390px) ══ */
+@media (max-width: 390px) {
+  #hero {
+    padding: 0px 18px 40px;
+  }
+
+  .hero-h1 {
+    font-size: clamp(44px, 17vw, 60px);
+  }
+}
 #hero {
   min-height: 100vh;
   display: flex;

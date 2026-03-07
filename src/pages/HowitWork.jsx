@@ -26,6 +26,7 @@ function LayerDiagram() {
       return { type: "mid", rowNum };
     }
   });
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -93,7 +94,8 @@ function LayerDiagram() {
                   key={ci}
                   style={{
                     flex: 1,
-                    background: ci % 2 === 0 ? "rgb(255 247 247 / 28%)" : "#202020",
+                    background:
+                      ci % 2 === 0 ? "rgb(255 247 247 / 28%)" : "#202020",
                     borderLeft: "1px solid #282828",
                   }}
                 />
@@ -703,6 +705,7 @@ export default function Learn() {
   const nav = useNavigate();
   useReveal();
   useAnimatedBars();
+   const isMobile = window.innerWidth <= 720;
   const goQuote = () => {
     nav("/");
     setTimeout(
@@ -736,9 +739,10 @@ export default function Learn() {
               fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
+              fontSize: isMobile ? 25 : 30,
             }}
           >
-          HOW
+            HOW
             <em style={{ fontStyle: "normal", color: "#f05c1e" }}>-IT-WORKS</em>
           </span>
         </div>

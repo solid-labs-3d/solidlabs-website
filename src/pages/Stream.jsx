@@ -134,7 +134,7 @@ export default function Stream() {
   const [showErr, setShowErr] = useState(false);
   const [activeCam, setActiveCam] = useState("Front View");
   useReveal();
-
+const isMobile = window.innerWidth <= 720;
   const svgRef = usePrinterAnimation(loggedIn);
   const pct = useProgressCounter(loggedIn);
 
@@ -193,6 +193,7 @@ export default function Stream() {
               fontSize: 30,
               letterSpacing: ".08em",
               color: "#ffffff",
+              fontSize: isMobile ? 25 : 30,
             }}
           >
             LIVE
