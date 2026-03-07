@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCartToggle } from "./Cart";
 import { cart } from "./Cart"; // ← import cart store
 
-const [carbonOpen, setCarbonOpen] = useState(false);
 const SL_LOGO = (
   <svg width="32" height="30" viewBox="0 0 56 52" fill="none">
     <polygon points="8,1 46,1 52,14 14,14" fill="#f05c1e" />
@@ -29,10 +28,11 @@ export function openContactModal() {
 export default function Nav({ page }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [carbonOpen, setCarbonOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Inside your Navbar component:
-  const [cartCount, setCartCount] = useState(0);
+
 
   useEffect(() => {
     const update = () => {
@@ -77,7 +77,7 @@ export default function Nav({ page }) {
     navigate(path);
     window.scrollTo(0, 0);
   };
-  const [carbonOpen, setCarbonOpen] = useState(false);
+
   /* ── Get Quote now opens the modal directly — no navigation ── */
   const goQuote = () => {
     setMobileOpen(false);
